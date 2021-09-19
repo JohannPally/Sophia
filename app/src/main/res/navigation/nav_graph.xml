@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/L1Fragment">
+
+    <fragment
+        android:id="@+id/L1Fragment"
+        android:name="com.example.myapplication.L1Fragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_l1" >
+        <action
+            android:id="@+id/action_L1Fragment_to_L2Fragment"
+            app:destination="@id/L2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/L2Fragment"
+        android:name="com.example.myapplication.L2Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_l2">
+
+        <argument
+            android:name="categoryName"
+            app:argType="string"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_L2Fragment_to_L1Fragment"
+            app:destination="@id/L1Fragment" />
+        <action
+            android:id="@+id/action_L2Fragment_to_L3Fragment"
+            app:destination="@id/L3Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/L3Fragment"
+        android:name="com.example.myapplication.L3Fragment"
+        android:label="fragment_l3"
+        tools:layout="@layout/fragment_l3" >
+        <action
+            android:id="@+id/action_L3Fragment_to_L2Fragment"
+            app:destination="@id/L2Fragment" />
+        <argument android:name="deviceName"
+            app:argType="string"
+            android:defaultValue="null" />
+    </fragment>
+</navigation>

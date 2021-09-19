@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="random_button_text">Random</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello world!</string>
+    <string name="random_heading">Here is a random number between 0 and %d.</string>
+    <string name="toast_button_text">Toast</string>
+    <string name="count_button_text">Count</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="backButton">Back</string>
+    <string name="nextButton">Next</string>
+    <string name="addButton">Add</string>
+    <string name="minus">Minus</string>
+    <string name="what_device_text">What Device?</string>
+    <string name="what_category_text">What Category?</string>
+    <string name="defaultString">default</string>
+</resources>
