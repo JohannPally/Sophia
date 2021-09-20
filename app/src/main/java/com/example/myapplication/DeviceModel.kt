@@ -30,3 +30,7 @@ fun createFromFile(context: Context, category: String, deviceName: String): Devi
     val jsonInput = stringBuilder.toString()
     return Gson().fromJson(jsonInput, DeviceModel::class.java);
 }
+
+fun getTest() : String {
+    return "test"
+}
