@@ -32,6 +32,7 @@ private var _binding: FragmentL3Binding? = null
     val args: L3FragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        println("--------------------L3 Created----------------------------------")
         super.onViewCreated(view, savedInstanceState)
 
         binding.l3backButton.setOnClickListener {

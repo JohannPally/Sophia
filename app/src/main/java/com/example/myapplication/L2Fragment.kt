@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentL2Binding
 import androidx.navigation.fragment.navArgs
@@ -15,18 +16,22 @@ import androidx.navigation.fragment.navArgs
  */
 class L2Fragment : Fragment() {
 
-private var _binding: FragmentL2Binding? = null
+    private var _binding: FragmentL2Binding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    // Reference to the front end model that handles navigation from screen to screen
+    private val feModel: FEModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-      _binding = FragmentL2Binding.inflate(inflater, container, false)
-      return binding.root
+        _binding = FragmentL2Binding.inflate(inflater, container, false)
+        return binding.root
 
     }
 
@@ -36,21 +41,20 @@ private var _binding: FragmentL2Binding? = null
         super.onViewCreated(view, savedInstanceState)
 
         binding.l2backButton.setOnClickListener {
-           findNavController().navigate(R.id.action_L2Fragment_to_L1Fragment)
+            findNavController().navigate(R.id.action_L2Fragment_to_L1Fragment)
         }
 
         binding.l2nextButton.setOnClickListener {
             val devTextVal = view.findViewById<TextView>(R.id.l2deviceEditText)
             val devValString = devTextVal.text.toString()
-            val action = L2FragmentDirections.actionL2FragmentToL3Fragment(devValString)
-            findNavController().navigate(action)
+            feModel.navigateToL3(devValString, findNavController())
         }
 
         val catArg = args.categoryName
         view.findViewById<TextView>(R.id.l2categoryText).text = catArg
     }
 
-override fun onDestroyView() {
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
