@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+//        var device = DeviceModel("Medical", "Syringe", 50);
+//        device.count--
+//        device.saveToLocalFile(applicationContext)
+        var device = createFromFile(applicationContext, "Medical", "Syringe")
+        println("Device Count: " + (device?.count ?: "N/A"));
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
