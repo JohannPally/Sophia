@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    var device: DeviceModel = DeviceModel("Medical", "Syringe", 50);
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

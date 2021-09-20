@@ -7,8 +7,8 @@ import java.lang.StringBuilder
 
 data class DeviceModel(var category: String, var deviceName: String, var count: Int) {
     fun saveToLocalFile(context: Context) {
-        var jsonOutput = Gson().toJson(this);
-        println("DIR: " + context.filesDir);
+        var jsonOutput = Gson().toJson(this)
+        println("DIR: " + context.filesDir)
         val file = File(context.filesDir, category + "_" + deviceName + ".json")
         val fileWriter = FileWriter(file)
         val bufferedWriter = BufferedWriter(fileWriter)

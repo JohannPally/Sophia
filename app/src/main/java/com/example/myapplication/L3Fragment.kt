@@ -39,6 +39,11 @@ private var _binding: FragmentL3Binding? = null
             findNavController().navigate(R.id.action_L3Fragment_to_L2Fragment)
         }
 
+        var activity = activity;
+        if (activity is MainActivity) {
+            activity.device;
+        }
+
         binding.l3minusButton.setOnClickListener {
             val cntTextVal = view.findViewById<TextView>(R.id.l3countText)
             val cntInt = cntTextVal.text.toString().toInt()
