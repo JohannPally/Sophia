@@ -4,6 +4,9 @@ import android.content.Context
 import com.google.gson.Gson
 import java.io.*
 import java.lang.StringBuilder
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
+
 
 private var filename: String = "database.json"
 
@@ -12,34 +15,22 @@ private var filename: String = "database.json"
 //2. upon startup, we just need to check whether database.json exists -> make if not
 //3. need search helper functions for L1 and L2 and get for L3 (consider a pair<str,str> input)
 
-data class DeviceModel(var category: String, var name: String, var count: Int) {
+class DatabaseModel(context: Context) {
     //TODO: Make Device Model with no arguments
     //Essentially DeviceModel needs to be able to check whether a database.json file already exists
     //and otherwise create one.
 
-    val device_Category : String = category
-    val device_Name : String = name
-    val device_Count : Int = count
+    lateinit var database : HashMap<Any?, Any?>
+
+    init {
+        createFromFile(context)
+    }
 
     /*
     Getters and Setters for our DeviceModel class
      */
 
-    fun getDeviceCategory() : String {
-        return this.device_Category
-    }
-
-    fun getDeviceName(): String {
-        return this.device_Name
-    }
-
-    fun getDeviceCount(): Int {
-        return this.device_Count
-    }
-
-
-    fun saveToLocalFile(context: Context) {
-        var jsonOutput = Gson().toJson(this)
+    fun saveToLocalFile(context: Context, jsonOutput: String) {
         println("DIR: " + context.filesDir)
         val file = File(context.filesDir, "database.json")
         val fileWriter = FileWriter(file)
@@ -48,29 +39,28 @@ data class DeviceModel(var category: String, var name: String, var count: Int) {
         bufferedWriter.close()
     }
 
-    fun getTest() : String {
-        return "test"
-    }
-}
+    fun createFromFile(context: Context): Map<*, *> {
+        try {
+            val file = File(context.filesDir, "database.json")
+            val fileReader = FileReader(file)
 
-fun createFromFile(context: Context, category: String, deviceName: String): Map<*, *> {
-    try {
-        val file = File(context.filesDir, "database.json")
-        val fileReader = FileReader(file)
-
-        val bufferedReader = BufferedReader(fileReader)
-        val stringBuilder = StringBuilder()
-        val allLines: List<String> = bufferedReader.readLines()
-        for (line in allLines) {
-            stringBuilder.append(line).append("\n")
+            val bufferedReader = BufferedReader(fileReader)
+            val stringBuilder = StringBuilder()
+            val allLines: List<String> = bufferedReader.readLines()
+            for (line in allLines) {
+                stringBuilder.append(line).append("\n")
+            }
+            bufferedReader.close()
+            val jsonInput = stringBuilder.toString()
+            val hashMapType: Type = object : TypeToken<HashMap<Any?, Any?>?>() {}.type
+            val readDB: HashMap<Any?, Any?> = Gson().fromJson(jsonInput, hashMapType)
+            this.database = readDB;
+            return readDB;
+        } catch (e: FileNotFoundException) {
+            val database = HashMap<Any?, Any?>()
+            this.database = database;
+            saveToLocalFile(context, Gson().toJson(database).toString());
+            return database
         }
-        bufferedReader.close()
-        val jsonInput = stringBuilder.toString()
-        val map: Map<*, *> = Gson().fromJson(jsonInput, MutableMap::class.java)
-        return map;
-    } catch (e: FileNotFoundException) {
-        val database = HashMap<Any?, Any?>()
-        newDevice.saveToLocalFile(context);
-        return newDevice
     }
 }
