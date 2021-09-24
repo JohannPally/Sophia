@@ -36,9 +36,10 @@ class L3Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var activity = activity;
-        if (activity is MainActivity) {
-            ctrl = activity.dbctrl;
+        var activity = activity as? MainActivity
+        if (activity != null) ctrl = activity.dbctrl;
+        else {
+            println("Failed to cast activity as MainActivity in L3 Fragment")
         }
 
         //========================BINDINGS====================================

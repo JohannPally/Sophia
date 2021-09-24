@@ -12,14 +12,36 @@ private var filename: String = "database.json"
 //2. upon startup, we just need to check whether database.json exists -> make if not
 //3. need search helper functions for L1 and L2 and get for L3 (consider a pair<str,str> input)
 
-data class DeviceModel(var category: String, var deviceName: String, var count: Int) {
+data class DeviceModel(var category: String, var name: String, var count: Int) {
     //TODO: Make Device Model with no arguments
     //Essentially DeviceModel needs to be able to check whether a database.json file already exists
     //and otherwise create one.
+
+    val device_Category : String = category
+    val device_Name : String = name
+    val device_Count : Int = count
+
+    /*
+    Getters and Setters for our DeviceModel class
+     */
+
+    fun getDeviceCategory() : String {
+        return this.device_Category
+    }
+
+    fun getDeviceName(): String {
+        return this.device_Name
+    }
+
+    fun getDeviceCount(): Int {
+        return this.device_Count
+    }
+
+
     fun saveToLocalFile(context: Context) {
         var jsonOutput = Gson().toJson(this)
         println("DIR: " + context.filesDir)
-        val file = File(context.filesDir, category + "_" + deviceName + ".json")
+        val file = File(context.filesDir, category + "_" + name + ".json")
         val fileWriter = FileWriter(file)
         val bufferedWriter = BufferedWriter(fileWriter)
         bufferedWriter.write(jsonOutput)
