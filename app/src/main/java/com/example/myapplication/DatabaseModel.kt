@@ -41,7 +41,7 @@ data class DeviceModel(var category: String, var name: String, var count: Int) {
     fun saveToLocalFile(context: Context) {
         var jsonOutput = Gson().toJson(this)
         println("DIR: " + context.filesDir)
-        val file = File(context.filesDir, category + "_" + name + ".json")
+        val file = File(context.filesDir, "database.json")
         val fileWriter = FileWriter(file)
         val bufferedWriter = BufferedWriter(fileWriter)
         bufferedWriter.write(jsonOutput)
@@ -53,16 +53,24 @@ data class DeviceModel(var category: String, var name: String, var count: Int) {
     }
 }
 
-fun createFromFile(context: Context, category: String, deviceName: String): DeviceModel? {
-    val file: File = File(context.filesDir, category + "_" + deviceName + ".json")
-    val fileReader = FileReader(file)
-    val bufferedReader = BufferedReader(fileReader)
-    val stringBuilder = StringBuilder()
-    val allLines: List<String> = bufferedReader.readLines()
-    for (line in allLines) {
-        stringBuilder.append(line).append("\n")
+fun createFromFile(context: Context, category: String, deviceName: String): Map<*, *> {
+    try {
+        val file = File(context.filesDir, "database.json")
+        val fileReader = FileReader(file)
+
+        val bufferedReader = BufferedReader(fileReader)
+        val stringBuilder = StringBuilder()
+        val allLines: List<String> = bufferedReader.readLines()
+        for (line in allLines) {
+            stringBuilder.append(line).append("\n")
+        }
+        bufferedReader.close()
+        val jsonInput = stringBuilder.toString()
+        val map: Map<*, *> = Gson().fromJson(jsonInput, MutableMap::class.java)
+        return map;
+    } catch (e: FileNotFoundException) {
+        val database = HashMap<Any?, Any?>()
+        newDevice.saveToLocalFile(context);
+        return newDevice
     }
-    bufferedReader.close()
-    val jsonInput = stringBuilder.toString()
-    return Gson().fromJson(jsonInput, DeviceModel::class.java);
 }
