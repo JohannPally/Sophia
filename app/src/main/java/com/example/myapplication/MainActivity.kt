@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    var device: DeviceModel = DeviceModel("Medical", "Syringe", 50);
+    var dbctrl: DBController = DBController();
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
 //        var device = DeviceModel("Medical", "Syringe", 50);
 //        device.count--
 //        device.saveToLocalFile(applicationContext)
-        var device = createFromFile(applicationContext, "Medical", "Syringe")
-        println("Device Count: " + (device?.count ?: "N/A"));
+//        var device = createFromFile(applicationContext, "Medical", "Syringe")
+//        println("Device Count: " + (device?.count ?: "N/A"));
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

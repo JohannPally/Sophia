@@ -3,7 +3,7 @@ package com.example.myapplication
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 
-class FEModel : ViewModel() {
+class NavMod : ViewModel() {
 
     /**
      * Function that handles the navigation from L1 fragment to L2 fragment

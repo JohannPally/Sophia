@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentL1Binding
 
@@ -22,8 +21,10 @@ class L1Fragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
+    private var ctrl: DBController ? = null
+
     // Reference to the front end model that handles navigation from screen to screen
-    private val feModel: FEModel by activityViewModels()
+    private val navMod: NavMod by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,13 +37,19 @@ class L1Fragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
+
+        var activity = activity;
+        if (activity is MainActivity) {
+            ctrl = activity.dbctrl;
+        }
+
+        //========================BINDINGS====================================
 
         view.findViewById<Button>(R.id.l1_next_Button).setOnClickListener {
             val catTextVal = view.findViewById<TextView>(R.id.l1categoryEditText)
             val catValString = catTextVal.text.toString()
-            feModel.navigateToL2(catValString, findNavController())
+            navMod.navigateToL2(catValString, findNavController())
         }
     }
 
