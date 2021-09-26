@@ -1,7 +1,6 @@
 package com.example.myapplication.placeholder
 
 import java.util.ArrayList
-import java.util.HashMap
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -19,7 +18,7 @@ object PlaceholderContent {
     /**
      * A map of sample (placeholder) items, by ID.
      */
-    val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
+    val ITEM_MAP: HashMap<String, PlaceholderItem> = HashMap()
 
     private val COUNT = 25
 
@@ -30,16 +29,16 @@ object PlaceholderContent {
         }
     }
 
-    private fun addItem(item: PlaceholderItem) {
+    fun addItem(item: PlaceholderItem) {
         ITEMS.add(item)
         ITEM_MAP.put(item.id, item)
     }
 
-    private fun createPlaceholderItem(position: Int): PlaceholderItem {
+    fun createPlaceholderItem(position: Int): PlaceholderItem {
         return PlaceholderItem(position.toString(), "Item " + position, makeDetails(position))
     }
 
-    private fun makeDetails(position: Int): String {
+    fun makeDetails(position: Int): String {
         val builder = StringBuilder()
         builder.append("Details about Item: ").append(position)
         for (i in 0..position - 1) {

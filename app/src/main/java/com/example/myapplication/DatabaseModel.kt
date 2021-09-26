@@ -27,7 +27,7 @@ class DatabaseModel(context: Context) {
     Startup and shutdown file operations
      */
 
-    fun saveToLocalFile(context: Context, jsonOutput: String) {
+    private fun saveToLocalFile(context: Context, jsonOutput: String) {
         println("DIR: " + context.filesDir)
         val file = File(context.filesDir, "database.json")
         val fileWriter = FileWriter(file)
@@ -36,7 +36,7 @@ class DatabaseModel(context: Context) {
         bufferedWriter.close()
     }
 
-    fun createFromFile(context: Context) {
+    private fun createFromFile(context: Context) {
         try {
             val file = File(context.filesDir, "database.json")
             val fileReader = FileReader(file)
@@ -63,17 +63,16 @@ class DatabaseModel(context: Context) {
     }
 
     /*
-    Getters and Setters for our DeviceModel class
+    Getters and Setters for our DatabaseModel class
      */
 
     fun get(lst: List<String>): Any {
         var tlst = lst
-        var out = database
+        var out : List<Any?> = mutableListOf()
         while(tlst.size > 0){
             var k = tlst.get(0)
             tlst = tlst.drop(1)
-
-            out = out.get(k) as HashMap<Any?, Any?>
+            out += (database.get(k))
         }
 
         return out
@@ -93,10 +92,10 @@ class DatabaseModel(context: Context) {
         while(tlst.size > 0){
             var k = tlst.get(0)
             tlst = tlst.drop(1)
-
             out = out.get(k) as HashMap<Any?, Any?>
         }
 
         out.set(key, value)
     }
 }
+

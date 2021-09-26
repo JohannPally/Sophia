@@ -1,10 +1,9 @@
 package com.example.myapplication
 
 import com.google.gson.JsonObject
+import java.security.AccessController.getContext
 
 class DBController {
-
-    var model: DeviceModel = DeviceModel("Medical", "Syringe", 50);
 
     //L1
     fun getCats(): JsonObject{
