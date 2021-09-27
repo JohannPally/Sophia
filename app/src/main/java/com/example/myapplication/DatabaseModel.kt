@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import java.io.*
 import java.lang.StringBuilder
 import com.google.gson.reflect.TypeToken
@@ -17,7 +16,7 @@ private var filename: String = "database.json"
 //4. Taking care of time logging actions
 
 class DatabaseModel(context: Context) {
-    lateinit var database : HashMap<Any?,Any?>
+    lateinit var database : HashMap<String, HashMap<String, HashMap<String, String>>>
 
     init {
         createFromFile(context)
@@ -38,7 +37,8 @@ class DatabaseModel(context: Context) {
 
     private fun createFromFile(context: Context) {
         try {
-            val file = File(context.filesDir, "database.json")
+            //val file = File(context.filesDir, "database.json")
+            val file = File( "app/java/com/example/myapplication/exDB.json")
             val fileReader = FileReader(file)
 
             val bufferedReader = BufferedReader(fileReader)
@@ -50,14 +50,15 @@ class DatabaseModel(context: Context) {
             bufferedReader.close()
 
             val jsonInput = stringBuilder.toString()
-            val hashMapType: Type = object : TypeToken<HashMap<Any?, Any?>?>() {}.type
-            val readDB: HashMap<Any?, Any?> = Gson().fromJson(jsonInput, hashMapType)
+            val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, HashMap<String, String>>>?>() {}.type
+            val readDB: HashMap<String, HashMap<String, HashMap<String, String>>> = Gson().fromJson(jsonInput, hashMapType)
             this.database = readDB;
             //return readDB;
         } catch (e: FileNotFoundException) {
-            val db = HashMap<Any?, Any?>()
+            val db = HashMap<String, HashMap<String, HashMap<String, String>>>()
             this.database = db;
             saveToLocalFile(context, Gson().toJson(database).toString());
+            println("are we here")
             //return database
         }
     }
@@ -66,16 +67,37 @@ class DatabaseModel(context: Context) {
     Getters and Setters for our DatabaseModel class
      */
 
-    fun get(lst: List<String>): Any {
-        var tlst = lst
-        var out : List<Any?> = mutableListOf()
-        while(tlst.size > 0){
-            var k = tlst.get(0)
-            tlst = tlst.drop(1)
-            out += (database.get(k))
+    fun get(lst: List<String>): Any? {
+        val s = lst.size
+        when(s) {
+            0 -> {
+                return database.keys
+            }
+            1 -> {
+                var catName = lst.get(0)
+                var catMap = database.get(catName)
+                if (catMap != null) {
+                    return catMap.keys
+                }
+                else {
+                    error("categories L")
+                }
+            }
+            2 -> {
+                var catName = lst.get(0)
+                var catMap = database.get(catName)
+                if (catMap != null) {
+                    var devMap = catMap.get(lst.get(1))
+                }
+                else {
+                    error("devices L ")
+                }
+            }
+            else -> {
+                error("device info L")
+            }
         }
-
-        return out
+        return null
     }
 
 
@@ -86,16 +108,16 @@ class DatabaseModel(context: Context) {
     }
 
     fun modify(lst: List<String>, key: String, value: Any ?) {
-        //TODO double check this is the way we're entering in and pulling
-        var tlst = lst
-        var out = database
-        while(tlst.size > 0){
-            var k = tlst.get(0)
-            tlst = tlst.drop(1)
-            out = out.get(k) as HashMap<Any?, Any?>
-        }
-
-        out.set(key, value)
+//        //TODO double check this is the way we're entering in and pulling
+//        var tlst = lst
+//        var out = database
+//        while(tlst.size > 0){
+//            var k = tlst.get(0)
+//            tlst = tlst.drop(1)
+//            out = out.get(k)
+//        }
+//
+//        out.set(key, value)
     }
 }
 

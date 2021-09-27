@@ -1,0 +1,22 @@
+{
+  "category1": {
+    "object1": {
+      "field1": "blue",
+      "field2": "green",
+      "field3": "red"
+
+    },
+    "object2": {
+      "field1": "1",
+      "field2": "2",
+      "field3": "3"
+    }
+  },
+  "category2": {
+    "object3": {
+      "field1": "windows",
+      "field2": "mac",
+      "field3": "linux"
+    }
+  }
+}
