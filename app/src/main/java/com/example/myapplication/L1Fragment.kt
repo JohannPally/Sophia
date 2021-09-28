@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentL1Binding
 
 /**
@@ -21,6 +23,7 @@ class L1Fragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
+    //TODO hook up to controller
     private var ctrl: DBController ? = null
 
     // Reference to the front end model that handles navigation from screen to screen
@@ -32,6 +35,7 @@ class L1Fragment : Fragment() {
         savedInstanceState: Bundle?
     ):
             View? {
+
         _binding = FragmentL1Binding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,11 +50,19 @@ class L1Fragment : Fragment() {
 
         //========================BINDINGS====================================
 
-        view.findViewById<Button>(R.id.l1_next_Button).setOnClickListener {
-            val catTextVal = view.findViewById<TextView>(R.id.l1categoryEditText)
-            val catValString = catTextVal.text.toString()
-            navMod.navigateToL2(catValString, findNavController())
-        }
+        val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
+        //TODO: replace with real getter for categories
+        val testCats = setOf("Emergency Room", "Operating Room", "Intensive Care Unit", "Cardiac Care Unit")
+        val adapter = CategoryAdapter(testCats, navMod, findNavController())
+        rvCats.adapter = adapter
+        rvCats.layoutManager = LinearLayoutManager(activity)
+
+//        OLD BUTTONS
+    //        view.findViewById<Button>(R.id.l1_next_Button).setOnClickListener {
+//            val catTextVal = view.findViewById<TextView>(R.id.l1categoryEditText)
+//            val catValString = catTextVal.text.toString()
+//            navMod.navigateToL2(catValString, findNavController())
+//        }
     }
 
     override fun onDestroyView() {

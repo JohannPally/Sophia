@@ -46,18 +46,19 @@ class L2Fragment : Fragment() {
 
         //========================BINDINGS====================================
 
-        binding.l2backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_L2Fragment_to_L1Fragment)
-        }
-
-        binding.l2nextButton.setOnClickListener {
-            val devTextVal = view.findViewById<TextView>(R.id.l2deviceEditText)
-            val devValString = devTextVal.text.toString()
-            navMod.navigateToL3(devValString, findNavController())
-        }
-
         val catArg = args.categoryName
         view.findViewById<TextView>(R.id.l2categoryText).text = catArg
+
+//       OLD BUTTONS
+    //        binding.l2backButton.setOnClickListener {
+//            findNavController().navigate(R.id.action_L2Fragment_to_L1Fragment)
+//        }
+//
+//        binding.l2nextButton.setOnClickListener {
+//            val devTextVal = view.findViewById<TextView>(R.id.l2deviceEditText)
+//            val devValString = devTextVal.text.toString()
+//            navMod.navigateToL3(devValString, findNavController())
+//        }
     }
 
     override fun onDestroyView() {
