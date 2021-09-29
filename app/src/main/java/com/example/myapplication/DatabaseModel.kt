@@ -37,8 +37,8 @@ class DatabaseModel(context: Context) {
 
     private fun createFromFile(context: Context) {
         try {
-            //val file = File(context.filesDir, "database.json")
-            val file = File( "app/java/com/example/myapplication/exDB.json")
+            val file = File(context.filesDir, "database.json")
+//            val file = File( "app/java/com/example/myapplication/exDB.json")
             val fileReader = FileReader(file)
 
             val bufferedReader = BufferedReader(fileReader)
@@ -50,16 +50,38 @@ class DatabaseModel(context: Context) {
             bufferedReader.close()
 
             val jsonInput = stringBuilder.toString()
+            println("DB: $jsonInput");
             val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, HashMap<String, String>>>?>() {}.type
             val readDB: HashMap<String, HashMap<String, HashMap<String, String>>> = Gson().fromJson(jsonInput, hashMapType)
             this.database = readDB;
+            println("DB2: ${this.database.keys}");
+
             //return readDB;
         } catch (e: FileNotFoundException) {
-            val db = HashMap<String, HashMap<String, HashMap<String, String>>>()
-            this.database = db;
-            saveToLocalFile(context, Gson().toJson(database).toString());
-            println("are we here")
+            saveToLocalFile(context, "{\n" +
+                    "  \"category1\": {\n" +
+                    "    \"object1\": {\n" +
+                    "      \"field1\": \"blue\",\n" +
+                    "      \"field2\": \"green\",\n" +
+                    "      \"field3\": \"red\"\n" +
+                    "\n" +
+                    "    },\n" +
+                    "    \"object2\": {\n" +
+                    "      \"field1\": \"1\",\n" +
+                    "      \"field2\": \"2\",\n" +
+                    "      \"field3\": \"3\"\n" +
+                    "    }\n" +
+                    "  },\n" +
+                    "  \"category2\": {\n" +
+                    "    \"object3\": {\n" +
+                    "      \"field1\": \"windows\",\n" +
+                    "      \"field2\": \"mac\",\n" +
+                    "      \"field3\": \"linux\"\n" +
+                    "    }\n" +
+                    "  }\n" +
+                    "}");
             //return database
+            return createFromFile(context);
         }
     }
 
