@@ -3,7 +3,8 @@ package com.example.myapplication
 import com.google.gson.JsonObject
 import java.security.AccessController.getContext
 
-class DBController {
+class DBController (){
+
 
     //L1
     fun getCats(): JsonObject{

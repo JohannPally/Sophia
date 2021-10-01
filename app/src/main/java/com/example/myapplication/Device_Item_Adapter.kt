@@ -5,43 +5,42 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
 
-class CategoryAdapter (private val cats: Set<String>, private val navMod: NavMod, private val navCtrl: NavController) :
-    RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class Device_Item_Adapter (private val cats: Set<String>, private val navMod: NavMod, private val navCtrl: NavController) :
+    RecyclerView.Adapter<Device_Item_Adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Your holder should contain and initialize a member variable
         // for any view that will be set as you render a row
-        val catNameTextView = itemView.findViewById<TextView>(R.id.category_name)
-        val selectCatButton = itemView.findViewById<Button>(R.id.select_category)
+        val devNameTextView = itemView.findViewById<TextView>(R.id.device_name)
+        val selectDevButton = itemView.findViewById<Button>(R.id.select_device)
     }
 
     // Usually involves inflating a layout from XML and returning the holder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Device_Item_Adapter.ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         // Inflate the custom layout
-        val contactView = inflater.inflate(R.layout.category_layout, parent, false)
+        val deviceSetView = inflater.inflate(R.layout.category_item_layout, parent, false)
         // Return a new holder instance
-        return ViewHolder(contactView)
+        return ViewHolder(deviceSetView)
     }
 
     // Involves populating data into the item through holder
-    override fun onBindViewHolder(viewHolder: CategoryAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: Device_Item_Adapter.ViewHolder, position: Int) {
         // Get the data model based on position
-        val cat: String = cats.elementAt(position)
+        val dev: String = cats.elementAt(position)
         // Set item views based on your views and data model
-        val textView = viewHolder.catNameTextView
-        textView.setText(cat)
-        val button = viewHolder.selectCatButton
+        val textView = viewHolder.devNameTextView
+        textView.setText(dev)
+        val button = viewHolder.selectDevButton
         //button.text = if (contact.isOnline) "Message" else "Offline"
         button.text = "Select"
         //button.isEnabled = contact.isOnline
         button.setOnClickListener() {
-            navMod.navigateToL2(cat, navCtrl)
+            navMod.navigateToL3(dev, navCtrl)
         }
     }
 

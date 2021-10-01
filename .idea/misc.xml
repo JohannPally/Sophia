@@ -13,6 +13,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
         <entry key="app/src/main/res/layout/category_layout.xml" value="0.18110435663627153" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.17401215805471124" />
+        <entry key="app/src/main/res/layout/device_item_layout.xml" value="0.2740036231884058" />
+        <entry key="app/src/main/res/layout/device_list_layout.xml" value="0.2740036231884058" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_l1.xml" value="0.22010869565217392" />

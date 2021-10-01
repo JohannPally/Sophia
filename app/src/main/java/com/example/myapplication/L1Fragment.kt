@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,7 +51,7 @@ class L1Fragment : Fragment() {
         val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
         //TODO: replace with real getter for categories
         val testCats = setOf("Emergency Room", "Operating Room", "Intensive Care Unit", "Cardiac Care Unit")
-        val adapter = CategoryAdapter(testCats, navMod, findNavController())
+        val adapter = Category_Item_Adapter(testCats, navMod, findNavController())
         rvCats.adapter = adapter
         rvCats.layoutManager = LinearLayoutManager(activity)
 

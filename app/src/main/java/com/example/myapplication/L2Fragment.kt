@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentL2Binding
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -49,16 +51,12 @@ class L2Fragment : Fragment() {
         val catArg = args.categoryName
         view.findViewById<TextView>(R.id.l2categoryText).text = catArg
 
-//       OLD BUTTONS
-    //        binding.l2backButton.setOnClickListener {
-//            findNavController().navigate(R.id.action_L2Fragment_to_L1Fragment)
-//        }
-//
-//        binding.l2nextButton.setOnClickListener {
-//            val devTextVal = view.findViewById<TextView>(R.id.l2deviceEditText)
-//            val devValString = devTextVal.text.toString()
-//            navMod.navigateToL3(devValString, findNavController())
-//        }
+        val rvDevs: RecyclerView = view.findViewById<RecyclerView>(R.id.rvDevices)
+        //TODO: replace with real getter for categories
+        val testCats = setOf("Stethascope", "Deflibrilator")
+        val adapter = Device_Item_Adapter(testCats, navMod, findNavController())
+        rvDevs.adapter = adapter
+        rvDevs.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onDestroyView() {
