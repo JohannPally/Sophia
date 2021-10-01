@@ -9,10 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityMainBinding
-import java.util.Observer
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +35,11 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-//        var device = DeviceModel("Medical", "Syringe", 50);
+        var db = DatabaseModel(applicationContext)
+
+        val getResult = db.get(listOf("category1", ""));
+        println("Result: $getResult");
+
 //        device.count--
 //        device.saveToLocalFile(applicationContext)
 //        var device = createFromFile(applicationContext, "Medical", "Syringe")

@@ -90,14 +90,16 @@ class DatabaseModel(context: Context) {
      */
 
     fun get(category: String = "", device: String = ""): Any? {
-        val s = lst.size
-        when(s) {
-            0 -> {
-                return database.keys
-            }
-            1 -> {
-                var catName = lst.get(0)
-                var catMap = database.get(catName)
+        if (category != "") {
+            if (device != "") {
+                var catMap = database.get(category)
+                if (catMap != null) {
+                    return catMap.get(device);
+                } else {
+                    error("devices L ")
+                }
+            } else {
+                var catMap = database.get(category)
                 if (catMap != null) {
                     return catMap.keys
                 }
@@ -105,21 +107,12 @@ class DatabaseModel(context: Context) {
                     error("categories L")
                 }
             }
-            2 -> {
-                var catName = lst.get(0)
-                var catMap = database.get(catName)
-                if (catMap != null) {
-                    var devMap = catMap.get(lst.get(1))
-                }
-                else {
-                    error("devices L ")
-                }
-            }
-            else -> {
-                error("device info L")
-            }
+        } else if (category == "" && device == "") {
+            return database.keys
+        } else {
+            error("device info L")
         }
-        return null
+        return null;
     }
 
 
