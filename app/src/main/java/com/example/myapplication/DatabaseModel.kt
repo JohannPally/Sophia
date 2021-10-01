@@ -89,7 +89,7 @@ class DatabaseModel(context: Context) {
     Getters and Setters for our DatabaseModel class
      */
 
-    fun get(lst: List<String>): Any? {
+    fun get(category: String = "", device: String = ""): Any? {
         val s = lst.size
         when(s) {
             0 -> {
