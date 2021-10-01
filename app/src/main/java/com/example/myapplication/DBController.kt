@@ -29,10 +29,9 @@ class DBController(context: Context) {
 
 
     //L2
-    fun getDevs(cat:String): JsonObject{
-        //make JsonObject out of s?
-        //model.get(s ?)
-        return JsonObject()
+    fun getDevs(cat:String): Set<String> {
+        var deviceSet : Set<String>  = model.get(category = cat) as Set<String>
+        return deviceSet
     }
 
     fun addDev(cat:String){
@@ -42,12 +41,9 @@ class DBController(context: Context) {
     //something to move a device from one category to the other? Sounds like an L3 task
 
     //L3
-    fun getInf(dev:Pair<String, String>): JsonObject{
-        //first string would be the category
-        //TODO: pass through the category name from L2 -> L3 when we figure out Lists
-        //make JsonObject out of s?
-        //model.get(s ?)
-        return JsonObject()
+    fun getInf(dev:Pair<String, String>): HashMap<String, String> {
+        var deviceInfo : HashMap<String, String>  = model.get(category = dev.first, device = dev.second) as HashMap<String, String>
+        return deviceInfo;
     }
 
     fun edtInfo(obj: JsonObject) {
