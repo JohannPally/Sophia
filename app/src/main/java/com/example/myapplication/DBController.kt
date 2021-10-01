@@ -1,14 +1,18 @@
 package com.example.myapplication
 
+import android.content.Context
 import com.google.gson.JsonObject
 import java.security.AccessController.getContext
 
-class DBController {
+class DBController(context: Context) {
+
+    // Instantiate a DB
+    var model:DatabaseModel = DatabaseModel(context)
 
     //L1
-    fun getCats(): JsonObject{
-        //model.get()
-        return JsonObject()
+    fun getCats(): Set<String>{
+        var categorySet : Set<String>  = model.get() as Set<String>
+        return categorySet
     }
 
     fun addCat(cat:String){
