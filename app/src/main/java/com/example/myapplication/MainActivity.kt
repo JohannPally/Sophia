@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    var dbctrl: DBController = DBController();
+    var dbctrl: DBController = DBController(applicationContext);
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         var db = DatabaseModel(applicationContext)
 
-        val getResult = db.get(listOf("category1", ""));
+        val getResult = db.get("category1", "");
         println("Result: $getResult");
 
 //        device.count--
