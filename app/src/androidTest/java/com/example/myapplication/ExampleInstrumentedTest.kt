@@ -26,11 +26,12 @@ class ExampleInstrumentedTest {
     var appContext = InstrumentationRegistry.getInstrumentation().targetContext
     var testContent = PlaceholderContent
     var testDBModel = DatabaseModel(appContext)
+    var testDBController = DBController(appContext)
 
     @Test
     fun testReadAndPrintDB() {
         println("hello")
-        var cats :  Set<String> = testDBModel.get(listOf()) as Set<String>
+        var cats :  Set<String> =testDBController.getCats()
         println(cats)
         for (cat in cats){
             println(cat)
