@@ -21,7 +21,7 @@ class L2Fragment : Fragment() {
     private var _binding: FragmentL2Binding? = null
     private val binding get() = _binding!!
 
-    private var ctrl: DBController ? = null
+    private var dbCtrl: DBController ? = null
 
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
@@ -43,18 +43,19 @@ class L2Fragment : Fragment() {
 
         var activity = activity;
         if (activity is MainActivity) {
-            ctrl = activity.dbctrl;
+            dbCtrl = activity.dbctrl;
         }
 
         //========================BINDINGS====================================
 
-        val catArg = args.categoryName
+        val catArg = args.categoryPassed
         view.findViewById<TextView>(R.id.l2categoryText).text = catArg
 
         val rvDevs: RecyclerView = view.findViewById<RecyclerView>(R.id.rvDevices)
         //TODO: replace with real getter for categories
-        val testCats = setOf("Stethascope", "Deflibrilator")
-        val adapter = Device_Item_Adapter(testCats, navMod, findNavController())
+        val Devs = dbCtrl?.getDevs(catArg)
+        val testDevs = setOf("Stethascope", "Deflibrilator")
+        val adapter = Devs?.let { Device_Item_Adapter(it, navMod, findNavController()) }
         rvDevs.adapter = adapter
         rvDevs.layoutManager = LinearLayoutManager(activity)
     }

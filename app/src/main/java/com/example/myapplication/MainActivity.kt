@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -11,35 +12,41 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.databinding.FragmentL1Binding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    var dbctrl: DBController = DBController(applicationContext);
+    public var dbctrl: DBController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
+        dbctrl = DBController(applicationContext);
+        Log.v("???", dbctrl.toString())
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        var db = DatabaseModel(applicationContext)
+        //TODO can make this a global variable instead of passing into frags
+        //but have to make a temp var and then assign the public var = temp var
+        //otherwise complains that 'it isn't mutable at this time
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        val getResult = db.get("category1", "");
-        println("Result: $getResult");
+//        var db = DatabaseModel(applicationContext)
+//
+//        val getResult = db.get("category1", "");
+//        println("Result: $getResult");
 
 //        device.count--
 //        device.saveToLocalFile(applicationContext)

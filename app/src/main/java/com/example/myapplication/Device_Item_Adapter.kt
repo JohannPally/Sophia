@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
 
-class Device_Item_Adapter (private val cats: Set<String>, private val navMod: NavMod, private val navCtrl: NavController) :
+class Device_Item_Adapter (private val devs: Set<String>, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<Device_Item_Adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,7 +23,7 @@ class Device_Item_Adapter (private val cats: Set<String>, private val navMod: Na
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         // Inflate the custom layout
-        val deviceSetView = inflater.inflate(R.layout.category_item_layout, parent, false)
+        val deviceSetView = inflater.inflate(R.layout.device_item_layout, parent, false)
         // Return a new holder instance
         return ViewHolder(deviceSetView)
     }
@@ -31,20 +31,20 @@ class Device_Item_Adapter (private val cats: Set<String>, private val navMod: Na
     // Involves populating data into the item through holder
     override fun onBindViewHolder(viewHolder: Device_Item_Adapter.ViewHolder, position: Int) {
         // Get the data model based on position
-        val dev: String = cats.elementAt(position)
+        val dev: String = devs.elementAt(position)
         // Set item views based on your views and data model
         val textView = viewHolder.devNameTextView
-        textView.setText(dev)
+        textView.text = dev
         val button = viewHolder.selectDevButton
         //button.text = if (contact.isOnline) "Message" else "Offline"
         button.text = "Select"
         //button.isEnabled = contact.isOnline
         button.setOnClickListener() {
-            navMod.navigateToL3(dev, navCtrl)
+            navMod.L2toL3(dev, navCtrl)
         }
     }
 
     override fun getItemCount(): Int {
-        return cats.size
+        return devs.size
     }
 }

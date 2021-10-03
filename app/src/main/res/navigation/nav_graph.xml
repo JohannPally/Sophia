@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_l2">
 
         <argument
-            android:name="categoryName"
+            android:name="categoryPassed"
             app:argType="string"
             android:defaultValue="null" />
         <action
@@ -39,7 +39,7 @@
         <action
             android:id="@+id/action_L3Fragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
-        <argument android:name="deviceName"
+        <argument android:name="devicePassed"
             app:argType="string"
             android:defaultValue="null" />
     </fragment>

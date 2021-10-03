@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentL3Binding
@@ -43,25 +45,23 @@ class L3Fragment : Fragment() {
         }
 
         //========================BINDINGS====================================
+        val devArg = "Device, " + args.devicePassed + ":"
+        view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
         binding.l3backButton.setOnClickListener {
             findNavController().navigate(R.id.action_L3Fragment_to_L2Fragment)
         }
 
         binding.l3minusButton.setOnClickListener {
-//            val cntTextVal = view.findViewById<TextView>(R.id.l3countText)
-//            val teststr = dev?.getTest()
-//            cntTextVal.setText(teststr)
-//            val cntTextVal = view.findViewById<TextView>(R.id.l3countText)
-//            val cntInt = cntTextVal.text.toString().toInt()
-//            cntTextVal.setText((cntInt-1).toString())
-//
-//            val myToast = Toast.makeText(context, "Decremented "+args.deviceName+" count by 1!", Toast.LENGTH_SHORT)
-//            myToast.show()
+            val cntTextVal = view.findViewById<TextView>(R.id.l3countText)
+            val cntInt = cntTextVal.text.toString().toInt()
+            cntTextVal.setText((cntInt-1).toString())
+
+            val myToast = Toast.makeText(context, "Decremented "+devArg+" count by 1!", Toast.LENGTH_SHORT)
+            myToast.show()
         }
 
-//        val devArg = "Device, " + args.deviceName + ":"
-//        view.findViewById<TextView>(R.id.l3deviceText).text = devArg
+
     }
 
 override fun onDestroyView() {

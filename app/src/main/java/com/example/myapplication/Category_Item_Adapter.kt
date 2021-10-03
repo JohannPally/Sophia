@@ -40,7 +40,7 @@ class Category_Item_Adapter (private val cats: Set<String>, private val navMod: 
         button.text = "Select"
         //button.isEnabled = contact.isOnline
         button.setOnClickListener() {
-            navMod.navigateToL2(cat, navCtrl)
+            navMod.L1toL2(cat, navCtrl)
         }
     }
 

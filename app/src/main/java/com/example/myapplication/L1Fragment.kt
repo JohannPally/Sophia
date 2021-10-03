@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +23,11 @@ class L1Fragment : Fragment() {
     private val binding get() = _binding!!
 
     //TODO hook up to controller
-    private var ctrl: DBController ? = null
+    private var dbCtrl: DBController ? = null
 
     // Reference to the front end model that handles navigation from screen to screen
+    //TODO: should we be passing this to the RV adapters or can we just instiate this there
+    //Does this refer to the one we made in the Main Activity?
     private val navMod: NavMod by activityViewModels()
 
     override fun onCreateView(
@@ -43,15 +46,17 @@ class L1Fragment : Fragment() {
 
         var activity = activity;
         if (activity is MainActivity) {
-            ctrl = activity.dbctrl;
+            dbCtrl = activity.dbctrl;
         }
 
         //========================BINDINGS====================================
 
         val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
         //TODO: replace with real getter for categories
+        val Cats = dbCtrl?.getCats()
+        Log.v("Cats",dbCtrl.toString())
         val testCats = setOf("Emergency Room", "Operating Room", "Intensive Care Unit", "Cardiac Care Unit")
-        val adapter = Category_Item_Adapter(testCats, navMod, findNavController())
+        val adapter = Cats?.let{Category_Item_Adapter(it, navMod, findNavController())}
         rvCats.adapter = adapter
         rvCats.layoutManager = LinearLayoutManager(activity)
 

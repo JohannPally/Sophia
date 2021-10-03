@@ -11,7 +11,7 @@ class NavMod : ViewModel() {
      *         navController - The reference to the navigation controller present in the fragment
      * Outputs: None
      */
-    fun navigateToL2(param: String, navController: NavController) {
+    fun L1toL2(param: String, navController: NavController) {
         val action = L1FragmentDirections.actionL1FragmentToL2Fragment(param)
         navController.navigate(action)
     }
@@ -22,7 +22,7 @@ class NavMod : ViewModel() {
      *         navController - The reference to the navigation controller present in the fragment
      * Outputs: None
      */
-    fun navigateToL3(param: String, navController: NavController) {
+    fun L2toL3(param: String, navController: NavController) {
         val action = L2FragmentDirections.actionL2FragmentToL3Fragment(param)
         navController.navigate(action)
     }
