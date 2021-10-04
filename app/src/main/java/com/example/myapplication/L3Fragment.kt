@@ -45,7 +45,7 @@ class L3Fragment : Fragment() {
         }
 
         //========================BINDINGS====================================
-        val devArg = "Device, " + args.devicePassed + ":"
+        val devArg = "ID: " + args.devicePassed + ":"
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
         binding.l3backButton.setOnClickListener {
