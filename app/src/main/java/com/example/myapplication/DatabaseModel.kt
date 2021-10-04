@@ -59,21 +59,42 @@ class DatabaseModel(context: Context) {
             //return readDB;
         } catch (e: FileNotFoundException) {
             saveToLocalFile(context, "{\n" +
-                    "  \"category1\": {\n" +
-                    "    \"object1\": {\n" +
+                    "  \"Surgical ICU\": {\n" +
+                    "    \"Surgical Masks\": {\n" +
                     "      \"field1\": \"blue\",\n" +
                     "      \"field2\": \"green\",\n" +
                     "      \"field3\": \"red\"\n" +
-                    "\n" +
                     "    },\n" +
-                    "    \"object2\": {\n" +
+                    "    \"Syringes\": {\n" +
+                    "      \"field1\": \"blue\",\n" +
+                    "      \"field2\": \"green\",\n" +
+                    "      \"field3\": \"red\"\n" +
+                    "    },\n" +
+                    "    \"Blood Pressure Cuffs\": {\n" +
                     "      \"field1\": \"1\",\n" +
                     "      \"field2\": \"2\",\n" +
                     "      \"field3\": \"3\"\n" +
                     "    }\n" +
                     "  },\n" +
-                    "  \"category2\": {\n" +
-                    "    \"object3\": {\n" +
+                    "  \"Neonatal Ward\": {\n" +
+                    "    \"Incubators\": {\n" +
+                    "      \"field1\": \"windows\",\n" +
+                    "      \"field2\": \"mac\",\n" +
+                    "      \"field3\": \"linux\"\n" +
+                    "    },\n" +
+                    "    \"Pulse Oximeters\": {\n" +
+                    "      \"field1\": \"windows\",\n" +
+                    "      \"field2\": \"mac\",\n" +
+                    "      \"field3\": \"linux\"\n" +
+                    "    }\n" +
+                    "  },\n" +
+                    "  \"Cardiology Ward\": {\n" +
+                    "    \"EKG Machines\": {\n" +
+                    "      \"field1\": \"windows\",\n" +
+                    "      \"field2\": \"mac\",\n" +
+                    "      \"field3\": \"linux\"\n" +
+                    "    },\n" +
+                    "    \"Defibrillators\": {\n" +
                     "      \"field1\": \"windows\",\n" +
                     "      \"field2\": \"mac\",\n" +
                     "      \"field3\": \"linux\"\n" +
