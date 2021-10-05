@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">R-360 CMMS</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label">Wards</string>
+    <string name="second_fragment_label">Inventory</string>
+    <string name="third_fragment_label">Device Info</string>
     <string name="random_button_text">Random</string>
     <string name="previous">Previous</string>
 
@@ -20,4 +21,8 @@
     <string name="what_device_text">What Device?</string>
     <string name="what_category_text">What Category?</string>
     <string name="defaultString">default</string>
+    <string name="count_50_test_string">50</string>
+    <string name="l3count_string">Count:</string>
+    <string name="welcome_String">RICE 360 CMMS</string>
+    <string name="welcome_fragment_label">Welcome</string>
 </resources>

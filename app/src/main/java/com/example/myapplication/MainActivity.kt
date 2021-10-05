@@ -24,17 +24,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         dbctrl = DBController(applicationContext);
-        Log.v("???", dbctrl.toString())
+        //Log.v("???", dbctrl.toString())
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
 
         //TODO can make this a global variable instead of passing into frags
         //but have to make a temp var and then assign the public var = temp var

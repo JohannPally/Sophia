@@ -57,6 +57,7 @@ class L1Fragment : Fragment() {
         Log.v("Cats",dbCtrl.toString())
         val testCats = setOf("Emergency Room", "Operating Room", "Intensive Care Unit", "Cardiac Care Unit")
         val adapter = Cats?.let{Category_Item_Adapter(it, navMod, findNavController())}
+        //TODO: Maybe instead of changing how the RV fits in the view, space the textview and button themselves in item layout
         rvCats.adapter = adapter
         rvCats.layoutManager = LinearLayoutManager(activity)
 

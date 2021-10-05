@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Mantej Singh/Desktop/Rice/Fall '21/COMP 413/R360CMMS_FE/app/src/main/res/layout/fragment_l1.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/Mantej Singh/Desktop/Rice/Fall '21/COMP 413/R360CMMS_FE/app/src/main/res/layout/fragment_l3.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/category_item_layout.xml" value="0.271286231884058" />
         <entry key="app/src/main/res/layout/category_layout.xml" value="0.18110435663627153" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.17401215805471124" />
         <entry key="app/src/main/res/layout/device_item_layout.xml" value="0.2740036231884058" />
@@ -21,7 +22,9 @@
         <entry key="app/src/main/res/layout/fragment_l2.xml" value="0.22010869565217392" />
         <entry key="app/src/main/res/layout/fragment_l3.xml" value="0.33695652173913043" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_welcome_screen.xml" value="0.271286231884058" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2341537245572393" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1388888888888889" />
       </map>
     </option>
   </component>

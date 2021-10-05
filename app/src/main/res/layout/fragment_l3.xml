@@ -8,43 +8,43 @@
     android:background="@color/white_neutral"
     tools:context=".L3Fragment">
 
-    <Button
-        android:id="@+id/l3backButton"
+    <TextView
+        android:id="@+id/l3countText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/backButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        android:text="@string/count_50_test_string"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textColor="@color/brown_neutral"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toStartOf="@+id/l3minusButton"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toEndOf="@+id/l3CountString"
+        app:layout_constraintTop_toTopOf="@+id/l3CountString" />
 
     <Button
         android:id="@+id/l3minusButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/minus"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.57" />
+        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintStart_toEndOf="@+id/l3CountString"
+        app:layout_constraintTop_toTopOf="@+id/l3countText" />
 
     <TextView
-        android:id="@+id/l3countText"
+        android:id="@+id/l3CountString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="50"
+        android:text="@string/l3count_string"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textColor="@color/brown_neutral"
         android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/l3minusButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/l3deviceText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/l3deviceText"
+        app:layout_constraintVertical_bias="0.033" />
 
     <TextView
         android:id="@+id/l3deviceText"
@@ -53,12 +53,13 @@
         android:text="@string/defaultString"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textColor="@color/brown_neutral"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/l3minusButton"
-        app:layout_constraintEnd_toStartOf="@+id/l3countText"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.023" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

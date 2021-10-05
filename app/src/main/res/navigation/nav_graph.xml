@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/L1Fragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/L1Fragment"
         android:name="com.example.myapplication.L1Fragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_l1" >
+        tools:layout="@layout/fragment_l1">
         <action
             android:id="@+id/action_L1Fragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
@@ -22,8 +22,8 @@
 
         <argument
             android:name="categoryPassed"
-            app:argType="string"
-            android:defaultValue="null" />
+            android:defaultValue="null"
+            app:argType="string" />
         <action
             android:id="@+id/action_L2Fragment_to_L1Fragment"
             app:destination="@id/L1Fragment" />
@@ -34,13 +34,23 @@
     <fragment
         android:id="@+id/L3Fragment"
         android:name="com.example.myapplication.L3Fragment"
-        android:label="fragment_l3"
-        tools:layout="@layout/fragment_l3" >
+        android:label="@string/third_fragment_label"
+        tools:layout="@layout/fragment_l3">
         <action
             android:id="@+id/action_L3Fragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
-        <argument android:name="devicePassed"
-            app:argType="string"
-            android:defaultValue="null" />
+        <argument
+            android:name="devicePassed"
+            android:defaultValue="null"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.myapplication.WelcomeFragment"
+        android:label="@string/welcome_fragment_label"
+        tools:layout="@layout/fragment_welcome_screen">
+        <action
+            android:id="@+id/action_welcomeFragment_to_L1Fragment"
+            app:destination="@id/L1Fragment" />
     </fragment>
 </navigation>

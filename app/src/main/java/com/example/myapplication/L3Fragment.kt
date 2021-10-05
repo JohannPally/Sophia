@@ -45,12 +45,9 @@ class L3Fragment : Fragment() {
         }
 
         //========================BINDINGS====================================
-        val devArg = "ID: " + args.devicePassed + ":"
+        val devArg = args.devicePassed
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
-        binding.l3backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_L3Fragment_to_L2Fragment)
-        }
 
         binding.l3minusButton.setOnClickListener {
             val cntTextVal = view.findViewById<TextView>(R.id.l3countText)

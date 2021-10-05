@@ -10,7 +10,8 @@
         android:id="@+id/category_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textSize="22sp" />
 
     <Button
         android:id="@+id/select_category"
@@ -18,5 +19,5 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textSize="10sp" />
+        android:textSize="12sp" />
 </LinearLayout>
