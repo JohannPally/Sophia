@@ -78,9 +78,13 @@ class DatabaseModel(context: Context) {
                     "  },\n" +
                     "  \"Neonatal Ward\": {\n" +
                     "    \"Incubators\": {\n" +
-                    "      \"field1\": \"windows\",\n" +
-                    "      \"field2\": \"mac\",\n" +
-                    "      \"field3\": \"linux\"\n" +
+                    "      \"Inventory Number\": \"1234\",\n" +
+                    "      \"Work Order Number\": \"64\",\n" +
+                    "      \"Service Provider\": \"MedTech\",\n" +
+                    "      \"Service Engineering Code\": \"504\",\n" +
+                    "      \"Fault Code\": \"300\",\n" +
+                    "      \"IPM Procedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"Status\": \"Caution\"\n" +
                     "    },\n" +
                     "    \"Pulse Oximeters\": {\n" +
                     "      \"field1\": \"windows\",\n" +
@@ -122,6 +126,7 @@ class DatabaseModel(context: Context) {
             } else {
                 var catMap = database.get(category)
                 if (catMap != null) {
+                    // TODO: Modify to return a pairing of Device Name and Status
                     return catMap.keys
                 }
                 else {
