@@ -52,5 +52,12 @@
         <action
             android:id="@+id/action_welcomeFragment_to_L1Fragment"
             app:destination="@id/L1Fragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_QRFragment"
+            app:destination="@id/QRFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/QRFragment"
+        android:name="com.example.myapplication.QRFragment"
+        android:label="QRFragment" />
 </navigation>

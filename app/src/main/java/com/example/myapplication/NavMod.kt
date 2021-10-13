@@ -16,6 +16,11 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
+    fun WtoQR(navController: NavController) {
+        val action = WelcomeFragmentDirections.actionWelcomeFragmentToQRFragment()
+        navController.navigate(action)
+    }
+
     /**
      * Function that handles the navigation from L1 fragment to L2 fragment
      * Inputs: param - The data to pass onto L2 fragment

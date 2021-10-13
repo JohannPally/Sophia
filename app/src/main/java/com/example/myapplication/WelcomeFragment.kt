@@ -45,9 +45,14 @@ class WelcomeFragment: Fragment() {
 
         //========================BINDINGS====================================
 
-        val unlockButton = view.findViewById<Button>(R.id.nextButton)
-        unlockButton.setOnClickListener() {
+        val nextButton = view.findViewById<Button>(R.id.nextButton)
+        nextButton.setOnClickListener() {
             navMod.WtoL1(findNavController())
+        }
+
+        val toQRButton = view.findViewById<Button>(R.id.toQRButton)
+        toQRButton.setOnClickListener() {
+            navMod.WtoQR(findNavController())
         }
     }
 }
