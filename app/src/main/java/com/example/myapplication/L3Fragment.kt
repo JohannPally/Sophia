@@ -5,10 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentL3Binding
 import androidx.navigation.fragment.navArgs
 
@@ -44,21 +43,43 @@ class L3Fragment : Fragment() {
             println("Failed to cast activity as MainActivity in L3 Fragment")
         }
 
+        fillText(view);
+        showStatus(view)
+
         //========================BINDINGS====================================
+
+        val makeWCButton = view.findViewById<Button>(R.id.l3makeWorkCodeButton)
+        makeWCButton.setOnClickListener() {
+            generateWorkCode(view);
+        }
+
+    }
+
+    fun fillText(view: View){
         val devArg = args.devicePassed
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
+        //TODO: have to fill out these functions in the controller for the gets
+//        view.findViewById<TextView>(R.id.inventoryNumberText).setText(ctrl.getInventoryNumber())
+//        view.findViewById<TextView>(R.id.workOrderNumberText).setText(ctrl.getWorkOrderNumber())
+//        view.findViewById<TextView>(R.id.serviceProviderText).setText(ctrl.getServiceProvider())
+//        view.findViewById<TextView>(R.id.serviceEngineerCodeText).setText(ctrl.getServiceEngineerCode())
+//        view.findViewById<TextView>(R.id.ipmProcedureText).setText(ctrl.getIPMProcedure())
+    }
 
-        binding.l3minusButton.setOnClickListener {
-            val cntTextVal = view.findViewById<TextView>(R.id.l3countText)
-            val cntInt = cntTextVal.text.toString().toInt()
-            cntTextVal.setText((cntInt-1).toString())
-
-            val myToast = Toast.makeText(context, "Decremented "+devArg+" count by 1!", Toast.LENGTH_SHORT)
-            myToast.show()
+    //TODO: probably need a button or something to clear work orders
+    fun generateWorkCode(view: View){
+        val wonTV = view.findViewById<TextView>(R.id.l3workOrderNumberText)
+        if (wonTV.text.toString().equals("")) {
+            //TODO: fill out helper function in controller
+//            wonTV.setText(ctrl.makeWON());
         }
+    }
 
-
+    fun showStatus(view: View){
+        val stBut = view.findViewById<TextView>(R.id.l3statusButton)
+        //TODO: fill the helper function to get the appropriate status color, might be an arg instead?
+        //stBut.setBackgroundColor(ctrl.getStatusColor())
     }
 
 override fun onDestroyView() {

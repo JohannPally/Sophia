@@ -8,43 +8,18 @@
     android:background="@color/white_neutral"
     tools:context=".L3Fragment">
 
-    <TextView
-        android:id="@+id/l3countText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/count_50_test_string"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-        android:textColor="@color/brown_neutral"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toStartOf="@+id/l3minusButton"
-        app:layout_constraintHorizontal_bias="0.128"
-        app:layout_constraintStart_toEndOf="@+id/l3CountString"
-        app:layout_constraintTop_toTopOf="@+id/l3CountString" />
-
     <Button
-        android:id="@+id/l3minusButton"
+        android:id="@+id/l3statusButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/minus"
+        android:text="status"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.879"
-        app:layout_constraintStart_toEndOf="@+id/l3CountString"
-        app:layout_constraintTop_toTopOf="@+id/l3countText" />
-
-    <TextView
-        android:id="@+id/l3CountString"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/l3count_string"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-        android:textColor="@color/brown_neutral"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/l3deviceText"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/l3deviceText"
@@ -60,6 +35,156 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.027" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/l3deviceText"
+        app:layout_constraintVertical_bias="0.178">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Inventory Number"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3inventoryNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+        </TableRow>
+
+        <!--//TODO: consider making a new row for the work order buttons?-->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_neutral">
+
+            <TextView
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Work Order Number"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3workOrderNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/l3makeWorkCodeButton"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:text=">"
+                android:textSize="14dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Service Provider"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3serviceProviderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Service Engineer Code"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3serviceEngineerCodeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fault Code"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3faultCodeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="IPM Procedure"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3ipmProcedureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+        </TableRow>
+
+    </TableLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
