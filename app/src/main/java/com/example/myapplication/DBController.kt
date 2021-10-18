@@ -30,7 +30,7 @@ class DBController(context: Context) {
 
 
     //L2
-    // TODO: Return a set of pairs containing status and name rather than just namesgit 
+    // TODO: Return a set of pairs containing status and name rather than just names
     fun getDevs(cat:String): Set<String> {
         var deviceSet : Set<String>  = model.get(category = cat) as Set<String>
         return deviceSet
@@ -44,8 +44,8 @@ class DBController(context: Context) {
 
     //L3
     // TODO: Change return type for this function to a DataClass
-    fun getInf(dev:Pair<String, String>): HashMap<String, String> {
-        var deviceInfo : HashMap<String, String>  = model.get(category = dev.first, device = dev.second) as HashMap<String, String>
+    fun getInf(dev:Pair<String, String>): MaintenanceRecord {
+        var deviceInfo : MaintenanceRecord  = model.get(category = dev.first, device = dev.second) as MaintenanceRecord
         return deviceInfo;
     }
 

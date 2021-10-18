@@ -16,7 +16,7 @@ private var filename: String = "database.json"
 //4. Taking care of time logging actions
 
 class DatabaseModel(context: Context) {
-    lateinit var database : HashMap<String, HashMap<String, HashMap<String, String>>>
+    lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
 
     init {
         createFromFile(context)
@@ -51,57 +51,83 @@ class DatabaseModel(context: Context) {
 
             val jsonInput = stringBuilder.toString()
             println("DB: $jsonInput");
-            val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, HashMap<String, String>>>?>() {}.type
-            val readDB: HashMap<String, HashMap<String, HashMap<String, String>>> = Gson().fromJson(jsonInput, hashMapType)
+            val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+            val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(jsonInput, hashMapType)
             this.database = readDB;
             println("DB2: ${this.database.keys}");
+            println("DB3: ${this.database["Surgical ICU"]?.get("Surgical Masks")}");
+            println("DB4: ${this.database["Surgical ICU"]?.get("Surgical Masks")?.inventoryNum}");
 
             //return readDB;
         } catch (e: FileNotFoundException) {
             saveToLocalFile(context, "{\n" +
                     "  \"Surgical ICU\": {\n" +
                     "    \"Surgical Masks\": {\n" +
-                    "      \"field1\": \"blue\",\n" +
-                    "      \"field2\": \"green\",\n" +
-                    "      \"field3\": \"red\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    },\n" +
                     "    \"Syringes\": {\n" +
-                    "      \"field1\": \"blue\",\n" +
-                    "      \"field2\": \"green\",\n" +
-                    "      \"field3\": \"red\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    },\n" +
                     "    \"Blood Pressure Cuffs\": {\n" +
-                    "      \"field1\": \"1\",\n" +
-                    "      \"field2\": \"2\",\n" +
-                    "      \"field3\": \"3\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    }\n" +
                     "  },\n" +
                     "  \"Neonatal Ward\": {\n" +
                     "    \"Incubators\": {\n" +
-                    "      \"Inventory Number\": \"1234\",\n" +
-                    "      \"Work Order Number\": \"64\",\n" +
-                    "      \"Service Provider\": \"MedTech\",\n" +
-                    "      \"Service Engineering Code\": \"504\",\n" +
-                    "      \"Fault Code\": \"300\",\n" +
-                    "      \"IPM Procedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"Status\": \"Caution\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    },\n" +
                     "    \"Pulse Oximeters\": {\n" +
-                    "      \"field1\": \"windows\",\n" +
-                    "      \"field2\": \"mac\",\n" +
-                    "      \"field3\": \"linux\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    }\n" +
                     "  },\n" +
                     "  \"Cardiology Ward\": {\n" +
                     "    \"EKG Machines\": {\n" +
-                    "      \"field1\": \"windows\",\n" +
-                    "      \"field2\": \"mac\",\n" +
-                    "      \"field3\": \"linux\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    },\n" +
                     "    \"Defibrillators\": {\n" +
-                    "      \"field1\": \"windows\",\n" +
-                    "      \"field2\": \"mac\",\n" +
-                    "      \"field3\": \"linux\"\n" +
+                    "      \"inventoryNum\": \"1234\",\n" +
+                    "      \"workOrderNum\": \"64\",\n" +
+                    "      \"serviceProvider\": \"MedTech\",\n" +
+                    "      \"serviceEngineeringCode\": \"504\",\n" +
+                    "      \"faultCode\": \"300\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"status\": \"Caution\"\n" +
                     "    }\n" +
                     "  }\n" +
                     "}");
@@ -124,10 +150,19 @@ class DatabaseModel(context: Context) {
                     error("devices L ")
                 }
             } else {
-                var catMap = database.get(category)
+                val catMap = database.get(category)
                 if (catMap != null) {
                     // TODO: Modify to return a pairing of Device Name and Status
-                    return catMap.keys
+                    val deviceKeys = catMap.keys;
+                    val statusAndDevices = ArrayList<Pair<String, String>>();
+                    for (key in deviceKeys) {
+                        var currentDevice = catMap.get(key);
+                        if (currentDevice != null) {
+                            statusAndDevices.add(Pair(key, currentDevice.status))
+                        }
+                    }
+                    println("STATUS: $statusAndDevices");
+                    return deviceKeys;
                 }
                 else {
                     error("categories L")
