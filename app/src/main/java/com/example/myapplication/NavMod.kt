@@ -38,8 +38,8 @@ class NavMod : ViewModel() {
      *         navController - The reference to the navigation controller present in the fragment
      * Outputs: None
      */
-    fun L2toL3(param: String, navController: NavController) {
-        val action = L2FragmentDirections.actionL2FragmentToL3Fragment(param)
+    fun L2toL3(category: String, device: String, navController: NavController) {
+        val action = L2FragmentDirections.actionL2FragmentToL3Fragment(category, device)
         navController.navigate(action)
     }
 

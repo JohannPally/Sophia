@@ -39,9 +39,10 @@
         <action
             android:id="@+id/action_L3Fragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
+        <argument android:name="categoryPassed"
+            app:argType="string" />
         <argument
             android:name="devicePassed"
-            android:defaultValue="null"
             app:argType="string" />
     </fragment>
     <fragment

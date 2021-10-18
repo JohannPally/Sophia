@@ -57,6 +57,11 @@ class L3Fragment : Fragment() {
 
     fun fillText(view: View){
         val devArg = args.devicePassed
+        val catArg = args.categoryPassed
+
+//      TODO: we need to save the json object
+//      val jsonobject = ...
+
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
         //TODO: have to fill out these functions in the controller for the gets

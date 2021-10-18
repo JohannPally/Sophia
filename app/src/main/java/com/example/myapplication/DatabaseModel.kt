@@ -140,7 +140,7 @@ class DatabaseModel(context: Context) {
     Getters and Setters for our DatabaseModel class
      */
 
-    fun get(category: String = "", device: String = ""): Any? {
+    fun fragment_get(category: String = "", device: String = ""): Any? {
         if (category != "") {
             if (device != "") {
                 var catMap = database.get(category)
@@ -177,23 +177,7 @@ class DatabaseModel(context: Context) {
     }
 
 
+//==============================BACKEND FXNS===============================================
 
-    fun put() {
-        //TODO efficient HashMap searching?
-        //contains might only do categories? so then would we have to do a contains of each category?
-    }
-
-    fun modify(lst: List<String>, key: String, value: Any ?) {
-//        //TODO double check this is the way we're entering in and pulling
-//        var tlst = lst
-//        var out = database
-//        while(tlst.size > 0){
-//            var k = tlst.get(0)
-//            tlst = tlst.drop(1)
-//            out = out.get(k)
-//        }
-//
-//        out.set(key, value)
-    }
 }
 

@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 
 
-class Device_Item_Adapter (private val devs: Set<String>, private val navMod: NavMod, private val navCtrl: NavController) :
+class Device_Item_Adapter (private val catArg: String, private val devs: Set<String>, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<Device_Item_Adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,7 +40,7 @@ class Device_Item_Adapter (private val devs: Set<String>, private val navMod: Na
         button.text = "Select"
         //button.isEnabled = contact.isOnline
         button.setOnClickListener() {
-            navMod.L2toL3(dev, navCtrl)
+            navMod.L2toL3(catArg, dev, navCtrl)
         }
     }
 

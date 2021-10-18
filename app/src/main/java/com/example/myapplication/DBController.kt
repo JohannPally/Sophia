@@ -1,9 +1,7 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.JsonObject
-import java.security.AccessController.getContext
 
 class DBController(context: Context) {
 
@@ -12,7 +10,7 @@ class DBController(context: Context) {
 
     //L1
     fun getCats(): Set<String>{
-        var categorySet : Set<String>  = model.get() as Set<String>
+        var categorySet : Set<String>  = model.fragment_get() as Set<String>
         return categorySet
     }
 
@@ -32,7 +30,7 @@ class DBController(context: Context) {
     //L2
     // TODO: Return a set of pairs containing status and name rather than just names
     fun getDevs(cat:String): Set<String> {
-        var deviceSet : Set<String>  = model.get(category = cat) as Set<String>
+        var deviceSet : Set<String>  = model.fragment_get(category = cat) as Set<String>
         return deviceSet
     }
 
@@ -45,7 +43,7 @@ class DBController(context: Context) {
     //L3
     // TODO: Change return type for this function to a DataClass
     fun getInf(dev:Pair<String, String>): MaintenanceRecord {
-        var deviceInfo : MaintenanceRecord  = model.get(category = dev.first, device = dev.second) as MaintenanceRecord
+        var deviceInfo : MaintenanceRecord  = model.fragment_get(category = dev.first, device = dev.second) as MaintenanceRecord
         return deviceInfo;
     }
 
