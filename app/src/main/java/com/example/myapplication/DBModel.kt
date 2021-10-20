@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.companion.CompanionDeviceManager
 import android.content.Context
 import com.google.gson.Gson
 import java.io.*
@@ -11,6 +12,7 @@ import java.net.URL
 import java.net.URLEncoder
 
 private var filename: String = "database.json"
+private val serverURL:String = "localhost:4567";
 
 //TODO NOTES
 //1. we're only going to have a single file with all the devices and categories
@@ -177,6 +179,13 @@ class DatabaseModel(context: Context) {
             error("device info L")
         }
         return null;
+    }
+
+    fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
+        val json = Gson().toJson(MR)
+        database.get(category)
+        val url = serverURL + "/DB/" + category + "/" + device;
+        post_server(url, json)
     }
 
 
