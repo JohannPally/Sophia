@@ -6,6 +6,9 @@ import java.io.*
 import java.lang.StringBuilder
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
 
 private var filename: String = "database.json"
 
@@ -178,6 +181,39 @@ class DatabaseModel(context: Context) {
 
 
 //==============================BACKEND FXNS===============================================
+
+    fun post_server(url:String, json:String) {
+        val mURL = URL(url)
+
+        var reqParam = URLEncoder.encode(json, "UTF-8")
+
+        with(mURL.openConnection() as HttpURLConnection) {
+            // optional default is GET
+            requestMethod = "POST"
+
+            val wr = OutputStreamWriter(getOutputStream());
+            wr.write(reqParam);
+            wr.flush();
+
+            println("URL : $url")
+            println("Response Code : $responseCode")
+
+            BufferedReader(InputStreamReader(inputStream)).use {
+                val response = StringBuffer()
+
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+                println("Response : $response")
+            }
+        }
+    }
+
+    fun get_server(url:String): String {
+        return URL(url).readText();
+    }
 
 }
 
