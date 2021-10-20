@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,8 +44,7 @@ class L3Fragment : Fragment() {
             println("Failed to cast activity as MainActivity in L3 Fragment")
         }
 
-        fillText(view);
-        showStatus(view)
+        fillText(view)
 
         //========================BINDINGS====================================
 
@@ -60,16 +60,20 @@ class L3Fragment : Fragment() {
         val catArg = args.categoryPassed
 
 //      TODO: we need to save the json object
-//      val jsonobject = ...
+        val manrecord = ctrl?.getInf(Pair(catArg, devArg)) as MaintenanceRecord
+        Log.d("check object", manrecord.toString())
 
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
         //TODO: have to fill out these functions in the controller for the gets
-//        view.findViewById<TextView>(R.id.inventoryNumberText).setText(ctrl.getInventoryNumber())
-//        view.findViewById<TextView>(R.id.workOrderNumberText).setText(ctrl.getWorkOrderNumber())
-//        view.findViewById<TextView>(R.id.serviceProviderText).setText(ctrl.getServiceProvider())
-//        view.findViewById<TextView>(R.id.serviceEngineerCodeText).setText(ctrl.getServiceEngineerCode())
-//        view.findViewById<TextView>(R.id.ipmProcedureText).setText(ctrl.getIPMProcedure())
+        view.findViewById<TextView>(R.id.l3inventoryNumberText).setText(manrecord.inventoryNum)
+        view.findViewById<TextView>(R.id.l3workOrderNumberText).setText(manrecord.workOrderNum)
+        view.findViewById<TextView>(R.id.l3serviceProviderText).setText(manrecord.serviceProvider)
+        view.findViewById<TextView>(R.id.l3serviceEngineerCodeText).setText(manrecord.serviceEngineeringCode)
+        view.findViewById<TextView>(R.id.l3faultCodeText).setText(manrecord.faultCode)
+        view.findViewById<TextView>(R.id.l3ipmProcedureText).setText(manrecord.ipmProcedure)
+
+        showStatus(view, manrecord)
     }
 
     //TODO: probably need a button or something to clear work orders
@@ -81,10 +85,28 @@ class L3Fragment : Fragment() {
         }
     }
 
-    fun showStatus(view: View){
+    fun showStatus(view: View, mr: MaintenanceRecord){
         val stBut = view.findViewById<TextView>(R.id.l3statusButton)
-        //TODO: fill the helper function to get the appropriate status color, might be an arg instead?
-        //stBut.setBackgroundColor(ctrl.getStatusColor())
+        val stat = mr.status.toInt()
+        stBut.isEnabled = false
+        when(stat){
+            0 -> {
+                stBut.setText("Active")
+                stBut.setBackgroundColor(resources.getColor(R.color.active_green))
+            }
+            1 -> {
+                stBut.setText("Caution")
+                stBut.setBackgroundColor(resources.getColor(R.color.caution_yellow))
+            }
+            2 -> {
+                stBut.setText("Hazard")
+                stBut.setBackgroundColor(resources.getColor(R.color.hazard_red))
+            }
+            else -> {
+                stBut.setText("OOP")
+                stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
+            }
+        }
     }
 
 override fun onDestroyView() {

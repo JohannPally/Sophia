@@ -11,6 +11,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.FragmentL1Binding
 
@@ -48,6 +50,9 @@ class MainActivity : AppCompatActivity() {
 //        device.saveToLocalFile(applicationContext)
 //        var device = createFromFile(applicationContext, "Medical", "Syringe")
 //        println("Device Count: " + (device?.count ?: "N/A"));
+
+        val qrBut = findViewById<View>(R.id.qrButton)
+        //qrBut.setOnClickListener(navController.navigate())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

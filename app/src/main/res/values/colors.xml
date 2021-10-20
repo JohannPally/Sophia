@@ -16,4 +16,7 @@
     <color name="tan_neutral">#FAEACB</color>
     <color name="pink_neutral">#F7DBD7</color>
     <color name="brown_neutral">#5C4327</color>
+    <color name="active_green">#50C878</color>
+    <color name="caution_yellow">#FFBD33</color>
+    <color name="hazard_red">#FF334B</color>
 </resources>

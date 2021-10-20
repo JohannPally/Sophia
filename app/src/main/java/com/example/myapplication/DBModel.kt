@@ -74,7 +74,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 0" +
                     "    },\n" +
                     "    \"Syringes\": {\n" +
                     "      \"inventoryNum\": \"1234\",\n" +
@@ -83,7 +83,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 1" +
                     "    },\n" +
                     "    \"Blood Pressure Cuffs\": {\n" +
                     "      \"inventoryNum\": \"1234\",\n" +
@@ -92,7 +92,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 1" +
                     "    }\n" +
                     "  },\n" +
                     "  \"Neonatal Ward\": {\n" +
@@ -103,7 +103,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 1" +
                     "    },\n" +
                     "    \"Pulse Oximeters\": {\n" +
                     "      \"inventoryNum\": \"1234\",\n" +
@@ -112,7 +112,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 0" +
                     "    }\n" +
                     "  },\n" +
                     "  \"Cardiology Ward\": {\n" +
@@ -123,7 +123,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 2" +
                     "    },\n" +
                     "    \"Defibrillators\": {\n" +
                     "      \"inventoryNum\": \"1234\",\n" +
@@ -132,7 +132,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
                     "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
-                    "      \"status\": \"Caution\"\n" +
+                    "      \"status\": 2" +
                     "    }\n" +
                     "  }\n" +
                     "}");
