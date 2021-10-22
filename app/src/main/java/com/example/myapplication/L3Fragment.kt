@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,10 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.databinding.FragmentL3Binding
 import androidx.navigation.fragment.navArgs
+import android.text.Editable
+
+
+
 
 
 class L3Fragment : Fragment() {
@@ -19,6 +24,7 @@ class L3Fragment : Fragment() {
     private val binding get() = _binding!!
 
     private var ctrl: DBController ? = null
+    private var currentMaintenanceRecord: MaintenanceRecord ? = null
 
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
@@ -44,7 +50,7 @@ class L3Fragment : Fragment() {
             println("Failed to cast activity as MainActivity in L3 Fragment")
         }
 
-        fillText(view)
+        initTextFields(view)
 
         //========================BINDINGS====================================
 
@@ -55,25 +61,108 @@ class L3Fragment : Fragment() {
 
     }
 
-    fun fillText(view: View){
+    fun initTextFields(view: View){
         val devArg = args.devicePassed
         val catArg = args.categoryPassed
 
 //      TODO: we need to save the json object
-        val manrecord = ctrl?.getInf(Pair(catArg, devArg)) as MaintenanceRecord
-        Log.d("check object", manrecord.toString())
+        this.currentMaintenanceRecord = ctrl?.getInf(Pair(catArg, devArg)) as MaintenanceRecord
+        Log.d("check object", this.currentMaintenanceRecord.toString())
 
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
         //TODO: have to fill out these functions in the controller for the gets
-        view.findViewById<TextView>(R.id.l3inventoryNumberText).setText(manrecord.inventoryNum)
-        view.findViewById<TextView>(R.id.l3workOrderNumberText).setText(manrecord.workOrderNum)
-        view.findViewById<TextView>(R.id.l3serviceProviderText).setText(manrecord.serviceProvider)
-        view.findViewById<TextView>(R.id.l3serviceEngineerCodeText).setText(manrecord.serviceEngineeringCode)
-        view.findViewById<TextView>(R.id.l3faultCodeText).setText(manrecord.faultCode)
-        view.findViewById<TextView>(R.id.l3ipmProcedureText).setText(manrecord.ipmProcedure)
+        val inventoryNumTextView = view.findViewById<TextView>(R.id.l3inventoryNumberText)
+        val workOrderNumTextView = view.findViewById<TextView>(R.id.l3workOrderNumberText)
+        val serviceProviderTextView = view.findViewById<TextView>(R.id.l3serviceProviderText)
+        val serviceEngineerCodeTextView = view.findViewById<TextView>(R.id.l3serviceEngineerCodeText)
+        val faultCodeTextView = view.findViewById<TextView>(R.id.l3faultCodeText)
+        val ipmProcedureTextView = view.findViewById<TextView>(R.id.l3ipmProcedureText)
+        var localManRec = this.currentMaintenanceRecord;
+        if (localManRec != null) {
+            inventoryNumTextView.setText(localManRec.inventoryNum)
+            workOrderNumTextView.setText(localManRec.workOrderNum)
+            serviceProviderTextView.setText(localManRec.serviceProvider)
+            serviceEngineerCodeTextView.setText(localManRec.serviceEngineeringCode)
+            faultCodeTextView.setText(localManRec.faultCode)
+            ipmProcedureTextView.setText(localManRec.ipmProcedure)
+        }
 
-        showStatus(view, manrecord)
+        inventoryNumTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (localManRec != null) {
+                    localManRec.inventoryNum = s.toString()
+                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                };
+            }
+        })
+
+        workOrderNumTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (localManRec != null) {
+                    localManRec.workOrderNum = s.toString()
+                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                };
+            }
+        })
+
+        serviceProviderTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (localManRec != null) {
+                    localManRec.serviceProvider = s.toString()
+                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                };
+            }
+        })
+
+        serviceEngineerCodeTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (localManRec != null) {
+                    localManRec.serviceEngineeringCode = s.toString()
+                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                };
+            }
+        })
+
+        faultCodeTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (localManRec != null) {
+                    localManRec.faultCode = s.toString()
+                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                };
+            }
+        })
+
+        ipmProcedureTextView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (localManRec != null) {
+                    localManRec.ipmProcedure = s.toString()
+                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                };
+            }
+        })
+
+        if (localManRec != null) {
+            showStatus(view, localManRec)
+        }
     }
 
     //TODO: probably need a button or something to clear work orders

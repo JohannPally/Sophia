@@ -47,8 +47,8 @@ class DBController(context: Context) {
         return deviceInfo;
     }
 
-    fun edtInfo(obj: JsonObject) {
-        //model.put(obj)
+    fun editInfo(dev:Pair<String, String>, newObj: MaintenanceRecord) {
+        model.fragment_set(category = dev.first, device = dev.second, newObj);
     }
 
 

@@ -20,6 +20,7 @@ private val serverURL:String = "localhost:4567"
 
 class DatabaseModel(context: Context) {
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
+    val context: Context = context;
 
     init {
         createFromFile(context)
@@ -29,7 +30,7 @@ class DatabaseModel(context: Context) {
     Startup and shutdown file operations
      */
 
-    private fun saveToLocalFile(context: Context, jsonOutput: String) {
+    private fun saveToLocalFile(jsonOutput: String) {
         println("DIR: " + context.filesDir)
         val file = File(context.filesDir, "database.json")
         val fileWriter = FileWriter(file)
@@ -63,7 +64,7 @@ class DatabaseModel(context: Context) {
 
             //return readDB;
         } catch (e: FileNotFoundException) {
-            saveToLocalFile(context, "{\n" +
+            saveToLocalFile("{\n" +
                     "  \"Surgical ICU\": {\n" +
                     "    \"Surgical Masks\": {\n" +
                     "      \"inventoryNum\": \"1234\",\n" +
@@ -185,8 +186,13 @@ class DatabaseModel(context: Context) {
         if (cat != null) {
             cat.put(device, MR)
         }
-        val url = serverURL + "/DB/" + category + "/" + device
-        post_server(url, json)
+
+        val fullDBJson = Gson().toJson(database)
+        println("SAVING FILE")
+        saveToLocalFile(fullDBJson);
+
+//        val url = serverURL + "/DB/" + category + "/" + device
+//        post_server(url, json)
     }
 
 
