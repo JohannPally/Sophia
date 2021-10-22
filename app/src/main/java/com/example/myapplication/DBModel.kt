@@ -1,18 +1,16 @@
 package com.example.myapplication
 
-import android.companion.CompanionDeviceManager
 import android.content.Context
 import com.google.gson.Gson
-import java.io.*
-import java.lang.StringBuilder
 import com.google.gson.reflect.TypeToken
+import java.io.*
 import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
 private var filename: String = "database.json"
-private val serverURL:String = "localhost:4567";
+private val serverURL:String = "localhost:4567"
 
 //TODO NOTES
 //1. we're only going to have a single file with all the devices and categories
@@ -55,13 +53,13 @@ class DatabaseModel(context: Context) {
             bufferedReader.close()
 
             val jsonInput = stringBuilder.toString()
-            println("DB: $jsonInput");
+            println("DB: $jsonInput")
             val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
             val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(jsonInput, hashMapType)
-            this.database = readDB;
-            println("DB2: ${this.database.keys}");
-            println("DB3: ${this.database["Surgical ICU"]?.get("Surgical Masks")}");
-            println("DB4: ${this.database["Surgical ICU"]?.get("Surgical Masks")?.inventoryNum}");
+            this.database = readDB
+            println("DB2: ${this.database.keys}")
+            println("DB3: ${this.database["Surgical ICU"]?.get("Surgical Masks")}")
+            println("DB4: ${this.database["Surgical ICU"]?.get("Surgical Masks")?.inventoryNum}")
 
             //return readDB;
         } catch (e: FileNotFoundException) {
@@ -135,9 +133,9 @@ class DatabaseModel(context: Context) {
                     "      \"status\": 2" +
                     "    }\n" +
                     "  }\n" +
-                    "}");
+                    "}")
             //return database
-            return createFromFile(context);
+            return createFromFile(context)
         }
     }
 
@@ -148,9 +146,9 @@ class DatabaseModel(context: Context) {
     fun fragment_get(category: String = "", device: String = ""): Any? {
         if (category != "") {
             if (device != "") {
-                var catMap = database.get(category)
+                val catMap = database.get(category)
                 if (catMap != null) {
-                    return catMap.get(device);
+                    return catMap.get(device)
                 } else {
                     error("devices L ")
                 }
@@ -158,16 +156,16 @@ class DatabaseModel(context: Context) {
                 val catMap = database.get(category)
                 if (catMap != null) {
                     // TODO: Modify to return a pairing of Device Name and Status
-                    val deviceKeys = catMap.keys;
-                    val statusAndDevices = ArrayList<Pair<String, String>>();
+                    val deviceKeys = catMap.keys
+                    val statusAndDevices = ArrayList<Pair<String, String>>()
                     for (key in deviceKeys) {
-                        var currentDevice = catMap.get(key);
+                        val currentDevice = catMap.get(key)
                         if (currentDevice != null) {
                             statusAndDevices.add(Pair(key, currentDevice.status))
                         }
                     }
-                    println("STATUS: $statusAndDevices");
-                    return deviceKeys;
+                    println("STATUS: $statusAndDevices")
+                    return deviceKeys
                 }
                 else {
                     error("categories L")
@@ -178,16 +176,16 @@ class DatabaseModel(context: Context) {
         } else {
             error("device info L")
         }
-        return null;
+        return null
     }
 
     fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
         val json = Gson().toJson(MR)
-        val cat = database.get(category);
+        val cat = database.get(category)
         if (cat != null) {
             cat.put(device, MR)
-        };
-        val url = serverURL + "/DB/" + category + "/" + device;
+        }
+        val url = serverURL + "/DB/" + category + "/" + device
         post_server(url, json)
     }
 
@@ -197,15 +195,15 @@ class DatabaseModel(context: Context) {
     fun post_server(url:String, json:String) {
         val mURL = URL(url)
 
-        var reqParam = URLEncoder.encode(json, "UTF-8")
+        val reqParam = URLEncoder.encode(json, "UTF-8")
 
         with(mURL.openConnection() as HttpURLConnection) {
             // optional default is GET
             requestMethod = "POST"
 
-            val wr = OutputStreamWriter(getOutputStream());
-            wr.write(reqParam);
-            wr.flush();
+            val wr = OutputStreamWriter(getOutputStream())
+            wr.write(reqParam)
+            wr.flush()
 
             println("URL : $url")
             println("Response Code : $responseCode")
@@ -224,7 +222,7 @@ class DatabaseModel(context: Context) {
     }
 
     fun get_server(url:String): String {
-        return URL(url).readText();
+        return URL(url).readText()
     }
 
 }
