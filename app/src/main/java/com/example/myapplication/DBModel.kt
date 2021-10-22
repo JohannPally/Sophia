@@ -13,6 +13,7 @@ import android.net.NetworkInfo
 import androidx.core.content.ContextCompat.getSystemService
 
 import android.net.ConnectivityManager
+import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 
@@ -32,9 +33,10 @@ private val serverURL:String = "127.0.0.1:4567"
 class DatabaseModel(context: Context) {
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
     val context: Context = context;
-
+    var cm : ConnectivityManager
     init {
         createFromFile(context)
+        this.cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
     /*
@@ -243,11 +245,12 @@ class DatabaseModel(context: Context) {
     }
 
     fun isOnline(): Boolean {
-
-        val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        val mWifi = connManager!!.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-
-        return mWifi.isConnected()
+        val net = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.cm.getActiveNetwork()
+        } else {
+            this.cm.getActiveNetworkInfo()
+        }
+        return net != null
     }
 
 }
