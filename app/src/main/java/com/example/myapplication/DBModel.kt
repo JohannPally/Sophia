@@ -183,7 +183,10 @@ class DatabaseModel(context: Context) {
 
     fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
         val json = Gson().toJson(MR)
-        database.get(category)
+        val cat = database.get(category);
+        if (cat != null) {
+            cat.put(device, MR)
+        };
         val url = serverURL + "/DB/" + category + "/" + device;
         post_server(url, json)
     }
