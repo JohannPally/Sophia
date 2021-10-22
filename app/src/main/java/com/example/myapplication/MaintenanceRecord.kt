@@ -8,4 +8,5 @@ data class MaintenanceRecord(
     var faultCode: String,
     var ipmProcedure: String,
     var status: String,
+    var timestamp: Int,
 )

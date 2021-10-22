@@ -8,9 +8,20 @@ import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import android.net.NetworkInfo
+
+import androidx.core.content.ContextCompat.getSystemService
+
+import android.net.ConnectivityManager
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
+
 
 private var filename: String = "database.json"
-private val serverURL:String = "localhost:4567"
+private val serverURL:String = "127.0.0.1:4567"
 
 //TODO NOTES
 //1. we're only going to have a single file with all the devices and categories
@@ -229,6 +240,14 @@ class DatabaseModel(context: Context) {
 
     fun get_server(url:String): String {
         return URL(url).readText()
+    }
+
+    fun isOnline(): Boolean {
+
+        val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val mWifi = connManager!!.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+
+        return mWifi.isConnected()
     }
 
 }
