@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 //        var device = createFromFile(applicationContext, "Medical", "Syringe")
 //        println("Device Count: " + (device?.count ?: "N/A"));
 
-        val qrBut = findViewById<View>(R.id.qrButton)
+        //val qrBut = findViewById<View>(R.id.qrButton)
         //qrBut.setOnClickListener(navController.navigate())
     }
 

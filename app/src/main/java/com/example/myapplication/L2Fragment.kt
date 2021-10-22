@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.example.myapplication.databinding.FragmentL2Binding
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -58,6 +60,11 @@ class L2Fragment : Fragment() {
         val adapter = Devs?.let { Device_Item_Adapter(catArg, it, navMod, findNavController()) }
         rvDevs.adapter = adapter
         rvDevs.layoutManager = LinearLayoutManager(activity)
+
+        val L2toQRButton = view.findViewById<FloatingActionButton>(R.id.l2toqrbutton)
+        L2toQRButton.setOnClickListener() {
+            navMod.L2toQR(findNavController())
+        }
     }
 
     override fun onDestroyView() {

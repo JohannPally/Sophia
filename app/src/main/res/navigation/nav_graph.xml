@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_L1Fragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
+        <action
+            android:id="@+id/action_L1Fragment_to_QRFragment"
+            app:destination="@id/QRFragment" />
     </fragment>
     <fragment
         android:id="@+id/L2Fragment"
@@ -30,6 +33,9 @@
         <action
             android:id="@+id/action_L2Fragment_to_L3Fragment"
             app:destination="@id/L3Fragment" />
+        <action
+            android:id="@+id/action_L2Fragment_to_QRFragment"
+            app:destination="@id/QRFragment" />
     </fragment>
     <fragment
         android:id="@+id/L3Fragment"
@@ -60,5 +66,9 @@
     <fragment
         android:id="@+id/QRFragment"
         android:name="com.example.myapplication.QRFragment"
-        android:label="QRFragment" />
+        android:label="QRFragment" >
+        <action
+            android:id="@+id/action_QRFragment_to_L3Fragment"
+            app:destination="@id/L3Fragment" />
+    </fragment>
 </navigation>

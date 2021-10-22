@@ -32,6 +32,11 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
+    fun L1toQR(navController: NavController) {
+        val action = L1FragmentDirections.actionL1FragmentToQRFragment()
+        navController.navigate(action)
+    }
+
     /**
      * Function that handles the navigation from L2 fragment to L3 fragment
      * Inputs: param - The data to pass onto L3 fragment
@@ -40,6 +45,11 @@ class NavMod : ViewModel() {
      */
     fun L2toL3(category: String, device: String, navController: NavController) {
         val action = L2FragmentDirections.actionL2FragmentToL3Fragment(category, device)
+        navController.navigate(action)
+    }
+
+    fun L2toQR(navController: NavController) {
+        val action = L2FragmentDirections.actionL2FragmentToQRFragment()
         navController.navigate(action)
     }
 

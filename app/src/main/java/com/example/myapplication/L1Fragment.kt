@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.FragmentL1Binding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -61,12 +63,10 @@ class L1Fragment : Fragment() {
         rvCats.adapter = adapter
         rvCats.layoutManager = LinearLayoutManager(activity)
 
-//        OLD BUTTONS
-    //        view.findViewById<Button>(R.id.l1_next_Button).setOnClickListener {
-//            val catTextVal = view.findViewById<TextView>(R.id.l1categoryEditText)
-//            val catValString = catTextVal.text.toString()
-//            navMod.navigateToL2(catValString, findNavController())
-//        }
+        val L1toQRButton = view.findViewById<FloatingActionButton>(R.id.l1toqrbutton)
+        L1toQRButton.setOnClickListener() {
+            navMod.L1toQR(findNavController())
+        }
     }
 
     override fun onDestroyView() {

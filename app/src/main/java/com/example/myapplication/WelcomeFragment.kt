@@ -50,9 +50,6 @@ class WelcomeFragment: Fragment() {
             navMod.WtoL1(findNavController())
         }
 
-        val toQRButton = view.findViewById<Button>(R.id.toQRButton)
-        toQRButton.setOnClickListener() {
-            navMod.WtoQR(findNavController())
-        }
+
     }
 }
