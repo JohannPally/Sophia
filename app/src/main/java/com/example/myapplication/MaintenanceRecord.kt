@@ -8,4 +8,5 @@ data class MaintenanceRecord(
     val faultCode: String,
     val ipmProcedure: String,
     val status: String,
+    val timestamp: int
 )
