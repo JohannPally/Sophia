@@ -3,20 +3,28 @@ package com.example.myapplication;
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
 import com.budiyev.android.codescanner.CodeScanner
 import com.example.myapplication.databinding.FragmentQrBinding
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
+import com.google.zxing.qrcode.QRCodeWriter
 import java.util.jar.Manifest
 
 class QRFragment : Fragment() {
@@ -97,8 +105,41 @@ class QRFragment : Fragment() {
         }
     }
 
+    /**
+     * This function reads in the data received from a QR input scan,
+     * parses it for the location and device name and then navigates to that device's
+     * particular maintenance record
+     */
     fun saveQRData(text: String) {
         Log.d("QR Data Received", text)
+        val paramList = text.split(":")
+        val Location : String = paramList[0]
+        val Device : String = paramList[1]
+        Log.d("Location = " , Location)
+        Log.d("Device = ", Device )
+        val deviceMR : MaintenanceRecord? = ctrl?.getInf(Pair(Location, Device))
+        Log.d("Device Acquired" , deviceMR.toString())
+        val action = QRFragmentDirections.actionQRFragmentToL3Fragment(Location, Device)
+        findNavController().navigate(action)
+
+    }
+
+    /**
+     * This function generates a QR code bitmap given the Location and Device information
+     * passed in as a string.
+     */
+    fun getQrCodeBitmap(Location: String, Device: String): Bitmap {
+        val qrCodeContent = "$Location : $Device"
+        val hints = hashMapOf<EncodeHintType, Int>().also { it[EncodeHintType.MARGIN] = 1 } // Make the QR code buffer border narrower
+        val size = 512 //pixels
+        val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
+        return Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            for (x in 0 until size) {
+                for (y in 0 until size) {
+                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
+                }
+            }
+        }
     }
 
     override fun onResume() {
