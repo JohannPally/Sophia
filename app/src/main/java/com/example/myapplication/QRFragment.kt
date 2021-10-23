@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,7 @@ class QRFragment : Fragment() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             activity?.runOnUiThread {
+                saveQRData(it.text)
                 Toast.makeText(context as Context, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
             }
         }
@@ -93,6 +95,10 @@ class QRFragment : Fragment() {
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
+    }
+
+    fun saveQRData(text: String) {
+        Log.d("QR Data Received", text)
     }
 
     override fun onResume() {
