@@ -5,15 +5,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -25,7 +22,6 @@ import com.example.myapplication.databinding.FragmentQrBinding
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
-import java.util.jar.Manifest
 
 class QRFragment : Fragment() {
     private var _binding: FragmentQrBinding? = null
@@ -113,13 +109,13 @@ class QRFragment : Fragment() {
     fun saveQRData(text: String) {
         Log.d("QR Data Received", text)
         val paramList = text.split(":")
-        val Location : String = paramList[0]
-        val Device : String = paramList[1]
-        Log.d("Location = " , Location)
-        Log.d("Device = ", Device )
-        val deviceMR : MaintenanceRecord? = ctrl?.getInf(Pair(Location, Device))
+        val catQR : String = paramList[0]
+        val devQR : String = paramList[1]
+        Log.d("Location = " , catQR)
+        Log.d("Device = ", devQR )
+        val deviceMR : MaintenanceRecord? = ctrl?.getInf(Pair(catQR, devQR))
         Log.d("Device Acquired" , deviceMR.toString())
-        val action = QRFragmentDirections.actionQRFragmentToL3Fragment(Location, Device)
+        val action = QRFragmentDirections.actionQRFragmentToL3Fragment(catQR, devQR)
         findNavController().navigate(action)
 
     }
