@@ -8,17 +8,9 @@ import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
-import android.net.NetworkInfo
-
-import androidx.core.content.ContextCompat.getSystemService
 
 import android.net.ConnectivityManager
 import android.os.Build
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-
-
-
 
 
 private var filename: String = "database.json"
@@ -34,6 +26,7 @@ class DatabaseModel(context: Context) {
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
     val context: Context = context;
     var cm : ConnectivityManager
+    var logs = arrayListOf<Pair<String, String>>()
     init {
         createFromFile(context)
         this.cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -204,12 +197,29 @@ class DatabaseModel(context: Context) {
         println("SAVING FILE")
         saveToLocalFile(fullDBJson);
 
-//        val url = serverURL + "/DB/" + category + "/" + device
+        val url = serverURL + "/DB/" + category + "/" + device
 //        post_server(url, json)
+        logging(url, json)
     }
 
 
 //==============================BACKEND FXNS===============================================
+    fun logging(url: String, json: String) {
+        logs.add(Pair(url, json))
+        sync()
+    }
+
+    fun sync() {
+        while (isOnline() && logs.size > 0) {
+            var log = logs.removeAt(0);
+            var response = post_server(log.first, log.second)
+            if (response != 200) {
+                logs.add(log, 0)
+                break
+            }
+        }
+    }
+
 
     fun post_server(url:String, json:String) {
         val mURL = URL(url)
@@ -238,6 +248,7 @@ class DatabaseModel(context: Context) {
                 println("Response : $response")
             }
         }
+
     }
 
     fun get_server(url:String): String {
