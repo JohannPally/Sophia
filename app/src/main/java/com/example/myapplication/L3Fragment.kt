@@ -88,77 +88,65 @@ class L3Fragment : Fragment() {
             ipmProcedureTextView.setText(localManRec.ipmProcedure)
         }
 
-        inventoryNumTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (localManRec != null) {
-                    localManRec.inventoryNum = s.toString()
-                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+        inventoryNumTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.inventoryNum != inventoryNumTextView.text.toString()) {
+                        localManRec.inventoryNum = inventoryNumTextView.text.toString()
+                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                    }
                 };
             }
-        })
 
-        workOrderNumTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (localManRec != null) {
-                    localManRec.workOrderNum = s.toString()
-                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+        workOrderNumTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.workOrderNum != workOrderNumTextView.text.toString()) {
+                        localManRec.workOrderNum = workOrderNumTextView.text.toString()
+                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                    }
                 };
             }
-        })
 
-        serviceProviderTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (localManRec != null) {
-                    localManRec.serviceProvider = s.toString()
-                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+        serviceProviderTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.serviceProvider != serviceProviderTextView.text.toString()) {
+                        localManRec.serviceProvider = serviceProviderTextView.text.toString()
+                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                    }
                 };
             }
-        })
 
-        serviceEngineerCodeTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (localManRec != null) {
-                    localManRec.serviceEngineeringCode = s.toString()
-                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+        serviceEngineerCodeTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.serviceEngineeringCode != serviceEngineerCodeTextView.text.toString()) {
+                        localManRec.serviceEngineeringCode = serviceEngineerCodeTextView.text.toString()
+                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                    }
                 };
             }
-        })
 
-        faultCodeTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (localManRec != null) {
-                    localManRec.faultCode = s.toString()
-                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+        faultCodeTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.faultCode != faultCodeTextView.text.toString()) {
+                        localManRec.faultCode = faultCodeTextView.text.toString()
+                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                    }
                 };
             }
-        })
 
-        ipmProcedureTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (localManRec != null) {
-                    localManRec.ipmProcedure = s.toString()
-                    ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+        ipmProcedureTextView.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.ipmProcedure != ipmProcedureTextView.text.toString()) {
+                        localManRec.ipmProcedure = ipmProcedureTextView.text.toString()
+                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                    }
                 };
             }
-        })
 
         if (localManRec != null) {
             showStatus(view, localManRec)
