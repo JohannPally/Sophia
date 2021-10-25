@@ -217,7 +217,7 @@ class DatabaseModel(context: Context) {
             var log = logs.removeAt(0);
             var response = post_server(log.first, log.second)
             if (response != 200) {
-                logs.add(log, 0)
+                logs.add(0, log)
                 break
             }
         }
