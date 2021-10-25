@@ -14,7 +14,7 @@ import android.os.Build
 
 
 private var filename: String = "database.json"
-private val serverURL:String = "127.0.0.1:4567"
+private val serverURL:String = "10.0.2.2:4567"
 
 //TODO NOTES
 //1. we're only going to have a single file with all the devices and categories
