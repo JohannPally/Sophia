@@ -272,10 +272,14 @@ class DatabaseModel(context: Context) {
      * Update DB with backendDB
      */
     fun updateDB() {
-        val newDB = get_server("$serverURL/DB/")
-        val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
-        val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(newDB, hashMapType)
-        this.database = readDB
+        if (isOnline()) {
+            val newDB = get_server("$serverURL/DB/")
+            val hashMapType: Type =
+                object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+            val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
+                Gson().fromJson(newDB, hashMapType)
+            this.database = readDB
+        }
     }
 }
 
