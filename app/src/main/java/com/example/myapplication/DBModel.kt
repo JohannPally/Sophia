@@ -214,11 +214,11 @@ class DatabaseModel(context: Context) {
 
 //==============================BACKEND FXNS===============================================
 
-    fun post_server(url:String, json:String) {
+    fun post_server(url:String, json:String) : Int {
         val mURL = URL(url)
 
         val reqParam = URLEncoder.encode(json, "UTF-8")
-
+        var code = 0
         with(mURL.openConnection() as HttpURLConnection) {
             // optional default is GET
             requestMethod = "POST"
@@ -229,6 +229,7 @@ class DatabaseModel(context: Context) {
 
             println("URL : $url")
             println("Response Code : $responseCode")
+            code = responseCode
 
             BufferedReader(InputStreamReader(inputStream)).use {
                 val response = StringBuffer()
@@ -241,6 +242,7 @@ class DatabaseModel(context: Context) {
                 println("Response : $response")
             }
         }
+        return code
     }
 
     fun get_server(url:String): String {
