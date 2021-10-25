@@ -189,6 +189,9 @@ class DatabaseModel(context: Context) {
     fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
         val json = Gson().toJson(MR)
         val cat = database.get(category)
+
+        MR.timestamp = (System.currentTimeMillis() / 1000).toInt()
+
         if (cat != null) {
             cat.put(device, MR)
         }
@@ -221,11 +224,11 @@ class DatabaseModel(context: Context) {
     }
 
 
-    fun post_server(url:String, json:String) {
+    fun post_server(url:String, json:String) : Int {
         val mURL = URL(url)
 
         val reqParam = URLEncoder.encode(json, "UTF-8")
-
+        var code = 0
         with(mURL.openConnection() as HttpURLConnection) {
             // optional default is GET
             requestMethod = "POST"
@@ -236,6 +239,7 @@ class DatabaseModel(context: Context) {
 
             println("URL : $url")
             println("Response Code : $responseCode")
+            code = responseCode
 
             BufferedReader(InputStreamReader(inputStream)).use {
                 val response = StringBuffer()
@@ -248,7 +252,7 @@ class DatabaseModel(context: Context) {
                 println("Response : $response")
             }
         }
-
+        return code
     }
 
     fun get_server(url:String): String {
@@ -264,5 +268,14 @@ class DatabaseModel(context: Context) {
         return net != null
     }
 
+    /**
+     * Update DB with backendDB
+     */
+    fun updateDB() {
+        val newDB = get_server("$serverURL/DB/")
+        val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+        val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(newDB, hashMapType)
+        this.database = readDB
+    }
 }
 
