@@ -10,9 +10,9 @@
     <color name="screenBackground">#2196F3</color>
     <color name="buttonBackground">#BBDEFB</color>
     <color name="screenBackground2">#26C6DA</color>
-    <color name="blue_neutral">#9CC0E7</color>
+    <color name="anchor_navy">#344A5F</color>
     <color name="grey_neutral">#EEEEEE</color>
-    <color name="white_neutral">#F9F8F0</color>
+    <color name="slate_grey">#F0F1F2</color>
     <color name="tan_neutral">#FAEACB</color>
     <color name="pink_neutral">#F7DBD7</color>
     <color name="brown_neutral">#5C4327</color>
