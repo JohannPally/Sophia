@@ -279,6 +279,10 @@ class DatabaseModel(context: Context) {
             val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
                 Gson().fromJson(newDB, hashMapType)
             this.database = readDB
+
+            val fullDBJson = Gson().toJson(database)
+            println("SAVING Web to FILE")
+            saveToLocalFile(fullDBJson);
         }
     }
 }
