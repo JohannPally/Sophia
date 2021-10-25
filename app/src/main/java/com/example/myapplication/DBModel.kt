@@ -196,6 +196,9 @@ class DatabaseModel(context: Context) {
     fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
         val json = Gson().toJson(MR)
         val cat = database.get(category)
+
+        MR.timestamp = (System.currentTimeMillis() / 1000).toInt()
+
         if (cat != null) {
             cat.put(device, MR)
         }
