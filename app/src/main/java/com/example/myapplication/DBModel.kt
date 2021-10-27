@@ -260,13 +260,16 @@ class DatabaseModel(context: Context) {
 
     fun get_server(url:String): String {
         Log.i("url", url)
-        var text = StringBuffer()
         val urlm = URL(url)
+
         Log.i("urlm", urlm.toString())
+        val text1 = urlm.readText()
+        Log.i("text1", text1)
+        var text = StringBuffer()
         with(urlm.openConnection() as HttpURLConnection) {
             requestMethod = "GET"  // optional default is GET
 
-            println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
+            Log.i("test1","\nSent 'GET' request to URL : $url; Response Code : $responseCode")
 
             inputStream.bufferedReader().use {
                 val response = StringBuffer()
