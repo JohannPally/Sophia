@@ -7,7 +7,6 @@ import java.io.*
 import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
-import java.net.URLEncoder
 
 import android.net.ConnectivityManager
 import android.os.Build
@@ -25,7 +24,7 @@ private val serverURL:String = "http://10.0.2.2:4567"
 class DatabaseModel(context: Context) {
 
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
-    val context: Context = context;
+    val context: Context = context
     var cm : ConnectivityManager
     var logs = arrayListOf<Pair<String, String>>()
     init {
@@ -79,7 +78,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 0" +
                     "    },\n" +
                     "    \"Syringes\": {\n" +
@@ -88,7 +87,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 1" +
                     "    },\n" +
                     "    \"Blood Pressure Cuffs\": {\n" +
@@ -97,7 +96,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 1" +
                     "    }\n" +
                     "  },\n" +
@@ -108,7 +107,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 1" +
                     "    },\n" +
                     "    \"Pulse Oximeters\": {\n" +
@@ -117,7 +116,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 0" +
                     "    }\n" +
                     "  },\n" +
@@ -128,7 +127,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 2" +
                     "    },\n" +
                     "    \"Defibrillators\": {\n" +
@@ -137,7 +136,7 @@ class DatabaseModel(context: Context) {
                     "      \"serviceProvider\": \"MedTech\",\n" +
                     "      \"serviceEngineeringCode\": \"504\",\n" +
                     "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dolar...\",\n" +
+                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
                     "      \"status\": 2" +
                     "    }\n" +
                     "  }\n" +
@@ -199,7 +198,7 @@ class DatabaseModel(context: Context) {
 
         val fullDBJson = Gson().toJson(database)
         println("SAVING FILE")
-        saveToLocalFile(fullDBJson);
+        saveToLocalFile(fullDBJson)
 
         val url = serverURL + "/DB/" + category + "/" + device +"/"
 //        post_server(url, json)
@@ -207,14 +206,14 @@ class DatabaseModel(context: Context) {
     }
 
 
-//==============================BACKEND FXNS===============================================
+//==============================BACKEND Functions ===============================================
     fun logging(url: String, json: String) {
         logs.add(Pair(url, json))
         sync()
     }
 
     fun sync() {
-        Thread(Runnable {
+        Thread {
             while (isOnline() && logs.size > 0) {
                 var log = logs.removeAt(0);
                 var response = post_server(log.first, log.second)
@@ -223,7 +222,7 @@ class DatabaseModel(context: Context) {
                     break
                 }
             }
-        }).start()
+        }.start()
     }
 
 
@@ -264,13 +263,13 @@ class DatabaseModel(context: Context) {
 
     fun get_server(url:String): String {
         Log.i("url", url)
-        val urlm = URL(url)
+        val URLm = URL(url)
 
-        Log.i("urlm", urlm.toString())
-        val text1 = urlm.readText()
+        Log.i("URLm", URLm.toString())
+        val text1 = URLm.readText()
         Log.i("text1", text1)
         //var text = StringBuffer()
-        //with(urlm.openConnection() as HttpURLConnection) {
+        //with(URLm.openConnection() as HttpURLConnection) {
         //    requestMethod = "GET"  // optional default is GET
 //
         //    Log.i("test1","\nSent 'GET' request to URL : $url; Response Code : $responseCode")
@@ -287,7 +286,7 @@ class DatabaseModel(context: Context) {
         //        text = response
         //    }
         //}
-        Log.i("responce:", text1.toString())
+        Log.i("response:", text1.toString())
         return text1
     }
 
@@ -305,18 +304,19 @@ class DatabaseModel(context: Context) {
      */
     fun updateDB() {
         if (isOnline()) {
-            Thread(Runnable {
+            Thread {
                 val newDB = get_server("$serverURL/DB/")
                 val hashMapType: Type =
-                    object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+                    object :
+                        TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
                 val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
                     Gson().fromJson(newDB, hashMapType)
                 this.database = readDB
 
                 val fullDBJson = Gson().toJson(database)
                 println("SAVING Web to FILE")
-                saveToLocalFile(fullDBJson);
-            }).start()
+                saveToLocalFile(fullDBJson)
+            }.start()
         }
     }
 }
