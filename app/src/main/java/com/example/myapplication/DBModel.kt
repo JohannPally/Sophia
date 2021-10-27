@@ -11,6 +11,7 @@ import java.net.URL
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
+import java.net.InetAddress
 
 private var filename: String = "database.json"
 private val serverURL:String = "http://10.0.2.2:4567"
@@ -227,20 +228,29 @@ class DatabaseModel(context: Context) {
 
     fun post_server(url:String, json:String) : Int {
         //val url2 = url.replace(" ", "_")
-        //Log.i("postServer0:",url2)
+        Log.i("postServer0:",url)
         val mURL = URL(url)
-        //Log.i("postServer0.5:",mURL.toString())
+        Log.i("postServer0.5:",mURL.toString())
         //val reqParam = URLEncoder.encode(json, "ascii")
         val reqParam = json
         var code:Int
         Log.i("postServer1:",json)
-        with(mURL.openConnection() as HttpURLConnection) {
-            // optional default is GET
-            requestMethod = "POST"
 
-            val wr = OutputStreamWriter(getOutputStream())
+        var urlc:HttpURLConnection = mURL.openConnection() as HttpURLConnection
+        try {
+            urlc.connectTimeout = (10*1000)
+            urlc.requestMethod = "POST"
+            val wr = OutputStreamWriter(urlc.getOutputStream())
             wr.write(reqParam)
             wr.flush()
+            urlc.connect()
+            Log.i("postServer1.5:",urlc.responseCode.toString())
+
+        } catch (e: IOException) {
+            Log.i("postServer1.5:","404")
+            return 404
+        }
+        with(urlc) {
 
             println("URL : $url")
             println("Response Code : $responseCode")
