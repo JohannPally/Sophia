@@ -228,10 +228,10 @@ class DatabaseModel(context: Context) {
 
 
     fun post_server(url:String, json:String) : Int {
-        val url2 = url.replace(" ", "_")
-        Log.i("postServer0:",url2)
-        val mURL = URL(url2)
-        Log.i("postServer0.5:",mURL.toString())
+        //val url2 = url.replace(" ", "_")
+        //Log.i("postServer0:",url2)
+        val mURL = URL(url)
+        //Log.i("postServer0.5:",mURL.toString())
         //val reqParam = URLEncoder.encode(json, "ascii")
         val reqParam = json
         var code = 0
