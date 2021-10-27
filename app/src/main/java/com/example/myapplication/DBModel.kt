@@ -38,7 +38,7 @@ class DatabaseModel(context: Context) {
 
     private fun saveToLocalFile(jsonOutput: String) {
         println("DIR: " + context.filesDir)
-        val file = File(context.filesDir, "database.json")
+        val file = File(context.filesDir, filename)
         val fileWriter = FileWriter(file)
         val bufferedWriter = BufferedWriter(fileWriter)
         bufferedWriter.write(jsonOutput)
@@ -47,7 +47,7 @@ class DatabaseModel(context: Context) {
 
     private fun createFromFile(context: Context) {
         try {
-            val file = File(context.filesDir, "database.json")
+            val file = File(context.filesDir, filename)
 //            val file = File( "app/java/com/example/myapplication/exDB.json")
             val fileReader = FileReader(file)
 
@@ -183,7 +183,6 @@ class DatabaseModel(context: Context) {
         } else {
             error("device info L")
         }
-        return null
     }
 
     fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
@@ -215,8 +214,8 @@ class DatabaseModel(context: Context) {
     fun sync() {
         Thread {
             while (isOnline() && logs.size > 0) {
-                var log = logs.removeAt(0);
-                var response = post_server(log.first, log.second)
+                val log = logs.removeAt(0)
+                val response = post_server(log.first, log.second)
                 if (response != 200) {
                     logs.add(0, log)
                     break
@@ -233,7 +232,7 @@ class DatabaseModel(context: Context) {
         //Log.i("postServer0.5:",mURL.toString())
         //val reqParam = URLEncoder.encode(json, "ascii")
         val reqParam = json
-        var code = 0
+        var code:Int
         Log.i("postServer1:",json)
         with(mURL.openConnection() as HttpURLConnection) {
             // optional default is GET
@@ -286,7 +285,7 @@ class DatabaseModel(context: Context) {
         //        text = response
         //    }
         //}
-        Log.i("response:", text1.toString())
+        Log.i("response:", text1)
         return text1
     }
 
