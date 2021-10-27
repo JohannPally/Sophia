@@ -11,6 +11,7 @@ import java.net.URLEncoder
 
 import android.net.ConnectivityManager
 import android.os.Build
+import android.util.Log
 
 
 private var filename: String = "database.json"
@@ -256,6 +257,7 @@ class DatabaseModel(context: Context) {
     }
 
     fun get_server(url:String): String {
+        Log.i("url", url)
         return URL(url).readText()
     }
 

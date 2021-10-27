@@ -51,5 +51,9 @@ class DBController(context: Context) {
         model.fragment_set(category = dev.first, device = dev.second, newObj);
     }
 
+    fun sync_updateDB(){
+        model.sync()
+        model.updateDB()
+    }
 
 }

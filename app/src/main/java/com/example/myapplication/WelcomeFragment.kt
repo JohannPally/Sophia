@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.databinding.FragmentWelcomeScreenBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class WelcomeFragment: Fragment() {
     private var _binding: FragmentWelcomeScreenBinding? = null
@@ -50,6 +51,10 @@ class WelcomeFragment: Fragment() {
             navMod.WtoL1(findNavController())
         }
 
+        val syncButton = view.findViewById<FloatingActionButton>(R.id.syncButton)
+        syncButton.setOnClickListener() {
+            dbCtrl?.sync_updateDB()
+        }
 
     }
 }
