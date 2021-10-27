@@ -201,7 +201,7 @@ class DatabaseModel(context: Context) {
         println("SAVING FILE")
         saveToLocalFile(fullDBJson);
 
-        val url = serverURL + "/DB/" + category + "/" + device
+        val url = serverURL + "/DB/" + category + "/" + device +"/"
 //        post_server(url, json)
         logging(url, json)
     }
@@ -228,10 +228,14 @@ class DatabaseModel(context: Context) {
 
 
     fun post_server(url:String, json:String) : Int {
-        val mURL = URL(url)
-
-        val reqParam = URLEncoder.encode(json, "UTF-8")
+        val url2 = url.replace(" ", "_")
+        Log.i("postServer0:",url2)
+        val mURL = URL(url2)
+        Log.i("postServer0.5:",mURL.toString())
+        //val reqParam = URLEncoder.encode(json, "ascii")
+        val reqParam = json
         var code = 0
+        Log.i("postServer1:",json)
         with(mURL.openConnection() as HttpURLConnection) {
             // optional default is GET
             requestMethod = "POST"
@@ -240,7 +244,7 @@ class DatabaseModel(context: Context) {
             wr.write(reqParam)
             wr.flush()
 
-            println("URL : $url")
+            println("URL : $url2")
             println("Response Code : $responseCode")
             code = responseCode
 
