@@ -214,14 +214,16 @@ class DatabaseModel(context: Context) {
     }
 
     fun sync() {
-        while (isOnline() && logs.size > 0) {
-            var log = logs.removeAt(0);
-            var response = post_server(log.first, log.second)
-            if (response != 200) {
-                logs.add(0, log)
-                break
+        Thread(Runnable {
+            while (isOnline() && logs.size > 0) {
+                var log = logs.removeAt(0);
+                var response = post_server(log.first, log.second)
+                if (response != 200) {
+                    logs.add(0, log)
+                    break
+                }
             }
-        }
+        }).start()
     }
 
 
@@ -296,16 +298,18 @@ class DatabaseModel(context: Context) {
      */
     fun updateDB() {
         if (isOnline()) {
-            val newDB = get_server("$serverURL/DB/")
-            val hashMapType: Type =
-                object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
-            val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
-                Gson().fromJson(newDB, hashMapType)
-            this.database = readDB
+            Thread(Runnable {
+                val newDB = get_server("$serverURL/DB/")
+                val hashMapType: Type =
+                    object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+                val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
+                    Gson().fromJson(newDB, hashMapType)
+                this.database = readDB
 
-            val fullDBJson = Gson().toJson(database)
-            println("SAVING Web to FILE")
-            saveToLocalFile(fullDBJson);
+                val fullDBJson = Gson().toJson(database)
+                println("SAVING Web to FILE")
+                saveToLocalFile(fullDBJson);
+            }).start()
         }
     }
 }
