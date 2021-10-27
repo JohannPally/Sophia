@@ -265,26 +265,26 @@ class DatabaseModel(context: Context) {
         Log.i("urlm", urlm.toString())
         val text1 = urlm.readText()
         Log.i("text1", text1)
-        var text = StringBuffer()
-        with(urlm.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"  // optional default is GET
-
-            Log.i("test1","\nSent 'GET' request to URL : $url; Response Code : $responseCode")
-
-            inputStream.bufferedReader().use {
-                val response = StringBuffer()
-
-                var inputLine = it.readLine()
-                while (inputLine != null) {
-                    println(inputLine)
-                    response.append(inputLine)
-                    inputLine = it.readLine()
-                }
-                text = response
-            }
-        }
-        Log.i("responce:", text.toString())
-        return text.toString()
+        //var text = StringBuffer()
+        //with(urlm.openConnection() as HttpURLConnection) {
+        //    requestMethod = "GET"  // optional default is GET
+//
+        //    Log.i("test1","\nSent 'GET' request to URL : $url; Response Code : $responseCode")
+//
+        //    inputStream.bufferedReader().use {
+        //        val response = StringBuffer()
+//
+        //        var inputLine = it.readLine()
+        //        while (inputLine != null) {
+        //            println(inputLine)
+        //            response.append(inputLine)
+        //            inputLine = it.readLine()
+        //        }
+        //        text = response
+        //    }
+        //}
+        Log.i("responce:", text1.toString())
+        return text1
     }
 
     fun isOnline(): Boolean {
