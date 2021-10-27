@@ -244,7 +244,7 @@ class DatabaseModel(context: Context) {
             wr.write(reqParam)
             wr.flush()
 
-            println("URL : $url2")
+            println("URL : $url")
             println("Response Code : $responseCode")
             code = responseCode
 
