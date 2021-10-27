@@ -13,9 +13,8 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
 
-
 private var filename: String = "database.json"
-private val serverURL:String = "10.0.2.2:4567"
+private val serverURL:String = "http://10.0.2.2:4567"
 
 //TODO NOTES
 //1. we're only going to have a single file with all the devices and categories
@@ -24,6 +23,7 @@ private val serverURL:String = "10.0.2.2:4567"
 //4. Taking care of time logging actions
 
 class DatabaseModel(context: Context) {
+
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
     val context: Context = context;
     var cm : ConnectivityManager
@@ -258,7 +258,28 @@ class DatabaseModel(context: Context) {
 
     fun get_server(url:String): String {
         Log.i("url", url)
-        return URL(url).readText()
+        var text = StringBuffer()
+        val urlm = URL(url)
+        Log.i("urlm", urlm.toString())
+        with(urlm.openConnection() as HttpURLConnection) {
+            requestMethod = "GET"  // optional default is GET
+
+            println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
+
+            inputStream.bufferedReader().use {
+                val response = StringBuffer()
+
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    println(inputLine)
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+                text = response
+            }
+        }
+        Log.i("responce:", text.toString())
+        return text.toString()
     }
 
     fun isOnline(): Boolean {
