@@ -12,7 +12,7 @@ class DBController(context: Context) {
     init {
         val secondsPerUpdate:Long = 60
         val countdown: Long = 1000 * secondsPerUpdate;
-        val timer: Timer = Timer()
+        val timer: Timer = Timer("Auto_Sync")
         timer.scheduleAtFixedRate(
             object : TimerTask() {
 
