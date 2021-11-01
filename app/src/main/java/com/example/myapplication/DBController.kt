@@ -2,11 +2,27 @@ package com.example.myapplication
 
 import android.content.Context
 import com.google.gson.JsonObject
+import java.util.*
 
 class DBController(context: Context) {
 
     // Instantiate a DB
     var model:DatabaseModel = DatabaseModel(context)
+
+    init {
+        val secondsPerUpdate:Long = 60
+        val countdown: Long = 1000 * secondsPerUpdate;
+        val timer: Timer = Timer()
+        timer.scheduleAtFixedRate(
+            object : TimerTask() {
+
+                override fun run() {
+                    sync_updateDB()
+                }
+
+            },0, countdown
+        )
+    }
 
     //L1
     fun getCats(): Set<String>{
