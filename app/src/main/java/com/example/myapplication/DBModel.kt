@@ -273,9 +273,9 @@ class DatabaseModel(context: Context) {
 
     fun get2_server(url:String) : String {
         //val url2 = url.replace(" ", "_")
-        Log.i("postServer0:",url)
+        Log.i("Get Server0:",url)
         val mURL = URL(url)
-        Log.i("postServer0.5:",mURL.toString())
+        Log.i("Get Server0.5:",mURL.toString())
         //val reqParam = URLEncoder.encode(json, "ascii")
         val out = StringBuffer()
         var code:Int
@@ -285,10 +285,10 @@ class DatabaseModel(context: Context) {
             urlc.connectTimeout = (10*1000)
             urlc.requestMethod = "GET"
             urlc.connect()
-            Log.i("postServer1.5:",urlc.responseCode.toString())
+            Log.i("Get Server1.5:",urlc.responseCode.toString())
 
         } catch (e: IOException) {
-            Log.i("postServer1.5:","404")
+            Log.i("Get Server1.5:","404")
             return ""
         }
         with(urlc) {
@@ -355,16 +355,18 @@ class DatabaseModel(context: Context) {
         if (isOnline()) {
             Thread {
                 val newDB = get_server("$serverURL/DB/")
-                val hashMapType: Type =
-                    object :
-                        TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
-                val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
-                    Gson().fromJson(newDB, hashMapType)
-                this.database = readDB
+                if (newDB.length != 0) {
+                    val hashMapType: Type =
+                        object :
+                            TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+                    val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> =
+                        Gson().fromJson(newDB, hashMapType)
+                    this.database = readDB
 
-                val fullDBJson = Gson().toJson(database)
-                println("SAVING Web to FILE")
-                saveToLocalFile(fullDBJson)
+                    val fullDBJson = Gson().toJson(database)
+                    println("SAVING Web to FILE")
+                    saveToLocalFile(fullDBJson)
+                }
             }.start()
         }
     }
