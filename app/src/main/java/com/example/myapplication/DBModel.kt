@@ -270,7 +270,47 @@ class DatabaseModel(context: Context) {
         return code
     }
 
+
+    fun get2_server(url:String) : String {
+        //val url2 = url.replace(" ", "_")
+        Log.i("postServer0:",url)
+        val mURL = URL(url)
+        Log.i("postServer0.5:",mURL.toString())
+        //val reqParam = URLEncoder.encode(json, "ascii")
+        val out = StringBuffer()
+        var code:Int
+
+        var urlc:HttpURLConnection = mURL.openConnection() as HttpURLConnection
+        try {
+            urlc.connectTimeout = (10*1000)
+            urlc.requestMethod = "GET"
+            urlc.connect()
+            Log.i("postServer1.5:",urlc.responseCode.toString())
+
+        } catch (e: IOException) {
+            Log.i("postServer1.5:","404")
+            return ""
+        }
+        with(urlc) {
+
+            println("URL : $url")
+            println("Response Code : $responseCode")
+            code = responseCode
+
+            BufferedReader(InputStreamReader(inputStream)).use {
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    out.append(inputLine)
+                    inputLine = it.readLine()
+                }
+                println("Response : $out")
+            }
+        }
+        return out.toString();
+    }
+
     fun get_server(url:String): String {
+        return get2_server(url);
         Log.i("url", url)
         val URLm = URL(url)
 
