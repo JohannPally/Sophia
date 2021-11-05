@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextWatcher
 import android.util.Log
@@ -13,9 +15,12 @@ import androidx.fragment.app.activityViewModels
 import com.example.myapplication.databinding.FragmentL3Binding
 import androidx.navigation.fragment.navArgs
 import android.text.Editable
-
-
-
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
+import com.google.zxing.qrcode.QRCodeWriter
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 
 class L3Fragment : Fragment() {
@@ -159,6 +164,49 @@ class L3Fragment : Fragment() {
         if (wonTV.text.toString().equals("")) {
             //TODO: fill out helper function in controller
 //            wonTV.setText(ctrl.makeWON());
+        }
+    }
+
+    fun getQrCodeBitmap(Location: String, Device: String): File? {
+        val qrCodeContent = "$Location : $Device"
+        val hints = hashMapOf<EncodeHintType, Int>().also {
+            it[EncodeHintType.MARGIN] = 1
+        } // Make the QR code buffer border narrower
+        val size = 512 //pixels
+        val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
+        val myQRCode = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            for (x in 0 until size) {
+                for (y in 0 until size) {
+                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
+                }
+            }
+        }
+
+        return bitmapToFile(myQRCode, "testQR")
+    }
+
+    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
+        //create a file to write bitmap data
+        var file: File? = null
+        return try {
+
+            val file = File(context?.filesDir, fileNameToSave)
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+            val bitmapdata = bos.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file // it will return null
         }
     }
 
