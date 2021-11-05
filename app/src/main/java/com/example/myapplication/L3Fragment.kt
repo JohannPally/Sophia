@@ -167,6 +167,7 @@ class L3Fragment : Fragment() {
         }
     }
 
+    // This function genetrates a bitmap based on the data provided
     fun getQrCodeBitmap(Location: String, Device: String): File? {
         val qrCodeContent = "$Location : $Device"
         val hints = hashMapOf<EncodeHintType, Int>().also {
@@ -185,6 +186,7 @@ class L3Fragment : Fragment() {
         return bitmapToFile(myQRCode, "testQR")
     }
 
+    // This function saves the bitmap to local file storage
     private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
         //create a file to write bitmap data
         var file: File? = null
