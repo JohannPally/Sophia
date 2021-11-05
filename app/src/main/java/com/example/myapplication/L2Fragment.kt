@@ -65,6 +65,11 @@ class L2Fragment : Fragment() {
         L2toQRButton.setOnClickListener() {
             navMod.L2toQR(findNavController())
         }
+
+        val addDevButton = view.findViewById<FloatingActionButton>(R.id.l2addDeviceButton)
+        addDevButton.setOnClickListener() {
+            navMod.L2toAddDev(findNavController())
+        }
     }
 
     override fun onDestroyView() {

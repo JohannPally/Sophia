@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_L2Fragment_to_QRFragment"
             app:destination="@id/QRFragment" />
+        <action
+            android:id="@+id/action_L2Fragment_to_addDeviceFragment"
+            app:destination="@id/addDeviceFragment" />
     </fragment>
     <fragment
         android:id="@+id/L3Fragment"
@@ -70,5 +73,19 @@
         <action
             android:id="@+id/action_QRFragment_to_L3Fragment"
             app:destination="@id/L3Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDeviceFragment"
+        android:name="com.example.myapplication.AddDeviceFragment"
+        android:label="Add a New Device"
+        tools:layout="@layout/fragment_add_device" >
+        <action
+            android:id="@+id/action_addDeviceFragment_to_L3Fragment"
+            app:destination="@id/L3Fragment" />
+        <action
+            android:id="@+id/action_addDeviceFragment_to_L2Fragment"
+            app:destination="@id/L2Fragment" />
+        <argument android:name="categoryPassed"
+            app:argType="string" />
     </fragment>
 </navigation>

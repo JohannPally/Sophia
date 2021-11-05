@@ -25,5 +25,6 @@
     <string name="l3count_string">Count:</string>
     <string name="welcome_String">RICE 360 CMMS</string>
     <string name="welcome_fragment_label">Welcome</string>
+    <string name="saveButtonText">Save</string>
 
 </resources>

@@ -53,5 +53,20 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
+    fun L2toAddDev(navController: NavController) {
+        val action = L2FragmentDirections.actionL2FragmentToAddDeviceFragment()
+        navController.navigate(action)
+    }
+
+    /**
+     * Function that handles the navigation from L2 fragment to L3 fragment
+     * Inputs: param - The data to pass onto L3 fragment
+     *         navController - The reference to the navigation controller present in the fragment
+     * Outputs: None
+     */
+    fun ADtoL3(category: String, device: String, navController: NavController) {
+        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToL3Fragment(category, device)
+        navController.navigate(action)
+    }
 
 }
