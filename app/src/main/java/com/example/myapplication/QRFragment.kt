@@ -22,6 +22,16 @@ import com.example.myapplication.databinding.FragmentQrBinding
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
+import java.io.FileOutputStream
+
+import java.io.ByteArrayOutputStream
+
+import java.io.File
+
+import android.os.Environment
+
+
+
 
 class QRFragment : Fragment() {
     private var _binding: FragmentQrBinding? = null
@@ -61,6 +71,7 @@ class QRFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(context as Context , android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(activity as Activity, arrayOf(android.Manifest.permission.CAMERA), 123)
         } else {
+            getQrCodeBitmap("TestLoc", "TestCat")
             startScanning()
         }
 
@@ -124,17 +135,46 @@ class QRFragment : Fragment() {
      * This function generates a QR code bitmap given the Location and Device information
      * passed in as a string.
      */
-    fun getQrCodeBitmap(Location: String, Device: String): Bitmap {
+    fun getQrCodeBitmap(Location: String, Device: String): File? {
         val qrCodeContent = "$Location : $Device"
-        val hints = hashMapOf<EncodeHintType, Int>().also { it[EncodeHintType.MARGIN] = 1 } // Make the QR code buffer border narrower
+        val hints = hashMapOf<EncodeHintType, Int>().also {
+            it[EncodeHintType.MARGIN] = 1
+        } // Make the QR code buffer border narrower
         val size = 512 //pixels
         val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
-        return Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+        val myQRCode = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
             for (x in 0 until size) {
                 for (y in 0 until size) {
                     it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
                 }
             }
+        }
+
+        return bitmapToFile(myQRCode, "testQR")
+    }
+
+    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
+        //create a file to write bitmap data
+        var file: File? = null
+        return try {
+
+            val file = File(context?.filesDir, fileNameToSave)
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+            val bitmapdata = bos.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file // it will return null
         }
     }
 
