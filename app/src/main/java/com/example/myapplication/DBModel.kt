@@ -205,6 +205,20 @@ class DatabaseModel(context: Context) {
         logging(url, json)
     }
 
+    fun fragment_delete(category: String = "", device: String = "") {
+        val cat = database.get(category)
+
+        if (cat != null) {
+            cat.remove(device)
+        }
+
+        delete_server("$serverURL/DB/$category/$device")
+
+        val fullDBJson = Gson().toJson(database)
+        println("SAVING FILE")
+        saveToLocalFile(fullDBJson)
+    }
+
 
 //==============================BACKEND Functions ===============================================
     fun logging(url: String, json: String) {
@@ -270,6 +284,44 @@ class DatabaseModel(context: Context) {
         return code
     }
 
+
+    fun delete_server(url:String) : String {
+        //val url2 = url.replace(" ", "_")
+        Log.i("Delete Server0:",url)
+        val mURL = URL(url)
+        Log.i("Delete Server0.5:",mURL.toString())
+        //val reqParam = URLEncoder.encode(json, "ascii")
+        val out = StringBuffer()
+        var code:Int
+
+        var urlc:HttpURLConnection = mURL.openConnection() as HttpURLConnection
+        try {
+            urlc.connectTimeout = (10*1000)
+            urlc.requestMethod = "DELETE"
+            urlc.connect()
+            Log.i("Delete Server1.5:",urlc.responseCode.toString())
+
+        } catch (e: IOException) {
+            Log.i("Delete Server1.5:","404")
+            return ""
+        }
+        with(urlc) {
+
+            println("URL : $url")
+            println("Response Code : $responseCode")
+            code = responseCode
+
+            BufferedReader(InputStreamReader(inputStream)).use {
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    out.append(inputLine)
+                    inputLine = it.readLine()
+                }
+                println("Response : $out")
+            }
+        }
+        return out.toString();
+    }
 
     fun get2_server(url:String) : String {
         //val url2 = url.replace(" ", "_")

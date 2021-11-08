@@ -67,6 +67,18 @@ class DBController(context: Context) {
         model.fragment_set(category = dev.first, device = dev.second, newObj);
     }
 
+    fun addNewDevice(dev:Pair<String, String>, workOrderNum: String, serviceProvider: String, serviceEngineeringCode: String, faultCode: String, ipmProcedure: String, status: String) {
+        val inventoryNum = dev.first.substring(0, 2) + dev.second.substring(0, 2) + String.format("%04d", (1..9999).random());
+
+        // Timestamp will be overwritten in fragment_set
+        var newObj = MaintenanceRecord(inventoryNum, workOrderNum, serviceProvider, serviceEngineeringCode, faultCode, ipmProcedure, status, timestamp = 0);
+        model.fragment_set(category = dev.first, device = dev.second, newObj);
+    }
+
+    fun removeDevice(dev:Pair<String, String>) {
+        model.fragment_delete(category = dev.first, device = dev.second);
+    }
+
     fun sync_updateDB(){
         model.sync()
         model.updateDB()
