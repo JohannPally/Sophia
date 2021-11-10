@@ -11,9 +11,9 @@ import java.net.URL
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
-import java.net.InetAddress
 
-private var filename: String = "database.json"
+private var dbFilename: String = "database.json"
+private var idFilename: String = "id.json"
 private val serverURL:String = "http://10.0.2.2:4567"
 
 //TODO NOTES
@@ -25,19 +25,20 @@ private val serverURL:String = "http://10.0.2.2:4567"
 class DatabaseModel(context: Context) {
 
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
+    lateinit var idData : HashMap<String, QrCodeIdData>
     val context: Context = context
     var cm : ConnectivityManager
     var logs = arrayListOf<Pair<String, String>>()
     init {
-        createFromFile(context)
         this.cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        createBothFromFile(context)
     }
 
     /*
     Startup and shutdown file operations
      */
 
-    private fun saveToLocalFile(jsonOutput: String) {
+    private fun saveToLocalFile(jsonOutput: String, filename: String) {
         println("DIR: " + context.filesDir)
         val file = File(context.filesDir, filename)
         val fileWriter = FileWriter(file)
@@ -46,9 +47,9 @@ class DatabaseModel(context: Context) {
         bufferedWriter.close()
     }
 
-    private fun createFromFile(context: Context) {
+    private fun createBothFromFile(context: Context) {
         try {
-            val file = File(context.filesDir, filename)
+            val file = File(context.filesDir, dbFilename)
 //            val file = File( "app/java/com/example/myapplication/exDB.json")
             val fileReader = FileReader(file)
 
@@ -61,97 +62,76 @@ class DatabaseModel(context: Context) {
             bufferedReader.close()
 
             val jsonInput = stringBuilder.toString()
-            println("DB: $jsonInput")
             val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
             val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(jsonInput, hashMapType)
             this.database = readDB
-            println("DB2: ${this.database.keys}")
-            println("DB3: ${this.database["Surgical ICU"]?.get("Surgical Masks")}")
-            println("DB4: ${this.database["Surgical ICU"]?.get("Surgical Masks")?.inventoryNum}")
+        } catch (e: FileNotFoundException) {
+            if (isOnline()) {
+                updateDB();
+            } else {
+                saveToLocalFile("{}", dbFilename)
+                return createBothFromFile(context)
+            }
+        }
+        try {
+            val idFile = File(context.filesDir, idFilename)
+            val idFileReader = FileReader(idFile)
+
+            val idBufferedReader = BufferedReader(idFileReader)
+            val idStringBuilder = StringBuilder()
+            val idAllLines: List<String> = idBufferedReader.readLines()
+            for (line in idAllLines) {
+                idStringBuilder.append(line).append("\n")
+            }
+            idBufferedReader.close()
+
+            val idJsonInput = idStringBuilder.toString()
+            val idHashMapType: Type = object : TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
+            val readIds: HashMap<String, QrCodeIdData> = Gson().fromJson(idJsonInput, idHashMapType)
+            this.idData = readIds
 
             //return readDB;
         } catch (e: FileNotFoundException) {
-            saveToLocalFile("{\n" +
-                    "  \"Surgical ICU\": {\n" +
-                    "    \"Surgical Masks\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 0" +
-                    "    },\n" +
-                    "    \"Syringes\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 1" +
-                    "    },\n" +
-                    "    \"Blood Pressure Cuffs\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 1" +
-                    "    }\n" +
-                    "  },\n" +
-                    "  \"Neonatal Ward\": {\n" +
-                    "    \"Incubators\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 1" +
-                    "    },\n" +
-                    "    \"Pulse Oximeters\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 0" +
-                    "    }\n" +
-                    "  },\n" +
-                    "  \"Cardiology Ward\": {\n" +
-                    "    \"EKG Machines\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 2" +
-                    "    },\n" +
-                    "    \"Defibrillators\": {\n" +
-                    "      \"inventoryNum\": \"1234\",\n" +
-                    "      \"workOrderNum\": \"64\",\n" +
-                    "      \"serviceProvider\": \"MedTech\",\n" +
-                    "      \"serviceEngineeringCode\": \"504\",\n" +
-                    "      \"faultCode\": \"300\",\n" +
-                    "      \"ipmProcedure\": \"Lorem Ipsum sit dollar...\",\n" +
-                    "      \"status\": 2" +
-                    "    }\n" +
-                    "  }\n" +
-                    "}")
-            //return database
-            return createFromFile(context)
+            if (isOnline()) {
+                updateIDs();
+            } else {
+                saveToLocalFile("{}", idFilename)
+                return createBothFromFile(context)
+            }
         }
     }
 
     /*
-    Getters and Setters for our DatabaseModel class
+    Getters and Setters for our DatabaseModel class relating to the ID databasae
      */
 
-    fun fragment_get(category: String = "", device: String = ""): Any? {
+    fun fragment_get_id(id: String): QrCodeIdData {
+        val idValue = idData.get(id)
+        if (idValue != null) {
+            return idValue
+        } else {
+            error("Error fetching data from ID $id")
+        }
+    }
+
+
+    fun fragment_set_id(id: String, category: String = "", device: String = "") {
+        val qrIdData = QrCodeIdData(category, device)
+
+        idData.put(id, qrIdData)
+
+        val fullIdJson = Gson().toJson(idData)
+        println("SAVING ID DATA FILE")
+        saveToLocalFile(fullIdJson, idFilename)
+    }
+
+
+
+    /*
+    Getters and Setters for our DatabaseModel class relating to the main Database
+     */
+
+    fun fragment_get_db(category: String = "", device: String = ""): Any? {
         if (category != "") {
             if (device != "") {
                 val catMap = database.get(category)
@@ -186,7 +166,7 @@ class DatabaseModel(context: Context) {
         }
     }
 
-    fun fragment_set(category: String = "", device: String = "", MR: MaintenanceRecord) {
+    fun fragment_set_db(category: String = "", device: String = "", MR: MaintenanceRecord) {
         val json = Gson().toJson(MR)
         val cat = database.get(category)
 
@@ -197,8 +177,8 @@ class DatabaseModel(context: Context) {
         }
 
         val fullDBJson = Gson().toJson(database)
-        println("SAVING FILE")
-        saveToLocalFile(fullDBJson)
+        println("SAVING DB FILE")
+        saveToLocalFile(fullDBJson, dbFilename)
 
         val url = serverURL + "/DB/" + category + "/" + device +"/"
 //        post_server(url, json)
@@ -216,7 +196,7 @@ class DatabaseModel(context: Context) {
 
         val fullDBJson = Gson().toJson(database)
         println("SAVING FILE")
-        saveToLocalFile(fullDBJson)
+        saveToLocalFile(fullDBJson, dbFilename)
     }
 
 
@@ -417,7 +397,30 @@ class DatabaseModel(context: Context) {
 
                     val fullDBJson = Gson().toJson(database)
                     println("SAVING Web to FILE")
-                    saveToLocalFile(fullDBJson)
+                    saveToLocalFile(fullDBJson, dbFilename)
+                }
+            }.start()
+        }
+    }
+
+    /**
+     * Update ID Data with backend IDs
+     */
+    fun updateIDs() {
+        if (isOnline()) {
+            Thread {
+                val newDB = get_server("$serverURL/ID/")
+                if (newDB.length != 0) {
+                    val hashMapType: Type =
+                        object :
+                            TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
+                    val readDB: HashMap<String, QrCodeIdData> =
+                        Gson().fromJson(newDB, hashMapType)
+                    this.idData = readDB
+
+                    val fullIDJson = Gson().toJson(idData)
+                    println("SAVING Web to FILE")
+                    saveToLocalFile(fullIDJson, idFilename)
                 }
             }.start()
         }

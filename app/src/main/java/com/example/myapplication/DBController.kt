@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.content.Context
-import com.google.gson.JsonObject
 import java.util.*
 
 class DBController(context: Context) {
@@ -26,7 +25,7 @@ class DBController(context: Context) {
 
     //L1
     fun getCats(): Set<String>{
-        var categorySet : Set<String>  = model.fragment_get() as Set<String>
+        var categorySet : Set<String>  = model.fragment_get_db() as Set<String>
         return categorySet
     }
 
@@ -46,7 +45,7 @@ class DBController(context: Context) {
     //L2
     // TODO: Return a set of pairs containing status and name rather than just names
     fun getDevs(cat:String): Set<String> {
-        var deviceSet : Set<String>  = model.fragment_get(category = cat) as Set<String>
+        var deviceSet : Set<String>  = model.fragment_get_db(category = cat) as Set<String>
         return deviceSet
     }
 
@@ -57,14 +56,22 @@ class DBController(context: Context) {
     //something to move a device from one category to the other? Sounds like an L3 task
 
     //L3
-    // TODO: Change return type for this function to a DataClass
     fun getInf(dev:Pair<String, String>): MaintenanceRecord {
-        var deviceInfo : MaintenanceRecord  = model.fragment_get(category = dev.first, device = dev.second) as MaintenanceRecord
+        var deviceInfo : MaintenanceRecord  = model.fragment_get_db(category = dev.first, device = dev.second) as MaintenanceRecord
         return deviceInfo;
     }
 
+    fun getInfFromQRId(id:String): MaintenanceRecord {
+        var deviceInfo : QrCodeIdData  = model.fragment_get_id(id)
+        return getInf(Pair(deviceInfo.category, deviceInfo.device));
+    }
+
+    fun addNewDeviceQR(qrCodeId:String, dev:Pair<String, String>) {
+        model.fragment_set_id(qrCodeId, dev.first, dev.second);
+    }
+
     fun editInfo(dev:Pair<String, String>, newObj: MaintenanceRecord) {
-        model.fragment_set(category = dev.first, device = dev.second, newObj);
+        model.fragment_set_db(category = dev.first, device = dev.second, newObj);
     }
 
     fun addNewDevice(dev:Pair<String, String>, workOrderNum: String, serviceProvider: String, serviceEngineeringCode: String, faultCode: String, ipmProcedure: String, status: String) {
@@ -72,7 +79,7 @@ class DBController(context: Context) {
 
         // Timestamp will be overwritten in fragment_set
         var newObj = MaintenanceRecord(inventoryNum, workOrderNum, serviceProvider, serviceEngineeringCode, faultCode, ipmProcedure, status, timestamp = 0);
-        model.fragment_set(category = dev.first, device = dev.second, newObj);
+        model.fragment_set_db(category = dev.first, device = dev.second, newObj);
     }
 
     fun removeDevice(dev:Pair<String, String>) {
