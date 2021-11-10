@@ -70,8 +70,9 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun ADtoQRAssign(cat: String, dev: String, work: String, servProv: String, servEng: String, fault: String, imp: String){
+    fun ADtoQRAssign(cat: String, dev: String, work: String, servProv: String, servEng: String, fault: String, imp: String, navController: NavController){
         val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
+        navController.navigate(action)
     }
 
     /**
@@ -95,12 +96,13 @@ class NavMod : ViewModel() {
 
     //TODO make sure this is right
     fun QRAssigntoL3(category: String, device: String, navController: NavController) {
-        val action = QRAssignIDDirections.actionQRAssignIDToAddDeviceFragment()
+        val action = QRAssignIDFragmentDirections.actionQRAssignIDToAddDeviceFragment()
         navController.navigate(action)
     }
 
-    fun QRAssigntoAD(cat: String, dev: String, inv: String, work: String, servProv: String, servEng: String, fault: String, imp: String){
-        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, invText = inv, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
+    fun QRAssigntoAD(cat: String, dev: String, inv: String, work: String, servProv: String, servEng: String, fault: String, imp: String, navController: NavController){
+        val action = QRAssignIDFragmentDirections.actionQRAssignIDToAddDeviceFragment(categoryPassed = cat, devText = dev, invText = inv, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
+        navController.navigate(action)
     }
 
 }

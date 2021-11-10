@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.budiyev.android.codescanner.*
 import com.budiyev.android.codescanner.CodeScanner
@@ -28,7 +29,7 @@ class QRAssignIDFragment : Fragment() {
 
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
-    val args: QRAssignIDArgs by navArgs()
+    val args: QRAssignIDFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +38,7 @@ class QRAssignIDFragment : Fragment() {
 
         _binding = FragmentQrBinding.inflate(inflater, container, false)
         return binding.root
-
+        Log.v("qrassign","am i here")
     }
 
     //val args: QRFragmentArgs by navArgs()
@@ -101,7 +102,9 @@ class QRAssignIDFragment : Fragment() {
         Log.d("device UUID = " , deviceUUID)
         // TODO send UUID and required info back to add info page
         Log.d("Device Acquired" , deviceUUID)
-        navMod.QRAssigntoAD(cat = args.categoryPassed, dev = args.devText, inv = deviceUUID, work = args.workText, servProv = args.servProvText, servEng = args.servEngText, fault = args.faultText, imp = args.impText)
+        navMod.QRAssigntoAD(cat = args.categoryPassed, dev = args.devText, inv = deviceUUID,
+            work = args.workText, servProv = args.servProvText, servEng = args.servEngText,
+            fault = args.faultText, imp = args.impText, navController = findNavController())
     }
 
     /**

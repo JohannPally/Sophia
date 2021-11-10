@@ -88,76 +88,64 @@
             app:destination="@id/L2Fragment" />
         <argument android:name="categoryPassed"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <action
             android:id="@+id/action_addDeviceFragment_to_QRAssignID"
-            app:destination="@id/QRAssignID" />
+            app:destination="@id/QRAssignIDFragment" />
         <argument
             android:name="devText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <argument
             android:name="invText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <argument
             android:name="workText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <argument
             android:name="servProvText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <argument android:name="servEngText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <argument
             android:name="faultText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue=""/>
         <argument android:name="impText"
             app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue="" />
     </fragment>
     <fragment
-        android:id="@+id/QRAssignID"
-        android:name="com.example.myapplication.QRAssignID"
-        android:label="fragment_q_r_assign_i_d"
-        tools:layout="@layout/fragment_q_r_assign_i_d" >
+        android:id="@+id/QRAssignIDFragment"
+        android:name="com.example.myapplication.QRAssignIDFragment"
+        android:label="fragment_q_r_assign_i_d">
         <action
             android:id="@+id/action_QRAssignID_to_addDeviceFragment"
             app:destination="@id/addDeviceFragment" />
         <argument
             android:name="categoryPassed"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
         <argument
             android:name="devText"
-            app:argType="string"
-            android:defaultValue='""' />
-        <argument
-            android:name="invText"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
         <argument
             android:name="workText"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
         <argument
             android:name="servProvText"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
         <argument
             android:name="servEngText"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
         <argument
             android:name="faultText"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
         <argument
             android:name="impText"
-            app:argType="string"
-            android:defaultValue='""' />
+            app:argType="string" />
     </fragment>
 </navigation>
