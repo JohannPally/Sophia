@@ -70,7 +70,9 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-
+    fun ADtoQRAssign(cat: String, dev: String, work: String, servProv: String, servEng: String, fault: String, imp: String){
+        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
+    }
 
     /**
      * Function that handles the navigation from L2 fragment to L3 fragment
@@ -82,6 +84,23 @@ class NavMod : ViewModel() {
     fun QRSearchtoL3(category: String, device: String, navController: NavController) {
         val action = QRSearchFragmentDirections.actionQRFragmentToL3Fragment(category, device)
         navController.navigate(action)
+    }
+
+    /**
+     * Function that handles the navigation from L2 fragment to L3 fragment
+     * Inputs: param - The data to pass onto L3 fragment
+     *         navController - The reference to the navigation controller present in the fragment
+     * Outputs: None
+     */
+
+    //TODO make sure this is right
+    fun QRAssigntoL3(category: String, device: String, navController: NavController) {
+        val action = QRAssignIDDirections.actionQRAssignIDToAddDeviceFragment()
+        navController.navigate(action)
+    }
+
+    fun QRAssigntoAD(cat: String, dev: String, inv: String, work: String, servProv: String, servEng: String, fault: String, imp: String){
+        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, invText = inv, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
     }
 
 }

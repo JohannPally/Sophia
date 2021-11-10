@@ -99,7 +99,7 @@ class QRAssignIDFragment : Fragment() {
         Log.d("device UUID = " , deviceUUID)
         // TODO send UUID and required info back to add info page
         Log.d("Device Acquired" , deviceUUID)
-        navMod.(catQR, devQR, findNavController())
+        navMod.(findNavController())
     }
 
     /**
