@@ -1,59 +1,130 @@
 package com.example.myapplication
 
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.budiyev.android.codescanner.*
+import com.budiyev.android.codescanner.CodeScanner
+import com.example.myapplication.databinding.FragmentQrBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class QRAssignIDFragment : Fragment() {
+    private var _binding: FragmentQrBinding? = null
+    private val binding get() = _binding!!
+    private var ctrl: DBController ? = null
 
-/**
- * A simple [Fragment] subclass.
- * Use the [QRAssignID.newInstance] factory method to
- * create an instance of this fragment.
- */
-class QRAssignID : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var codeScanner : CodeScanner
+    private lateinit var scannerView: CodeScannerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    // Reference to the front end model that handles navigation from screen to screen
+    private val navMod: NavMod by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_q_r_assign_i_d, container, false)
+
+        _binding = FragmentQrBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment QRAssignID.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            QRAssignID().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    //val args: QRFragmentArgs by navArgs()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var activity = activity as? MainActivity
+        if (activity != null) ctrl = activity.dbctrl;
+        else {
+            println("Failed to cast activity as MainActivity in QR Assign ID Fragment")
+        }
+
+        scannerView = view.findViewById(R.id.scanner_view)
+
+        super.onCreate(savedInstanceState)
+        //setContentView(R.layout.activity_main)
+        if (ContextCompat.checkSelfPermission(context as Context, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(activity as Activity, arrayOf(android.Manifest.permission.CAMERA), 123)
+        } else {
+            startScanning()
+        }
+    }
+
+    private fun startScanning() {
+        // Parameters (default values)
+        codeScanner = CodeScanner(context as Context, scannerView) // TODO sus
+        codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
+        codeScanner.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
+        // ex. listOf(BarcodeFormat.QR_CODE)
+        codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
+        codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
+        codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
+        codeScanner.isFlashEnabled = false // Whether to enable flash or not
+
+        // Callbacks
+        codeScanner.decodeCallback = DecodeCallback {
+            activity?.runOnUiThread {
+                assignQRData(it.text)
+                Toast.makeText(context as Context, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
             }
+        }
+        codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
+            activity?.runOnUiThread {
+                Toast.makeText(context as Context, "Camera initialization error: ${it.message}",
+                    Toast.LENGTH_LONG).show() // TODO sus context as context
+            }
+        }
+
+        scannerView.setOnClickListener {
+            codeScanner.startPreview()
+        }
+    }
+
+    /**
+     * This function reads in the data received from a QR input scan,
+     * parses it for the device's ID and then returns that back to the object
+     */
+    fun assignQRData(text: String) {
+        Log.d("QR Data Received", text)
+        val deviceUUID : String = text
+        Log.d("device UUID = " , deviceUUID)
+        // TODO send UUID and required info back to add info page
+        Log.d("Device Acquired" , deviceUUID)
+        navMod.(catQR, devQR, findNavController())
+    }
+
+    /**
+     * This function generates a QR code bitmap given the Location and Device information
+     * passed in as a string.
+     */
+
+
+    override fun onResume() {
+        super.onResume()
+        if(::codeScanner.isInitialized) {
+            codeScanner?.startPreview()
+        }
+    }
+
+    override fun onPause() {
+        if(::codeScanner.isInitialized) {
+            codeScanner?.releaseResources()
+        }
+        super.onPause()
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

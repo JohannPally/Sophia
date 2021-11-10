@@ -47,7 +47,7 @@ class QRSearchFragment : Fragment() {
         var activity = activity as? MainActivity
         if (activity != null) ctrl = activity.dbctrl;
         else {
-            println("Failed to cast activity as MainActivity in QR Fragment")
+            println("Failed to cast activity as MainActivity in QR Search Fragment")
         }
 
         scannerView = view.findViewById(R.id.scanner_view)
