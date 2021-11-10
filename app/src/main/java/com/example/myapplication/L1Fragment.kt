@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,7 +64,7 @@ class L1Fragment : Fragment() {
 
         val L1toQRButton = view.findViewById<FloatingActionButton>(R.id.l1toqrbutton)
         L1toQRButton.setOnClickListener() {
-            navMod.L1toQR(findNavController())
+            navMod.L1toQRSearch(findNavController())
         }
     }
 

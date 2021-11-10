@@ -3,8 +3,6 @@ package com.example.myapplication;
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,21 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.budiyev.android.codescanner.*
 import com.budiyev.android.codescanner.CodeScanner
 import com.example.myapplication.databinding.FragmentQrBinding
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.EncodeHintType
-import com.google.zxing.qrcode.QRCodeWriter
-import java.io.FileOutputStream
-
-import java.io.ByteArrayOutputStream
-
-import java.io.File
-
-import android.os.Environment
 
 
-
-
-class QRFragment : Fragment() {
+class QRSearchFragment : Fragment() {
     private var _binding: FragmentQrBinding? = null
     private val binding get() = _binding!!
     private var ctrl: DBController ? = null
@@ -125,9 +111,7 @@ class QRFragment : Fragment() {
         Log.d("Device = ", devQR )
         val deviceMR : MaintenanceRecord? = ctrl?.getInf(Pair(catQR, devQR))
         Log.d("Device Acquired" , deviceMR.toString())
-        val action = QRFragmentDirections.actionQRFragmentToL3Fragment(catQR, devQR)
-        findNavController().navigate(action)
-
+        navMod.QRSearchtoL3(catQR, devQR, findNavController())
     }
 
     /**

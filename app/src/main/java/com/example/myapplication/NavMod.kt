@@ -16,7 +16,8 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun WtoQR(navController: NavController) {
+    //TODO add button to Welcome screen to QRsearch?
+    fun WtoQRSearch(navController: NavController) {
         val action = WelcomeFragmentDirections.actionWelcomeFragmentToQRFragment()
         navController.navigate(action)
     }
@@ -32,7 +33,7 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun L1toQR(navController: NavController) {
+    fun L1toQRSearch(navController: NavController) {
         val action = L1FragmentDirections.actionL1FragmentToQRFragment()
         navController.navigate(action)
     }
@@ -48,13 +49,13 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun L2toQR(navController: NavController) {
+    fun L2toQRSearch(navController: NavController) {
         val action = L2FragmentDirections.actionL2FragmentToQRFragment()
         navController.navigate(action)
     }
 
-    fun L2toAddDev(navController: NavController) {
-        val action = L2FragmentDirections.actionL2FragmentToAddDeviceFragment()
+    fun L2toAddDev(category: String, navController: NavController) {
+        val action = L2FragmentDirections.actionL2FragmentToAddDeviceFragment(categoryPassed = category)
         navController.navigate(action)
     }
 
@@ -66,6 +67,20 @@ class NavMod : ViewModel() {
      */
     fun ADtoL3(category: String, device: String, navController: NavController) {
         val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToL3Fragment(category, device)
+        navController.navigate(action)
+    }
+
+
+
+    /**
+     * Function that handles the navigation from L2 fragment to L3 fragment
+     * Inputs: param - The data to pass onto L3 fragment
+     *         navController - The reference to the navigation controller present in the fragment
+     * Outputs: None
+     */
+
+    fun QRSearchtoL3(category: String, device: String, navController: NavController) {
+        val action = QRSearchFragmentDirections.actionQRFragmentToL3Fragment(category, device)
         navController.navigate(action)
     }
 

@@ -15,7 +15,7 @@
             app:destination="@id/L2Fragment" />
         <action
             android:id="@+id/action_L1Fragment_to_QRFragment"
-            app:destination="@id/QRFragment" />
+            app:destination="@id/QRSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/L2Fragment"
@@ -35,7 +35,7 @@
             app:destination="@id/L3Fragment" />
         <action
             android:id="@+id/action_L2Fragment_to_QRFragment"
-            app:destination="@id/QRFragment" />
+            app:destination="@id/QRSearchFragment" />
         <action
             android:id="@+id/action_L2Fragment_to_addDeviceFragment"
             app:destination="@id/addDeviceFragment" />
@@ -64,12 +64,13 @@
             app:destination="@id/L1Fragment" />
         <action
             android:id="@+id/action_welcomeFragment_to_QRFragment"
-            app:destination="@id/QRFragment" />
+            app:destination="@id/QRSearchFragment" />
     </fragment>
     <fragment
-        android:id="@+id/QRFragment"
-        android:name="com.example.myapplication.QRFragment"
-        android:label="QRFragment" >
+        android:id="@+id/QRSearchFragment"
+        android:name="com.example.myapplication.QRSearchFragment"
+        android:label="QRSearchFragment"
+        tools:layout="@layout/fragment_qr">
         <action
             android:id="@+id/action_QRFragment_to_L3Fragment"
             app:destination="@id/L3Fragment" />
@@ -86,6 +87,77 @@
             android:id="@+id/action_addDeviceFragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
         <argument android:name="categoryPassed"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_addDeviceFragment_to_QRAssignID"
+            app:destination="@id/QRAssignID" />
+        <argument
+            android:name="devText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="invText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="workText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="servProvText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument android:name="servEngText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="faultText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument android:name="impText"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
+    <fragment
+        android:id="@+id/QRAssignID"
+        android:name="com.example.myapplication.QRAssignID"
+        android:label="fragment_q_r_assign_i_d"
+        tools:layout="@layout/fragment_q_r_assign_i_d" >
+        <action
+            android:id="@+id/action_QRAssignID_to_addDeviceFragment"
+            app:destination="@id/addDeviceFragment" />
+        <argument
+            android:name="categoryPassed"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="devText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="invText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="workText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="servProvText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="servEngText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="faultText"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="impText"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>

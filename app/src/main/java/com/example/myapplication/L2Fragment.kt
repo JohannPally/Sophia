@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -63,12 +62,12 @@ class L2Fragment : Fragment() {
 
         val L2toQRButton = view.findViewById<FloatingActionButton>(R.id.l2toqrbutton)
         L2toQRButton.setOnClickListener() {
-            navMod.L2toQR(findNavController())
+            navMod.L2toQRSearch(findNavController())
         }
 
         val addDevButton = view.findViewById<FloatingActionButton>(R.id.l2addDeviceButton)
         addDevButton.setOnClickListener() {
-            navMod.L2toAddDev(findNavController())
+            navMod.L2toAddDev(catArg, findNavController())
         }
     }
 

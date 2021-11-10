@@ -43,7 +43,9 @@ class AddDeviceFragment : Fragment() {
         saveButton.setOnClickListener() {
             val deviceNameText = view.findViewById<EditText>(R.id.adDeviceName).text as String
             if(!deviceNameText.equals("")){
-                //TODO call DBCTRL helper function
+                //TODO make these actual fields
+                val workOrderNumText = ""
+                //dbCtrl?.addNewDevice(Pair(catPassed, deviceNameText), )
                 navMod.ADtoL3(catPassed, deviceNameText, findNavController())
             }
             else{

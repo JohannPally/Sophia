@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/slate_grey"
-    tools:context="com.example.myapplication.QRFragment">
+    tools:context="com.example.myapplication.QRSearchFragment">
 
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"
