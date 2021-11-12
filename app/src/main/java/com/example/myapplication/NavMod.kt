@@ -70,8 +70,8 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun ADtoQRAssign(cat: String, dev: String, work: String, servProv: String, servEng: String, fault: String, imp: String, navController: NavController){
-        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
+    fun ADtoQRAssign(cat: String, dev: String, work: String, servProv: String, servEng: String, fault: String, ipm: String, navController: NavController){
+        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, ipmText = ipm)
         navController.navigate(action)
     }
 

@@ -75,21 +75,32 @@ class AddDeviceFragment : Fragment() {
             val servProvText = servProvET.text.toString()
             val servEngText = servEngET.text.toString()
             val faultText = faultET.text.toString()
-            //TODO IMP
-            val impText = "testIMP"
+            //TODO IPM
+            val ipmText = "testIPM"
             Log.v("hmm","is this working")
             navMod.ADtoQRAssign(cat = catPassed, dev = devNameText, work = workText, servProv = servProvText,
-            servEng = servEngText, fault = faultText, imp = impText, navController = findNavController())
+            servEng = servEngText, fault = faultText, ipm = ipmText, navController = findNavController())
         }
 
         val saveButton = view.findViewById<Button>(R.id.adsaveButton)
         saveButton.setOnClickListener() {
-            val devName = devNameET.text.toString()
+            val bdevName = devNameET.text.toString()
+            val binvNumText = invNumTV.text.toString()
             //TODO check UUID too
-            if(!devName.equals("")){
+            if(!bdevName.equals("")){
+
+                val bdevNameText = devNameET.text.toString()
+                //TODO work
+                val bworkText = "testwork"
+                val bservProvText = servProvET.text.toString()
+                val bservEngText = servEngET.text.toString()
+                val bfaultText = faultET.text.toString()
+                //TODO IMP
+                val bipmText = "testIMP"
                 //TODO finish out the controller call
-                //dbCtrl?.addNewDevice(Pair(catPassed, deviceNameText), )
-                navMod.ADtoL3(catPassed, devName, findNavController())
+                //TODO status?
+                dbCtrl?.addNewDevice(dev = Pair(catPassed, bdevName), inventoryNum = binvNumText, workOrderNum = bworkText, serviceProvider = bservProvText, serviceEngineeringCode = bservEngText, faultCode = bfaultText, ipmProcedure = bipmText, status = "0")
+                navMod.ADtoL3(catPassed, bdevName, findNavController())
             }
             else{
                 //TODO make a toast and reject going forward make sure UUID is not empty

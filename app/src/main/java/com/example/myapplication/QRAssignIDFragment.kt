@@ -104,7 +104,7 @@ class QRAssignIDFragment : Fragment() {
         Log.d("Device Acquired" , deviceUUID)
         navMod.QRAssigntoAD(cat = args.categoryPassed, dev = args.devText, inv = deviceUUID,
             work = args.workText, servProv = args.servProvText, servEng = args.servEngText,
-            fault = args.faultText, imp = args.impText, navController = findNavController())
+            fault = args.faultText, imp = args.ipmText, navController = findNavController())
     }
 
     /**

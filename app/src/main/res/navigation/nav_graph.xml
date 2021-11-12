@@ -145,7 +145,7 @@
             android:name="faultText"
             app:argType="string" />
         <argument
-            android:name="impText"
+            android:name="ipmText"
             app:argType="string" />
     </fragment>
 </navigation>
