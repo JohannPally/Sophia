@@ -65,8 +65,17 @@ class NavMod : ViewModel() {
      *         navController - The reference to the navigation controller present in the fragment
      * Outputs: None
      */
+
+//    @Composable
+//    fun ADtoL3(category: String, device: String, navController: NavController) {
+//        navController.navigate("com.example.myapplication.L3Fragment") {
+//            popUpTo("com.example.myapplication.L2Fragment")
+//        }
+//    }
+
     fun ADtoL3(category: String, device: String, navController: NavController) {
-        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToL3Fragment(category, device)
+        val action = L2FragmentDirections.actionL2FragmentToL3Fragment(category, device)
+        navController.popBackStack(R.id.L2Fragment, false)
         navController.navigate(action)
     }
 
@@ -104,5 +113,7 @@ class NavMod : ViewModel() {
         val action = QRAssignIDFragmentDirections.actionQRAssignIDToAddDeviceFragment(categoryPassed = cat, devText = dev, invText = inv, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
         navController.navigate(action)
     }
+
+
 
 }
