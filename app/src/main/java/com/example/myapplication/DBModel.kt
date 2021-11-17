@@ -88,10 +88,12 @@ class DatabaseModel(context: Context) {
             val idJsonInput = idStringBuilder.toString()
             val idHashMapType: Type = object : TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
             val readIds: HashMap<String, QrCodeIdData> = Gson().fromJson(idJsonInput, idHashMapType)
+            Log.v("HIT THIS", "TAP")
             this.idData = readIds
 
             //return readDB;
         } catch (e: FileNotFoundException) {
+            Log.v("Catch hit" ,"ch")
             // This should work!
             if (isOnline()) {
                 updateIDs();
@@ -107,7 +109,7 @@ class DatabaseModel(context: Context) {
      */
 
     fun fragment_get_id(id: String): QrCodeIdData {
-        val idValue = idData.get(id)
+        val idValue = idData[id]
         if (idValue != null) {
             return idValue
         } else {

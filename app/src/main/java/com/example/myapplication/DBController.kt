@@ -87,7 +87,9 @@ class DBController(context: Context) {
 
     fun addNewDevice(dev:Pair<String, String>, inventoryNum: String, workOrderNum: String, serviceProvider: String, serviceEngineeringCode: String, faultCode: String, ipmProcedure: String, status: String) {
         //val inventoryNum = dev.first.substring(0, 2) + dev.second.substring(0, 2) + String.format("%04d", (1..9999).random());
-
+        if (inventoryNum != ""){
+            addNewDeviceQR(qrCodeId = inventoryNum, dev = dev)
+        }
         // Timestamp will be overwritten in fragment_set
         var newObj = MaintenanceRecord(inventoryNum, workOrderNum, serviceProvider, serviceEngineeringCode, faultCode, ipmProcedure, status, timestamp = 0);
         model.fragment_set_db(category = dev.first, device = dev.second, newObj);
