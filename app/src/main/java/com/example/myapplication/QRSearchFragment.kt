@@ -104,14 +104,13 @@ class QRSearchFragment : Fragment() {
      */
     fun saveQRData(text: String) {
         Log.d("QR Data Received", text)
-        val paramList = text.split(":")
-        val catQR : String = paramList[0]
-        val devQR : String = paramList[1]
-        Log.d("Location = " , catQR)
-        Log.d("Device = ", devQR )
-        val deviceMR : MaintenanceRecord? = ctrl?.getInf(Pair(catQR, devQR))
-        Log.d("Device Acquired" , deviceMR.toString())
-        navMod.QRSearchtoL3(catQR, devQR, findNavController())
+        val devInfo = ctrl?.getPathFromQRId(text)
+        if (devInfo != null) {
+            navMod.QRSearchtoL3(devInfo.first, devInfo.second, findNavController())
+        }
+        else {
+            Log.v("SAVE QR corrupt", "bhenchod")
+        }
     }
 
     /**
