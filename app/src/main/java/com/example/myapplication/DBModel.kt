@@ -92,6 +92,7 @@ class DatabaseModel(context: Context) {
 
             //return readDB;
         } catch (e: FileNotFoundException) {
+            // This should work!
             if (isOnline()) {
                 updateIDs();
             } else {
