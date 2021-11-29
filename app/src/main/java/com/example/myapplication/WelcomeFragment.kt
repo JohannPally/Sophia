@@ -24,7 +24,7 @@ class WelcomeFragment: Fragment() {
     private var dbCtrl: DBController ? = null
 
     // Reference to the front end model that handles navigation from screen to screen
-    //TODO: should we be passing this to the RV adapters or can we just instiate this there
+    //TODO: should we be passing this to the RV adapters or can we just instantiate this there
     //Does this refer to the one we made in the Main Activity?
     private val navMod: NavMod by activityViewModels()
 
@@ -52,11 +52,11 @@ class WelcomeFragment: Fragment() {
         val loginButton = view.findViewById<Button>(R.id.loginButton)
         loginButton.setOnClickListener() {
             val loginText = view.findViewById<EditText>(R.id.loginEditPassword).text.toString()
-            if(loginText.equals("1234")){
+            if(loginText == "1234"){
                 navMod.WtoL1(findNavController())
             }
             else{
-                Toast.makeText(context as Context, "Incorrect password: ${loginText}", Toast.LENGTH_LONG).show()
+                Toast.makeText(context as Context, "Incorrect password: $loginText", Toast.LENGTH_LONG).show()
             }
         }
 

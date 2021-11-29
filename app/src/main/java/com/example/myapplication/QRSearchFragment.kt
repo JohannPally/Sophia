@@ -69,7 +69,7 @@ class QRSearchFragment : Fragment() {
 
     private fun startScanning() {
         // Parameters (default values)
-        codeScanner = CodeScanner(context as Context, scannerView) // TODO sus
+        codeScanner = CodeScanner(context as Context, scannerView)
         codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
         codeScanner.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
         // ex. listOf(BarcodeFormat.QR_CODE)
@@ -88,7 +88,7 @@ class QRSearchFragment : Fragment() {
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
             activity?.runOnUiThread {
                 Toast.makeText(context as Context , "Camera initialization error: ${it.message}",
-                    Toast.LENGTH_LONG).show() // TODO sus context as context
+                    Toast.LENGTH_LONG).show()
             }
         }
 
@@ -102,14 +102,14 @@ class QRSearchFragment : Fragment() {
      * parses it for the location and device name and then navigates to that device's
      * particular maintenance record
      */
-    fun saveQRData(text: String) {
+    private fun saveQRData(text: String) {
         Log.d("QR Data Received", text)
         val devInfo = ctrl?.getPathFromQRId(text)
         if (devInfo != null) {
             navMod.QRSearchtoL3(devInfo.first, devInfo.second, findNavController())
         }
         else {
-            Log.v("SAVE QR corrupt", "bhenchod")
+            Log.v("SAVE QR corrupt", "Error")
         }
     }
 

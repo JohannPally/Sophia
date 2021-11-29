@@ -16,12 +16,13 @@ import com.example.myapplication.databinding.FragmentWelcomeScreenBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AddDeviceFragment : Fragment() {
+
     private var _binding: FragmentWelcomeScreenBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private var dbCtrl: DBController ? = null
     private val navMod: NavMod by activityViewModels()
-    val args: AddDeviceFragmentArgs by navArgs()
+    private val args: AddDeviceFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +38,10 @@ class AddDeviceFragment : Fragment() {
         var activity = activity;
         if (activity is MainActivity) {
             dbCtrl = activity.dbctrl;
+        }
+
+        else {
+            Log.d("can't cast activity", "AddDeviceFragment.kt")
         }
         //TODO fill text, add button to jump between
 
@@ -57,7 +62,7 @@ class AddDeviceFragment : Fragment() {
         val faultET = view.findViewById<EditText>(R.id.adFaultCode)
         //TODO IMP
 
-        invNumTV.setText(invPassed)
+        invNumTV.text = invPassed
         devNameET.setText(devPassed)
         //TODO work
         servProvET.setText(servProvPassed)
@@ -70,14 +75,16 @@ class AddDeviceFragment : Fragment() {
         val toQRAssignButton = view.findViewById<FloatingActionButton>(R.id.adToQRAssignButton)
         toQRAssignButton.setOnClickListener() {
             val devNameText = devNameET.text.toString()
+
             //TODO work
             val workText = "testwork"
             val servProvText = servProvET.text.toString()
             val servEngText = servEngET.text.toString()
             val faultText = faultET.text.toString()
+
             //TODO IPM
             val ipmText = "testIPM"
-            Log.v("hmm","is this working")
+            Log.v("QRAssignButton test?","is this working")
             navMod.ADtoQRAssign(cat = catPassed, dev = devNameText, work = workText, servProv = servProvText,
             servEng = servEngText, fault = faultText, ipm = ipmText, navController = findNavController())
         }
@@ -86,17 +93,19 @@ class AddDeviceFragment : Fragment() {
         saveButton.setOnClickListener() {
             val bdevName = devNameET.text.toString()
             val binvNumText = invNumTV.text.toString()
-            //TODO check UUID too
-            if(!bdevName.equals("")){
 
+            //TODO check UUID too
+            if(bdevName != ""){
                 val bdevNameText = devNameET.text.toString()
                 //TODO work
                 val bworkText = "testwork"
                 val bservProvText = servProvET.text.toString()
                 val bservEngText = servEngET.text.toString()
                 val bfaultText = faultET.text.toString()
+
                 //TODO IMP
                 val bipmText = "testIMP"
+
                 //TODO finish out the controller call
                 //TODO status?
                 dbCtrl?.addNewDevice(dev = Pair(catPassed, bdevName), inventoryNum = binvNumText, workOrderNum = bworkText, serviceProvider = bservProvText, serviceEngineeringCode = bservEngText, faultCode = bfaultText, ipmProcedure = bipmText, status = "0")

@@ -121,7 +121,7 @@ class DatabaseModel(context: Context) {
     fun fragment_set_id(id: String, category: String = "", device: String = "") {
         val qrIdData = QrCodeIdData(category, device)
 
-        idData.put(id, qrIdData)
+        idData[id] = qrIdData
 
         val fullIdJson = Gson().toJson(idData)
         println("SAVING ID DATA FILE")
@@ -137,20 +137,20 @@ class DatabaseModel(context: Context) {
     fun fragment_get_db(category: String = "", device: String = ""): Any? {
         if (category != "") {
             if (device != "") {
-                val catMap = database.get(category)
+                val catMap = database[category]
                 if (catMap != null) {
-                    return catMap.get(device)
+                    return catMap[device]
                 } else {
-                    error("devices L ")
+                    error("Category Map is null ")
                 }
             } else {
-                val catMap = database.get(category)
+                val catMap = database[category]
                 if (catMap != null) {
                     // TODO: Modify to return a pairing of Device Name and Status
                     val deviceKeys = catMap.keys
                     val statusAndDevices = ArrayList<Pair<String, String>>()
                     for (key in deviceKeys) {
-                        val currentDevice = catMap.get(key)
+                        val currentDevice = catMap[key]
                         if (currentDevice != null) {
                             statusAndDevices.add(Pair(key, currentDevice.status))
                         }
@@ -159,46 +159,40 @@ class DatabaseModel(context: Context) {
                     return deviceKeys
                 }
                 else {
-                    error("categories L")
+                    error("Category Map is null (second conditional)")
                 }
             }
         } else if (category == "" && device == "") {
             return database.keys
         } else {
-            error("device info L")
+            error("Device Info is null")
         }
     }
 
     fun fragment_set_db(category: String = "", device: String = "", MR: MaintenanceRecord) {
         val json = Gson().toJson(MR)
-        val cat = database.get(category)
 
         MR.timestamp = (System.currentTimeMillis() / 1000).toInt()
 
-        if (cat != null) {
-            cat.put(device, MR)
-        }
+        database[category]?.put(device, MR)
 
         val fullDBJson = Gson().toJson(database)
         println("SAVING DB FILE")
         saveToLocalFile(fullDBJson, dbFilename)
 
-        val url = serverURL + "/DB/" + category + "/" + device +"/"
+        val url = "$serverURL/DB/$category/$device/"
 //        post_server(url, json)
         logging(url, json)
     }
 
     fun fragment_delete(category: String = "", device: String = "") {
-        val cat = database.get(category)
 
-        if (cat != null) {
-            cat.remove(device)
-        }
+        database[category]?.remove(device)
 
         delete_server("$serverURL/DB/$category/$device")
 
         val fullDBJson = Gson().toJson(database)
-        println("SAVING FILE")
+        Log.d("SAVING FILE", "fragment_delete")
         saveToLocalFile(fullDBJson, dbFilename)
     }
 
@@ -237,7 +231,7 @@ class DatabaseModel(context: Context) {
         try {
             urlc.connectTimeout = (10*1000)
             urlc.requestMethod = "POST"
-            val wr = OutputStreamWriter(urlc.getOutputStream())
+            val wr = OutputStreamWriter(urlc.outputStream)
             wr.write(reqParam)
             wr.flush()
             urlc.connect()
@@ -376,7 +370,7 @@ class DatabaseModel(context: Context) {
 
     fun isOnline(): Boolean {
         val net = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            this.cm.getActiveNetwork()
+            this.cm.activeNetwork
         } else {
             this.cm.getActiveNetworkInfo()
         }
@@ -390,7 +384,7 @@ class DatabaseModel(context: Context) {
         if (isOnline()) {
             Thread {
                 val newDB = get_server("$serverURL/DB/")
-                if (newDB.length != 0) {
+                if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
                             TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
@@ -399,7 +393,7 @@ class DatabaseModel(context: Context) {
                     this.database = readDB
 
                     val fullDBJson = Gson().toJson(database)
-                    println("SAVING Web to FILE")
+                    Log.d("SAVING Web to FILE", "updateDB")
                     saveToLocalFile(fullDBJson, dbFilename)
                 }
             }.start()
@@ -413,7 +407,7 @@ class DatabaseModel(context: Context) {
         if (isOnline()) {
             Thread {
                 val newDB = get_server("$serverURL/ID/")
-                if (newDB.length != 0) {
+                if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
                             TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
@@ -422,7 +416,7 @@ class DatabaseModel(context: Context) {
                     this.idData = readDB
 
                     val fullIDJson = Gson().toJson(idData)
-                    println("SAVING Web to FILE")
+                    Log.d("SAVING Web to FILE", "updatedIDs")
                     saveToLocalFile(fullIDJson, idFilename)
                 }
             }.start()

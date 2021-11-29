@@ -14,8 +14,8 @@ class Device_Item_Adapter (private val catArg: String, private val devs: Set<Str
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Your holder should contain and initialize a member variable
         // for any view that will be set as you render a row
-        val devNameTextView = itemView.findViewById<TextView>(R.id.device_name)
-        val selectDevButton = itemView.findViewById<Button>(R.id.select_device)
+        val devNameTextView: TextView = itemView.findViewById(R.id.device_name)
+        val selectDevButton: Button = itemView.findViewById(R.id.select_device)
     }
 
     // Usually involves inflating a layout from XML and returning the holder

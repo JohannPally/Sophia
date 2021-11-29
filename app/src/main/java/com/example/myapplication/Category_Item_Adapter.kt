@@ -14,8 +14,8 @@ class Category_Item_Adapter (private val cats: Set<String>, private val navMod: 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Your holder should contain and initialize a member variable
         // for any view that will be set as you render a row
-        val catNameTextView = itemView.findViewById<TextView>(R.id.category_name)
-        val selectCatButton = itemView.findViewById<Button>(R.id.select_category)
+        val catNameTextView: TextView = itemView.findViewById(R.id.category_name)
+        val selectCatButton: Button = itemView.findViewById(R.id.select_category)
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -34,7 +34,7 @@ class Category_Item_Adapter (private val cats: Set<String>, private val navMod: 
         val cat: String = cats.elementAt(position)
         // Set item views based on your views and data model
         val textView = viewHolder.catNameTextView
-        textView.setText(cat)
+        textView.text = cat
         val button = viewHolder.selectCatButton
         //button.text = if (contact.isOnline) "Message" else "Offline"
         button.text = "Select"

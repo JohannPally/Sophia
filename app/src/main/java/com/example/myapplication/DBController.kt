@@ -24,9 +24,8 @@ class DBController(context: Context) {
     }
 
     //L1
-    fun getCats(): Set<String>{
-        var categorySet : Set<String>  = model.fragment_get_db() as Set<String>
-        return categorySet
+    fun getCats(): Set<String> {
+        return model.fragment_get_db() as Set<String>
     }
 
     fun addCat(cat:String){
@@ -44,9 +43,8 @@ class DBController(context: Context) {
 
     //L2
     // TODO: Return a set of pairs containing status and name rather than just names
-    fun getDevs(cat:String): Set<String> {
-        var deviceSet : Set<String>  = model.fragment_get_db(category = cat) as Set<String>
-        return deviceSet
+    fun getDevs(cat: String): Set<String> {
+        return model.fragment_get_db(category = cat) as Set<String>
     }
 
     fun addDev(cat:String){
@@ -56,9 +54,11 @@ class DBController(context: Context) {
     //something to move a device from one category to the other? Sounds like an L3 task
 
     //L3
-    fun getInf(dev:Pair<String, String>): MaintenanceRecord {
-        var deviceInfo : MaintenanceRecord  = model.fragment_get_db(category = dev.first, device = dev.second) as MaintenanceRecord
-        return deviceInfo;
+    fun getInf(dev: Pair<String, String>): MaintenanceRecord {
+        return model.fragment_get_db(
+            category = dev.first,
+            device = dev.second
+        ) as MaintenanceRecord;
     }
 
     fun getInfFromQRId(id:String): MaintenanceRecord {
@@ -71,7 +71,7 @@ class DBController(context: Context) {
         return Pair(deviceInfo.category, deviceInfo.device);
     }
 
-    fun addNewDeviceQR(qrCodeId:String, dev:Pair<String, String>) {
+    private fun addNewDeviceQR(qrCodeId:String, dev:Pair<String, String>) {
         model.fragment_set_id(qrCodeId, dev.first, dev.second);
     }
 

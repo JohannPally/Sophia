@@ -85,12 +85,12 @@ class L3Fragment : Fragment() {
         val ipmProcedureTextView = view.findViewById<TextView>(R.id.l3ipmProcedureText)
         var localManRec = this.currentMaintenanceRecord;
         if (localManRec != null) {
-            inventoryNumTextView.setText(localManRec.inventoryNum)
-            workOrderNumTextView.setText(localManRec.workOrderNum)
-            serviceProviderTextView.setText(localManRec.serviceProvider)
-            serviceEngineerCodeTextView.setText(localManRec.serviceEngineeringCode)
-            faultCodeTextView.setText(localManRec.faultCode)
-            ipmProcedureTextView.setText(localManRec.ipmProcedure)
+            inventoryNumTextView.text = localManRec.inventoryNum
+            workOrderNumTextView.text = localManRec.workOrderNum
+            serviceProviderTextView.text = localManRec.serviceProvider
+            serviceEngineerCodeTextView.text = localManRec.serviceEngineeringCode
+            faultCodeTextView.text = localManRec.faultCode
+            ipmProcedureTextView.text = localManRec.ipmProcedure
         }
 
         inventoryNumTextView.onFocusChangeListener =
@@ -161,7 +161,7 @@ class L3Fragment : Fragment() {
     //TODO: probably need a button or something to clear work orders
     fun generateWorkCode(view: View){
         val wonTV = view.findViewById<TextView>(R.id.l3workOrderNumberText)
-        if (wonTV.text.toString().equals("")) {
+        if (wonTV.text.toString() == "") {
             //TODO: fill out helper function in controller
 //            wonTV.setText(ctrl.makeWON());
         }
@@ -218,19 +218,19 @@ class L3Fragment : Fragment() {
         stBut.isEnabled = false
         when(stat){
             0 -> {
-                stBut.setText("Active")
+                stBut.text = "Active"
                 stBut.setBackgroundColor(resources.getColor(R.color.active_green))
             }
             1 -> {
-                stBut.setText("Caution")
+                stBut.text = "Caution"
                 stBut.setBackgroundColor(resources.getColor(R.color.caution_yellow))
             }
             2 -> {
-                stBut.setText("Hazard")
+                stBut.text = "Hazard"
                 stBut.setBackgroundColor(resources.getColor(R.color.hazard_red))
             }
             else -> {
-                stBut.setText("OOP")
+                stBut.text = "OOP"
                 stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
             }
         }
