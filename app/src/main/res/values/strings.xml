@@ -26,5 +26,6 @@
     <string name="welcome_String">RICE 360 CMMS</string>
     <string name="welcome_fragment_label">Welcome</string>
     <string name="saveButtonText">Save</string>
+    <string name="loginButtonText">Log In</string>
 
 </resources>

@@ -1,10 +1,13 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -46,9 +49,15 @@ class WelcomeFragment: Fragment() {
 
         //========================BINDINGS====================================
 
-        val nextButton = view.findViewById<Button>(R.id.nextButton)
-        nextButton.setOnClickListener() {
-            navMod.WtoL1(findNavController())
+        val loginButton = view.findViewById<Button>(R.id.loginButton)
+        loginButton.setOnClickListener() {
+            val loginText = view.findViewById<EditText>(R.id.loginEditPassword).text.toString()
+            if(loginText.equals("1234")){
+                navMod.WtoL1(findNavController())
+            }
+            else{
+                Toast.makeText(context as Context, "Incorrect password: ${loginText}", Toast.LENGTH_LONG).show()
+            }
         }
 
         val syncButton = view.findViewById<FloatingActionButton>(R.id.syncButton)
