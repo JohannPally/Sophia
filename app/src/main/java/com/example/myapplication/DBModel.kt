@@ -66,12 +66,9 @@ class DatabaseModel(context: Context) {
             val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(jsonInput, hashMapType)
             this.database = readDB
         } catch (e: FileNotFoundException) {
-            if (isOnline()) {
-                updateDB();
-            } else {
-                saveToLocalFile("{}", dbFilename)
-                return createBothFromFile(context)
-            }
+            saveToLocalFile("{}", dbFilename)
+            this.database = hashMapOf();
+            updateDB();
         }
         try {
             val idFile = File(context.filesDir, idFilename)
@@ -93,14 +90,9 @@ class DatabaseModel(context: Context) {
 
             //return readDB;
         } catch (e: FileNotFoundException) {
-            Log.v("Catch hit" ,"ch")
-            // This should work!
-            if (isOnline()) {
-                updateIDs();
-            } else {
-                saveToLocalFile("{}", idFilename)
-                return createBothFromFile(context)
-            }
+            saveToLocalFile("{}", idFilename)
+            this.idData = hashMapOf();
+            updateDB();
         }
     }
 
