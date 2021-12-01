@@ -63,8 +63,8 @@
             android:id="@+id/action_welcomeFragment_to_L1Fragment"
             app:destination="@id/L1Fragment" />
         <action
-            android:id="@+id/action_welcomeFragment_to_QRFragment"
-            app:destination="@id/QRSearchFragment" />
+            android:id="@+id/action_welcomeFragment_to_QRValidateUser"
+            app:destination="@id/QRValidateUser" />
     </fragment>
     <fragment
         android:id="@+id/QRSearchFragment"
@@ -147,5 +147,14 @@
         <argument
             android:name="ipmText"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/QRValidateUser"
+        android:name="com.example.myapplication.QRValidateUser"
+        android:label="fragment_q_r_validate_user"
+        tools:layout="@layout/fragment_q_r_validate_user" >
+        <action
+            android:id="@+id/action_QRValidateUser_to_L1Fragment"
+            app:destination="@id/L1Fragment" />
     </fragment>
 </navigation>
