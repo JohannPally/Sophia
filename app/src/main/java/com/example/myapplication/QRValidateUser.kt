@@ -111,6 +111,7 @@ class QRValidateUser : Fragment() {
         val url: String? = url_authkey_map["URL"]
         val authkey: String? = url_authkey_map["AuthKey"]
         //TODO shared preferences
+            //ligma
     }
 
     /**
