@@ -17,8 +17,8 @@ class NavMod : ViewModel() {
     }
 
     //TODO add button to Welcome screen to QRsearch?
-    fun WtoQRSearch(navController: NavController) {
-        val action = WelcomeFragmentDirections.actionWelcomeFragmentToQRFragment()
+    fun WtoQRValidate(navController: NavController) {
+        val action = WelcomeFragmentDirections.actionWelcomeFragmentToQRValidateUser()
         navController.navigate(action)
     }
 
