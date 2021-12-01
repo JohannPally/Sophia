@@ -27,5 +27,8 @@
     <string name="welcome_fragment_label">Welcome</string>
     <string name="saveButtonText">Save</string>
     <string name="loginButtonText">Log In</string>
+    <string name="preferences_file_key">PREFERENCES_FILE_KEY</string>
+    <string name="authkey_key">AuthKey</string>
+    <string name="url_key">URL</string>
 
 </resources>

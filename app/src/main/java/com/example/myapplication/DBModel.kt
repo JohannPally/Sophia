@@ -97,6 +97,36 @@ class DatabaseModel(context: Context) {
     }
 
     /*
+    Getters and Setters for SharedPreferences
+     */
+
+    fun getAuthKey(): String {
+        val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
+        return prefs.getString(context.getString(R.string.authkey_key), "Error Retrieving AuthKey")!!
+    }
+
+
+    fun setAuthKey(newAuthKey: String) {
+        val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
+        var editor = prefs.edit()
+        editor.putString(context.getString(R.string.authkey_key), newAuthKey)
+        editor.apply()
+    }
+
+    fun getBackendUrl(): String {
+        val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
+        return prefs.getString(context.getString(R.string.url_key), "Error Retrieving URL")!!
+    }
+
+
+    fun setBackendUrl(newURL: String) {
+        val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
+        var editor = prefs.edit()
+        editor.putString(context.getString(R.string.url_key), newURL)
+        editor.apply()
+    }
+
+    /*
     Getters and Setters for our DatabaseModel class relating to the ID databasae
      */
 
