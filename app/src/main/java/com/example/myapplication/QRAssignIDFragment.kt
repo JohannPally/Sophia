@@ -51,7 +51,7 @@ class QRAssignIDFragment : Fragment() {
             println("Failed to cast activity as MainActivity in QR Assign ID Fragment")
         }
 
-        scannerView = view.findViewById(R.id.scanner_view)
+        scannerView = view.findViewById(R.id.search_scanner_view)
 
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)

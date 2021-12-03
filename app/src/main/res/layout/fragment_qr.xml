@@ -9,7 +9,7 @@
     tools:context="com.example.myapplication.QRSearchFragment">
 
     <com.budiyev.android.codescanner.CodeScannerView
-        android:id="@+id/scanner_view"
+        android:id="@+id/search_scanner_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:autoFocusButtonColor="@android:color/white"

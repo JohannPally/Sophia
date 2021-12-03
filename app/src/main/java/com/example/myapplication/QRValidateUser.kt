@@ -53,7 +53,7 @@ class QRValidateUser : Fragment() {
             println("Failed to cast activity as MainActivity in QR Search Fragment")
         }
 
-        scannerView = view.findViewById(R.id.scanner_view)
+        scannerView = view.findViewById(R.id.validate_scanner_view)
 
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
@@ -110,8 +110,48 @@ class QRValidateUser : Fragment() {
         val url_authkey_map: HashMap<String, String> = Gson().fromJson(text, hashType)
         val url: String? = url_authkey_map["URL"]
         val authkey: String? = url_authkey_map["AuthKey"]
+
+        if (url != null) {
+            Log.v("URL Key Test", url)
+        }
+        if (authkey != null) {
+            Log.v("URL Test", authkey)
+        }
+
         //TODO shared preferences
-            //ligma
+            //ligma balls
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
+
+        // Update the sharedPrefs so tha thte user is authenticated
+        if (authkey != null) {
+            editSharedPreferences(authkey, url)
+        }
+
+
+        val defaultValue = resources.getString(R.string.default_keys)
+        val testAK = sharedPref?.getString(R.string.authkey_key.toString(), "h")
+        val testUK = sharedPref?.getString(R.string.url_key.toString(), "i")
+        Log.v(testAK, "Auth key testing")
+        Log.v(testUK, "URL key testing")
+
+        navMod.QRValidatetoL1(findNavController());
+
+
+    }
+
+    /**
+     * This function takes in an authKey and urlKey and modifies the sharedPreference to include it
+     */
+    private fun editSharedPreferences(authKey : String, urlKey : String) {
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preferences_file_key), Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString(getString(R.string.authkey_key), authKey)
+            putString(getString(R.string.url_key), urlKey)
+            apply()
+        }
+
     }
 
     /**

@@ -30,5 +30,6 @@
     <string name="preferences_file_key">PREFERENCES_FILE_KEY</string>
     <string name="authkey_key">AuthKey</string>
     <string name="url_key">URL</string>
+    <string name="default_keys">DEFAULT_KEYS</string>
 
 </resources>
