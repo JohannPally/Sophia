@@ -64,6 +64,38 @@ class L3Fragment : Fragment() {
             generateWorkCode(view);
         }
 
+        val stBut = view.findViewById<TextView>(R.id.l3statusButton)
+        stBut.setOnClickListener() {
+            var stat = this.currentMaintenanceRecord?.status?.toInt()
+            if (stat!=null)
+                stat = (stat+1)%4
+                this.currentMaintenanceRecord?.status = (stat).toString()
+            val devArg = args.devicePassed
+            val catArg = args.categoryPassed
+            this.currentMaintenanceRecord?.let { it1 -> ctrl?.editInfo(Pair(catArg, devArg), it1) }
+            when(stat){
+                0 -> {
+                    stBut.text = "Active"
+                    stBut.setBackgroundColor(resources.getColor(R.color.active_green))
+                }
+                1 -> {
+                    stBut.text = "Caution"
+                    stBut.setBackgroundColor(resources.getColor(R.color.caution_yellow))
+                }
+                2 -> {
+                    stBut.text = "Hazard"
+                    stBut.setBackgroundColor(resources.getColor(R.color.hazard_red))
+                }
+                3 -> {
+                    stBut.text = "Offline"
+                    stBut.setBackgroundColor(resources.getColor(R.color.black))
+                }
+                else -> {
+                    stBut.text = "OOP"
+                    stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
+                }
+            }
+        }
     }
 
     fun initTextFields(view: View){
@@ -215,7 +247,6 @@ class L3Fragment : Fragment() {
     fun showStatus(view: View, mr: MaintenanceRecord){
         val stBut = view.findViewById<TextView>(R.id.l3statusButton)
         val stat = mr.status.toInt()
-        stBut.isEnabled = false
         when(stat){
             0 -> {
                 stBut.text = "Active"
@@ -228,6 +259,10 @@ class L3Fragment : Fragment() {
             2 -> {
                 stBut.text = "Hazard"
                 stBut.setBackgroundColor(resources.getColor(R.color.hazard_red))
+            }
+            3 -> {
+                stBut.text = "Offline"
+                stBut.setBackgroundColor(resources.getColor(R.color.black))
             }
             else -> {
                 stBut.text = "OOP"
