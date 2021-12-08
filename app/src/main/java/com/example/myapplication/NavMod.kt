@@ -44,6 +44,12 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
+    fun L1toL3(param: String, device: String, navController: NavController) {
+        println("NavMod: " + param + " / " + device)
+        val action = L1FragmentDirections.actionL1FragmentToL3Fragment(param, device)
+        navController.navigate(action)
+    }
+
     fun L1toQRSearch(navController: NavController) {
         val action = L1FragmentDirections.actionL1FragmentToQRFragment()
         navController.navigate(action)

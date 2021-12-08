@@ -7,17 +7,52 @@
     android:background="@color/slate_grey"
     tools:context=".L1Fragment">
 
+    <TableRow
+        android:id="@+id/l1TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".04">
+
+        <EditText
+            android:id="@+id/l1searchTextView"
+            android:ems="10"
+            android:hint="hint"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:textColor="@color/brown_neutral"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias=".04"/>
+
+        <Button
+            android:id="@+id/l1searchButton"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias=".04"
+            android:text="Search!" />
+
+    </TableRow>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategories"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/l1TableRow"
+        app:layout_constraintVertical_bias=".04" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/l1toqrbutton"

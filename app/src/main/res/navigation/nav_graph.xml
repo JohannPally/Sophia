@@ -14,6 +14,9 @@
             android:id="@+id/action_L1Fragment_to_L2Fragment"
             app:destination="@id/L2Fragment" />
         <action
+            android:id="@+id/action_L1Fragment_to_L3Fragment"
+            app:destination="@id/L3Fragment" />
+        <action
             android:id="@+id/action_L1Fragment_to_QRFragment"
             app:destination="@id/QRSearchFragment" />
     </fragment>
