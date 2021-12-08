@@ -57,8 +57,9 @@ class WelcomeFragment: Fragment() {
             // TODO do we still need a password?
             if(loginText == "6969"){
                 // TODO remove this and edit shared preferences correctly
-                Log.v("Entered 69 case", "2")
-                defaultSharedPreference(R.string.default_keys.toString(), R.string.default_keys.toString())
+                Log.v("Entered clear case", "2")
+                var defaultValue = getString(R.string.default_keys)
+                defaultSharedPreference(defaultValue, defaultValue)
             }
             else{
                 Toast.makeText(context as Context, "Cleared UP: $loginText", Toast.LENGTH_LONG).show()
@@ -69,13 +70,12 @@ class WelcomeFragment: Fragment() {
             // TODO check if user is authenticated
             val sharedPref = activity?.getSharedPreferences(
                 getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
-            val defaultValue = resources.getString(R.string.default_keys)
-            val testAK = sharedPref?.getString(R.string.authkey_key.toString(), defaultValue)
-            val testUK = sharedPref?.getString(R.string.url_key.toString(), defaultValue)
-            Log.v(testAK, "Auth key debug")
-            Log.v(testUK, "URL key debug")
+            val defaultValue = R.string.default_keys.toString()
+            val testAK = sharedPref?.getString(getString(R.string.authkey_key), defaultValue)
+            val testUK = sharedPref?.getString(getString(R.string.url_key), defaultValue)
+            Log.v(testAK, "Auth key debug before")
+            Log.v(testUK, "URL key debug before")
 
-            Log.v("Defailt key debug", defaultValue)
             if (testAK.equals(resources.getString(R.string.default_keys)) and testUK.equals(resources.getString(R.string.default_keys))) {
                 navMod.WtoQRValidate(findNavController())
             }
@@ -84,6 +84,12 @@ class WelcomeFragment: Fragment() {
                 Log.v("Authenticate Successful", "Success")
                 navMod.WtoL1(findNavController())
             }
+
+            val defaultValueA = resources.getString(R.string.default_keys)
+            val testAKA = sharedPref?.getString(getString(R.string.authkey_key), defaultValue)
+            val testUKA = sharedPref?.getString(getString(R.string.url_key), defaultValue)
+            Log.v(testAKA, "Auth key debug after")
+            Log.v(testUKA, "URL key debug after")
 
         }
 
@@ -98,6 +104,8 @@ class WelcomeFragment: Fragment() {
      * This function takes in an authKey and urlKey and modifies the sharedPreference to include it
      */
     private fun defaultSharedPreference(authKey : String, urlKey : String) {
+        Log.v("authkey dsp input", authKey)
+        Log.v("urlkey dsp input", authKey)
         val sharedPref = activity?.getSharedPreferences(
             getString(R.string.preferences_file_key), Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
@@ -106,11 +114,11 @@ class WelcomeFragment: Fragment() {
             apply()
         }
         Log.v("Set UP back to default","1")
-        val defaultValue = resources.getString(R.string.default_keys)
-        val testAK = sharedPref?.getString(R.string.authkey_key.toString(), defaultValue)
-        val testUK = sharedPref?.getString(R.string.url_key.toString(), defaultValue)
-        Log.v(testAK, "Auth key def")
-        Log.v(testUK, "URL key def")
+        val defaultValue = getString(R.string.default_keys)
+        val testAK = sharedPref?.getString(getString(R.string.authkey_key), defaultValue)
+        val testUK = sharedPref?.getString(getString(R.string.url_key), defaultValue)
+        Log.v(testAK, "DSP - AO")
+        Log.v(testUK, "DSP - URL0")
 
     }
 

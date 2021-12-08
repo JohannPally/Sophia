@@ -125,7 +125,9 @@ class QRValidateUser : Fragment() {
 
         // Update the sharedPrefs so tha thte user is authenticated
         if (authkey != null) {
-            editSharedPreferences(authkey, url)
+            if (url != null) {
+                editSharedPreferences(authkey, url)
+            }
         }
 
 
@@ -144,13 +146,23 @@ class QRValidateUser : Fragment() {
      * This function takes in an authKey and urlKey and modifies the sharedPreference to include it
      */
     private fun editSharedPreferences(authKey : String, urlKey : String) {
-        val sharedPref = activity?.getSharedPreferences(
-            getString(R.string.preferences_file_key), Context.MODE_PRIVATE) ?: return
+        Log.v("authkey input esp", authKey)
+        Log.v("urlkey input esp", urlKey)
+
+        val sharedPref = activity?.getSharedPreferences(getString(R.string.preferences_file_key), Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
             putString(getString(R.string.authkey_key), authKey)
             putString(getString(R.string.url_key), urlKey)
             apply()
+            val testAK = sharedPref?.getString(getString(R.string.authkey_key), "h")
+            val testUK = sharedPref?.getString(getString(R.string.url_key), "i")
+            Log.v(testAK, "A0 at end of ESP apply")
+            Log.v(testUK, "URL0 at end of ESP apply")
         }
+        val testAK = sharedPref?.getString(getString(R.string.authkey_key), "h")
+        val testUK = sharedPref?.getString(getString(R.string.url_key), "i")
+        Log.v(testAK, "A0 at end of ESP")
+        Log.v(testUK, "URL0 at end of ESP")
 
     }
 
