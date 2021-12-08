@@ -39,8 +39,16 @@ class Category_Item_Adapter (private val cats: Set<String>, private val navMod: 
         //button.text = if (contact.isOnline) "Message" else "Offline"
         button.text = "Select"
         //button.isEnabled = contact.isOnline
+//        button.setOnClickListener() {
+//            navMod.L1toL2(cat, navCtrl)
+//        }
         button.setOnClickListener() {
-            navMod.L1toL2(cat, navCtrl)
+            if (cat.contains(".")) {
+                navMod.L1toL3(cat.split(".")[0], cat.split(".")[1], navCtrl)
+            } else {
+                println("CIA: " + cat)
+                navMod.L1toL2(cat, navCtrl)
+            }
         }
     }
 

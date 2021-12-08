@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,9 @@ class L1Fragment : Fragment() {
 
     //TODO hook up to controller
     private var dbCtrl: DBController ? = null
+
+    // Search Input
+    private var searchInput: String? = null
 
     // Reference to the front end model that handles navigation from screen to screen
     //TODO: should we be passing this to the RV adapters or can we just instiate this there
@@ -50,6 +54,8 @@ class L1Fragment : Fragment() {
             dbCtrl = activity.dbctrl;
         }
 
+        initTextFields(view)
+
         //========================BINDINGS====================================
 
         val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
@@ -71,5 +77,38 @@ class L1Fragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun initTextFields(view: View){
+
+        //TODO: have to fill out these functions in the controller for the gets
+        val l1TestingsearchTextView = view.findViewById<TextView>(R.id.l1searchTextView)
+        val l1TestingsearchButton = view.findViewById<TextView>(R.id.l1searchButton)
+
+        l1TestingsearchButton.setOnClickListener {
+
+            searchInput = l1TestingsearchTextView.text.toString() // this is the search text input from view things
+
+            val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
+            //TODO: replace with real getter for categories
+            val Cats = dbCtrl?.getCats()
+
+            var catsAndDevs = mutableSetOf<String>()
+
+            if (Cats != null) {
+                for (cat in Cats) {
+                    catsAndDevs.add(cat)
+                }
+                for (cat in Cats) {
+                    dbCtrl?.getDevs(cat)?.forEach { item -> catsAndDevs.add("$cat.$item") }
+                }
+            }
+
+            // Filter Set of Categories
+            val filterCatsAndDevs = HashSet(catsAndDevs?.filter { catOrDevName -> catOrDevName.contains(searchInput.toString(), ignoreCase = true) })
+
+            val adapter = filterCatsAndDevs?.let{Category_Item_Adapter(it, navMod, findNavController())} // change here from Cats to filterCats
+            rvCats.adapter = adapter
+        }
     }
 }
