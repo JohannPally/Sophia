@@ -48,6 +48,8 @@ class WelcomeFragment: Fragment() {
             dbCtrl = activity.dbctrl;
         }
 
+        Toast.makeText(context as Context, "Please authenticate", Toast.LENGTH_LONG).show()
+
         //========================BINDINGS====================================
 
         val loginButton = view.findViewById<Button>(R.id.loginButton)

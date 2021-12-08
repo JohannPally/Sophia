@@ -31,5 +31,6 @@
     <string name="authkey_key">AuthKey</string>
     <string name="url_key">URL</string>
     <string name="default_keys">DEFAULT_KEYS</string>
+    <string name="authenticateText">Authenticate</string>
 
 </resources>
