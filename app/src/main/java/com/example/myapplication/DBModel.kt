@@ -192,7 +192,9 @@ class DatabaseModel(context: Context) {
     }
 
     fun fragment_set_db(category: String = "", device: String = "", MR: MaintenanceRecord) {
-        val json = Gson().toJson(MR)
+        var json = Gson().toJson(MR)
+        // TODO: Unhardcode the auth string
+        json = "{\"Key\": \"SAHTesting449496\", \"Data\": $json}";
 
         MR.timestamp = (System.currentTimeMillis() / 1000).toInt()
 
