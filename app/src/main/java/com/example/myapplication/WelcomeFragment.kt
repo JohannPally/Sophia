@@ -21,12 +21,8 @@ class WelcomeFragment: Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    //TODO hook up to controller
     private var dbCtrl: DBController ? = null
 
-    // Reference to the front end model that handles navigation from screen to screen
-    //TODO: should we be passing this to the RV adapters or can we just instantiate this there
-    //Does this refer to the one we made in the Main Activity?
     private val navMod: NavMod by activityViewModels()
 
     override fun onCreateView(
@@ -100,9 +96,6 @@ class WelcomeFragment: Fragment() {
             putString(getString(R.string.url_key), urlKey)
             apply()
         }
-        val defaultValue = getString(R.string.default_keys)
-        val testAK = sharedPref?.getString(getString(R.string.authkey_key), defaultValue)
-        val testUK = sharedPref?.getString(getString(R.string.url_key), defaultValue)
     }
 
 }
