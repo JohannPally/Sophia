@@ -16,12 +16,6 @@ private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
 private val serverURL:String = "http://10.0.2.2:4567"
 
-//TODO NOTES
-//1. we're only going to have a single file with all the devices and categories
-//2. upon startup, we just need to check whether database.json exists -> make if not
-//3. need search helper functions for L1 and L2 and get for L3 (consider a pair<str,str> input)
-//4. Taking care of time logging actions
-
 class DatabaseModel(context: Context) {
 
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
@@ -37,7 +31,6 @@ class DatabaseModel(context: Context) {
     /*
     Startup and shutdown file operations
      */
-
     private fun saveToLocalFile(jsonOutput: String, filename: String) {
         println("DIR: " + context.filesDir)
         val file = File(context.filesDir, filename)
@@ -99,12 +92,10 @@ class DatabaseModel(context: Context) {
     /*
     Getters and Setters for SharedPreferences
      */
-
     fun getAuthKey(): String {
         val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
         return prefs.getString(context.getString(R.string.authkey_key), "Error Retrieving AuthKey")!!
     }
-
 
     fun setAuthKey(newAuthKey: String) {
         val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
@@ -117,7 +108,6 @@ class DatabaseModel(context: Context) {
         val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
         return prefs.getString(context.getString(R.string.url_key), "Error Retrieving URL")!!
     }
-
 
     fun setBackendUrl(newURL: String) {
         val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
@@ -242,11 +232,9 @@ class DatabaseModel(context: Context) {
 
 
     fun post_server(url:String, json:String) : Int {
-        //val url2 = url.replace(" ", "_")
         Log.i("postServer0:",url)
         val mURL = URL(url)
         Log.i("postServer0.5:",mURL.toString())
-        //val reqParam = URLEncoder.encode(json, "ascii")
         val reqParam = json
         var code:Int
         Log.i("postServer1:",json)
@@ -266,7 +254,6 @@ class DatabaseModel(context: Context) {
             return 404
         }
         with(urlc) {
-
             println("URL : $url")
             println("Response Code : $responseCode")
             code = responseCode
@@ -287,11 +274,9 @@ class DatabaseModel(context: Context) {
 
 
     fun delete_server(url:String) : String {
-        //val url2 = url.replace(" ", "_")
         Log.i("Delete Server0:",url)
         val mURL = URL(url)
         Log.i("Delete Server0.5:",mURL.toString())
-        //val reqParam = URLEncoder.encode(json, "ascii")
         val out = StringBuffer()
         var code:Int
 
@@ -325,11 +310,9 @@ class DatabaseModel(context: Context) {
     }
 
     fun get2_server(url:String) : String {
-        //val url2 = url.replace(" ", "_")
         Log.i("Get Server0:",url)
         val mURL = URL(url)
         Log.i("Get Server0.5:",mURL.toString())
-        //val reqParam = URLEncoder.encode(json, "ascii")
         val out = StringBuffer()
         var code:Int
 
@@ -364,32 +347,6 @@ class DatabaseModel(context: Context) {
 
     fun get_server(url:String): String {
         return get2_server(url);
-        Log.i("url", url)
-        val URLm = URL(url)
-
-        Log.i("URLm", URLm.toString())
-        val text1 = URLm.readText()
-        Log.i("text1", text1)
-        //var text = StringBuffer()
-        //with(URLm.openConnection() as HttpURLConnection) {
-        //    requestMethod = "GET"  // optional default is GET
-//
-        //    Log.i("test1","\nSent 'GET' request to URL : $url; Response Code : $responseCode")
-//
-        //    inputStream.bufferedReader().use {
-        //        val response = StringBuffer()
-//
-        //        var inputLine = it.readLine()
-        //        while (inputLine != null) {
-        //            println(inputLine)
-        //            response.append(inputLine)
-        //            inputLine = it.readLine()
-        //        }
-        //        text = response
-        //    }
-        //}
-        Log.i("response:", text1)
-        return text1
     }
 
     fun isOnline(): Boolean {
