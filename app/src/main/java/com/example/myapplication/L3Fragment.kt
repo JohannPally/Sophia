@@ -31,6 +31,8 @@ class L3Fragment : Fragment() {
     private var ctrl: DBController ? = null
     private var currentMaintenanceRecord: MaintenanceRecord ? = null
 
+    private val args: L3FragmentArgs by navArgs()
+
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
 
@@ -44,8 +46,6 @@ class L3Fragment : Fragment() {
 
     }
 
-    val args: L3FragmentArgs by navArgs()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,7 +58,6 @@ class L3Fragment : Fragment() {
         initTextFields(view)
 
         //========================BINDINGS====================================
-
         val makeWCButton = view.findViewById<Button>(R.id.l3makeWorkCodeButton)
         makeWCButton.setOnClickListener() {
             generateWorkCode(view);
@@ -67,12 +66,15 @@ class L3Fragment : Fragment() {
         val stBut = view.findViewById<TextView>(R.id.l3statusButton)
         stBut.setOnClickListener() {
             var stat = this.currentMaintenanceRecord?.status?.toInt()
-            if (stat!=null)
+            if (stat != null)
                 stat = (stat+1)%4
                 this.currentMaintenanceRecord?.status = (stat).toString()
+
             val devArg = args.devicePassed
             val catArg = args.categoryPassed
+
             this.currentMaintenanceRecord?.let { it1 -> ctrl?.editInfo(Path(catArg, devArg), it1) }
+
             when(stat){
                 0 -> {
                     stBut.text = "Active"
@@ -91,7 +93,7 @@ class L3Fragment : Fragment() {
                     stBut.setBackgroundColor(resources.getColor(R.color.black))
                 }
                 else -> {
-                    stBut.text = "OOP"
+                    stBut.text = "Error"
                     stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
                 }
             }
@@ -99,23 +101,25 @@ class L3Fragment : Fragment() {
     }
 
     fun initTextFields(view: View){
+
         val devArg = args.devicePassed
         val catArg = args.categoryPassed
 
-//      TODO: we need to save the json object
         this.currentMaintenanceRecord = ctrl?.getInf(Path(catArg, devArg)) as MaintenanceRecord
+
         Log.d("check object", this.currentMaintenanceRecord.toString())
 
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
-        //TODO: have to fill out these functions in the controller for the gets
         val inventoryNumTextView = view.findViewById<TextView>(R.id.l3inventoryNumberText)
         val workOrderNumTextView = view.findViewById<TextView>(R.id.l3workOrderNumberText)
         val serviceProviderTextView = view.findViewById<TextView>(R.id.l3serviceProviderText)
         val serviceEngineerCodeTextView = view.findViewById<TextView>(R.id.l3serviceEngineerCodeText)
         val faultCodeTextView = view.findViewById<TextView>(R.id.l3faultCodeText)
         val ipmProcedureTextView = view.findViewById<TextView>(R.id.l3ipmProcedureText)
+
         var localManRec = this.currentMaintenanceRecord;
+
         if (localManRec != null) {
             inventoryNumTextView.text = localManRec.inventoryNum
             workOrderNumTextView.text = localManRec.workOrderNum
@@ -190,8 +194,7 @@ class L3Fragment : Fragment() {
         }
     }
 
-    //TODO: probably need a button or something to clear work orders
-    fun generateWorkCode(view: View){
+    private fun generateWorkCode(view: View){
         val wonTV = view.findViewById<TextView>(R.id.l3workOrderNumberText)
         if (wonTV.text.toString() == "") {
             //TODO: fill out helper function in controller
@@ -199,27 +202,9 @@ class L3Fragment : Fragment() {
         }
     }
 
-    // This function genetrates a bitmap based on the data provided
-    fun getQrCodeBitmap(Location: String, Device: String): File? {
-        val qrCodeContent = "$Location : $Device"
-        val hints = hashMapOf<EncodeHintType, Int>().also {
-            it[EncodeHintType.MARGIN] = 1
-        } // Make the QR code buffer border narrower
-        val size = 512 //pixels
-        val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
-        val myQRCode = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
-            for (x in 0 until size) {
-                for (y in 0 until size) {
-                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
-                }
-            }
-        }
-
-        return bitmapToFile(myQRCode, "testQR")
-    }
 
     // This function saves the bitmap to local file storage
-    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
+    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? {
         //create a file to write bitmap data
         var file: File? = null
         return try {
@@ -238,16 +223,16 @@ class L3Fragment : Fragment() {
             fos.flush()
             fos.close()
             file
+
         } catch (e: Exception) {
             e.printStackTrace()
             file // it will return null
         }
     }
 
-    fun showStatus(view: View, mr: MaintenanceRecord){
+    private fun showStatus(view: View, mr: MaintenanceRecord){
         val stBut = view.findViewById<TextView>(R.id.l3statusButton)
-        val stat = mr.status.toInt()
-        when(stat){
+        when(mr.status.toInt()){
             0 -> {
                 stBut.text = "Active"
                 stBut.setBackgroundColor(resources.getColor(R.color.active_green))
@@ -265,7 +250,7 @@ class L3Fragment : Fragment() {
                 stBut.setBackgroundColor(resources.getColor(R.color.black))
             }
             else -> {
-                stBut.text = "OOP"
+                stBut.text = "Error"
                 stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
             }
         }

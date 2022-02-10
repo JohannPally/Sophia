@@ -1,0 +1,10 @@
+TODO:
+1. Device should have the following fields:
+    - Is it working?
+    - When was the last time maintenance was done on it?
+    - Who checked on it?
+2. Having a pre-set template for devices - consumable vs durable medical devices
+3. Dashboard should have the ability to display which devices need maintenance and where they are
+4. Useful to have levels of "brokeness"
+5. How do I determine how many devices a location should have?
+6. Print out obnoxious messages if the DB has not been synced in a while.
