@@ -3,8 +3,6 @@ package com.example.myapplication
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +12,6 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.databinding.FragmentL3Binding
 import androidx.navigation.fragment.navArgs
-import android.text.Editable
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
@@ -31,8 +28,6 @@ class L3Fragment : Fragment() {
     private var ctrl: DBController ? = null
     private var currentMaintenanceRecord: MaintenanceRecord ? = null
 
-    private val args: L3FragmentArgs by navArgs()
-
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
 
@@ -46,6 +41,8 @@ class L3Fragment : Fragment() {
 
     }
 
+    val args: L3FragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,6 +55,7 @@ class L3Fragment : Fragment() {
         initTextFields(view)
 
         //========================BINDINGS====================================
+
         val makeWCButton = view.findViewById<Button>(R.id.l3makeWorkCodeButton)
         makeWCButton.setOnClickListener() {
             generateWorkCode(view);
@@ -66,15 +64,12 @@ class L3Fragment : Fragment() {
         val stBut = view.findViewById<TextView>(R.id.l3statusButton)
         stBut.setOnClickListener() {
             var stat = this.currentMaintenanceRecord?.status?.toInt()
-            if (stat != null)
+            if (stat!=null)
                 stat = (stat+1)%4
                 this.currentMaintenanceRecord?.status = (stat).toString()
-
             val devArg = args.devicePassed
             val catArg = args.categoryPassed
-
-            this.currentMaintenanceRecord?.let { it1 -> ctrl?.editInfo(Path(catArg, devArg), it1) }
-
+            this.currentMaintenanceRecord?.let { it1 -> ctrl?.editInfo(DevicePath(catArg, devArg), it1) }
             when(stat){
                 0 -> {
                     stBut.text = "Active"
@@ -93,7 +88,7 @@ class L3Fragment : Fragment() {
                     stBut.setBackgroundColor(resources.getColor(R.color.black))
                 }
                 else -> {
-                    stBut.text = "Error"
+                    stBut.text = "OOP"
                     stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
                 }
             }
@@ -101,27 +96,26 @@ class L3Fragment : Fragment() {
     }
 
     fun initTextFields(view: View){
-
         val devArg = args.devicePassed
         val catArg = args.categoryPassed
 
-        this.currentMaintenanceRecord = ctrl?.getInf(Path(catArg, devArg)) as MaintenanceRecord
-
-        Log.d("check object", this.currentMaintenanceRecord.toString())
+//      TODO: we need to save the json object
+        this.currentMaintenanceRecord = ctrl?.getInf(DevicePath(catArg, devArg)) as MaintenanceRecord
+        //Log.d("test getInf", this.currentMaintenanceRecord.toString())
+        //Log.d("check object", this.currentMaintenanceRecord.toString())
 
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
 
+        //TODO: have to fill out these functions in the controller for the gets
         val inventoryNumTextView = view.findViewById<TextView>(R.id.l3inventoryNumberText)
         val workOrderNumTextView = view.findViewById<TextView>(R.id.l3workOrderNumberText)
         val serviceProviderTextView = view.findViewById<TextView>(R.id.l3serviceProviderText)
         val serviceEngineerCodeTextView = view.findViewById<TextView>(R.id.l3serviceEngineerCodeText)
         val faultCodeTextView = view.findViewById<TextView>(R.id.l3faultCodeText)
         val ipmProcedureTextView = view.findViewById<TextView>(R.id.l3ipmProcedureText)
-
         var localManRec = this.currentMaintenanceRecord;
-
         if (localManRec != null) {
-            inventoryNumTextView.text = localManRec.inventoryNum
+            inventoryNumTextView.text = localManRec.id
             workOrderNumTextView.text = localManRec.workOrderNum
             serviceProviderTextView.text = localManRec.serviceProvider
             serviceEngineerCodeTextView.text = localManRec.serviceEngineeringCode
@@ -132,9 +126,9 @@ class L3Fragment : Fragment() {
         inventoryNumTextView.onFocusChangeListener =
             View.OnFocusChangeListener { p0, hasFocus ->
                 if (localManRec != null && !hasFocus) {
-                    if (localManRec.inventoryNum != inventoryNumTextView.text.toString()) {
-                        localManRec.inventoryNum = inventoryNumTextView.text.toString()
-                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
+                    if (localManRec.id != inventoryNumTextView.text.toString()) {
+                        localManRec.id = inventoryNumTextView.text.toString()
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -144,7 +138,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.workOrderNum != workOrderNumTextView.text.toString()) {
                         localManRec.workOrderNum = workOrderNumTextView.text.toString()
-                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -154,7 +148,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.serviceProvider != serviceProviderTextView.text.toString()) {
                         localManRec.serviceProvider = serviceProviderTextView.text.toString()
-                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -164,7 +158,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.serviceEngineeringCode != serviceEngineerCodeTextView.text.toString()) {
                         localManRec.serviceEngineeringCode = serviceEngineerCodeTextView.text.toString()
-                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -174,7 +168,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.faultCode != faultCodeTextView.text.toString()) {
                         localManRec.faultCode = faultCodeTextView.text.toString()
-                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -184,7 +178,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.ipmProcedure != ipmProcedureTextView.text.toString()) {
                         localManRec.ipmProcedure = ipmProcedureTextView.text.toString()
-                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -194,7 +188,8 @@ class L3Fragment : Fragment() {
         }
     }
 
-    private fun generateWorkCode(view: View){
+    //TODO: probably need a button or something to clear work orders
+    fun generateWorkCode(view: View){
         val wonTV = view.findViewById<TextView>(R.id.l3workOrderNumberText)
         if (wonTV.text.toString() == "") {
             //TODO: fill out helper function in controller
@@ -202,9 +197,27 @@ class L3Fragment : Fragment() {
         }
     }
 
+    // This function genetrates a bitmap based on the data provided
+    fun getQrCodeBitmap(Location: String, Device: String): File? {
+        val qrCodeContent = "$Location : $Device"
+        val hints = hashMapOf<EncodeHintType, Int>().also {
+            it[EncodeHintType.MARGIN] = 1
+        } // Make the QR code buffer border narrower
+        val size = 512 //pixels
+        val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
+        val myQRCode = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            for (x in 0 until size) {
+                for (y in 0 until size) {
+                    it.setPixel(x, y, if (bits[x, y]) Color.BLACK else Color.WHITE)
+                }
+            }
+        }
+
+        return bitmapToFile(myQRCode, "testQR")
+    }
 
     // This function saves the bitmap to local file storage
-    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? {
+    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
         //create a file to write bitmap data
         var file: File? = null
         return try {
@@ -223,16 +236,17 @@ class L3Fragment : Fragment() {
             fos.flush()
             fos.close()
             file
-
         } catch (e: Exception) {
             e.printStackTrace()
             file // it will return null
         }
     }
 
-    private fun showStatus(view: View, mr: MaintenanceRecord){
+    fun showStatus(view: View, mr: MaintenanceRecord){
+        //Log.d("v", mr.toString());
         val stBut = view.findViewById<TextView>(R.id.l3statusButton)
-        when(mr.status.toInt()){
+        val stat = mr.status.toInt()
+        when(stat){
             0 -> {
                 stBut.text = "Active"
                 stBut.setBackgroundColor(resources.getColor(R.color.active_green))
@@ -250,7 +264,7 @@ class L3Fragment : Fragment() {
                 stBut.setBackgroundColor(resources.getColor(R.color.black))
             }
             else -> {
-                stBut.text = "Error"
+                stBut.text = "OOP"
                 stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
             }
         }

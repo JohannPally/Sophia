@@ -5,12 +5,12 @@ package com.example.myapplication
  * All modifications to the contents of an MR should start from here.
  */
 data class MaintenanceRecord(
-    var inventoryNum: String,
+    var id: String,
     var workOrderNum: String,
     var serviceProvider: String,
     var serviceEngineeringCode: String,
     var faultCode: String,
     var ipmProcedure: String,
     var status: String,
-    var timestamp: Int,
+    var timestamp: Long,
 )
