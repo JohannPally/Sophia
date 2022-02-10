@@ -72,7 +72,7 @@ class L3Fragment : Fragment() {
                 this.currentMaintenanceRecord?.status = (stat).toString()
             val devArg = args.devicePassed
             val catArg = args.categoryPassed
-            this.currentMaintenanceRecord?.let { it1 -> ctrl?.editInfo(Pair(catArg, devArg), it1) }
+            this.currentMaintenanceRecord?.let { it1 -> ctrl?.editInfo(Path(catArg, devArg), it1) }
             when(stat){
                 0 -> {
                     stBut.text = "Active"
@@ -103,7 +103,7 @@ class L3Fragment : Fragment() {
         val catArg = args.categoryPassed
 
 //      TODO: we need to save the json object
-        this.currentMaintenanceRecord = ctrl?.getInf(Pair(catArg, devArg)) as MaintenanceRecord
+        this.currentMaintenanceRecord = ctrl?.getInf(Path(catArg, devArg)) as MaintenanceRecord
         Log.d("check object", this.currentMaintenanceRecord.toString())
 
         view.findViewById<TextView>(R.id.l3deviceText).text = devArg
@@ -130,7 +130,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.inventoryNum != inventoryNumTextView.text.toString()) {
                         localManRec.inventoryNum = inventoryNumTextView.text.toString()
-                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -140,7 +140,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.workOrderNum != workOrderNumTextView.text.toString()) {
                         localManRec.workOrderNum = workOrderNumTextView.text.toString()
-                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -150,7 +150,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.serviceProvider != serviceProviderTextView.text.toString()) {
                         localManRec.serviceProvider = serviceProviderTextView.text.toString()
-                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -160,7 +160,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.serviceEngineeringCode != serviceEngineerCodeTextView.text.toString()) {
                         localManRec.serviceEngineeringCode = serviceEngineerCodeTextView.text.toString()
-                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -170,7 +170,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.faultCode != faultCodeTextView.text.toString()) {
                         localManRec.faultCode = faultCodeTextView.text.toString()
-                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
                     }
                 };
             }
@@ -180,7 +180,7 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.ipmProcedure != ipmProcedureTextView.text.toString()) {
                         localManRec.ipmProcedure = ipmProcedureTextView.text.toString()
-                        ctrl?.editInfo(Pair(catArg, devArg), localManRec);
+                        ctrl?.editInfo(Path(catArg, devArg), localManRec);
                     }
                 };
             }
