@@ -88,7 +88,7 @@ class L3Fragment : Fragment() {
                     stBut.setBackgroundColor(resources.getColor(R.color.black))
                 }
                 else -> {
-                    stBut.text = "OOP"
+                    stBut.text = "Fatal Error"
                     stBut.setBackgroundColor(resources.getColor(R.color.purple_200))
                 }
             }
@@ -113,6 +113,10 @@ class L3Fragment : Fragment() {
         val serviceEngineerCodeTextView = view.findViewById<TextView>(R.id.l3serviceEngineerCodeText)
         val faultCodeTextView = view.findViewById<TextView>(R.id.l3faultCodeText)
         val ipmProcedureTextView = view.findViewById<TextView>(R.id.l3ipmProcedureText)
+        val weeklyMaintenanceDate = view.findViewById<TextView>(R.id.l3weeklymaintenanceText)
+        val monthlyMaintenanceDate = view.findViewById<TextView>(R.id.l3monthlymaintenanceText)
+        val yearlyMaintenanceDate = view.findViewById<TextView>(R.id.l3yearlymaintenanceText)
+
         var localManRec = this.currentMaintenanceRecord;
         if (localManRec != null) {
             inventoryNumTextView.text = localManRec.id
@@ -121,6 +125,9 @@ class L3Fragment : Fragment() {
             serviceEngineerCodeTextView.text = localManRec.serviceEngineeringCode
             faultCodeTextView.text = localManRec.faultCode
             ipmProcedureTextView.text = localManRec.ipmProcedure
+            weeklyMaintenanceDate.text = localManRec.weeklyMaintenance
+            monthlyMaintenanceDate.text = localManRec.monthlyMaintenance
+            yearlyMaintenanceDate.text = localManRec.yearlyMaintenance
         }
 
         inventoryNumTextView.onFocusChangeListener =
@@ -178,6 +185,36 @@ class L3Fragment : Fragment() {
                 if (localManRec != null && !hasFocus) {
                     if (localManRec.ipmProcedure != ipmProcedureTextView.text.toString()) {
                         localManRec.ipmProcedure = ipmProcedureTextView.text.toString()
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
+                    }
+                };
+            }
+
+        weeklyMaintenanceDate.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.weeklyMaintenance != weeklyMaintenanceDate.text.toString()) {
+                        localManRec.weeklyMaintenance = weeklyMaintenanceDate.text.toString()
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
+                    }
+                };
+            }
+
+        monthlyMaintenanceDate.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.monthlyMaintenance != monthlyMaintenanceDate.text.toString()) {
+                        localManRec.monthlyMaintenance = monthlyMaintenanceDate.text.toString()
+                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
+                    }
+                };
+            }
+
+        yearlyMaintenanceDate.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if (localManRec != null && !hasFocus) {
+                    if (localManRec.yearlyMaintenance != yearlyMaintenanceDate.text.toString()) {
+                        localManRec.yearlyMaintenance = yearlyMaintenanceDate.text.toString()
                         ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
                     }
                 };

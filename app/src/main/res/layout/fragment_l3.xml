@@ -184,6 +184,72 @@
                 android:textSize="14sp" />
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Weekly Maintenance"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3weeklymaintenanceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="datetime"
+                android:textSize="14sp"
+                tools:text="@tools:sample/date/ddmmyy" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Monthly Maintenance"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3monthlymaintenanceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="datetime"
+                android:textSize="14sp"
+                tools:text="@tools:sample/date/ddmmyy" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_neutral">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Yearly Maintenance"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/l3yearlymaintenanceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="datetime"
+                android:textSize="14sp"
+                tools:text="@tools:sample/date/ddmmyy" />
+        </TableRow>
+
     </TableLayout>
 
 

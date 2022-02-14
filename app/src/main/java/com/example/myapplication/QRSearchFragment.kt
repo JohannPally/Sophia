@@ -106,7 +106,7 @@ class QRSearchFragment : Fragment() {
         Log.d("QR Data Received", text)
         val devInfo = ctrl?.getPathFromQRId(text)
         if (devInfo != null) {
-            navMod.QRSearchtoL3(devInfo.first, devInfo.second, findNavController())
+            navMod.QRSearchtoL3(devInfo.category, devInfo.device, findNavController())
         }
         else {
             Log.v("SAVE QR corrupt", "Error")

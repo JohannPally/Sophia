@@ -14,6 +14,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.databinding.FragmentWelcomeScreenBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 
 class AddDeviceFragment : Fragment() {
 
@@ -43,7 +46,6 @@ class AddDeviceFragment : Fragment() {
         else {
             Log.d("can't cast activity", "AddDeviceFragment.kt")
         }
-        //TODO fill text, add button to jump between
 
         val catPassed = args.categoryPassed
         val invPassed = args.invText
@@ -56,19 +58,15 @@ class AddDeviceFragment : Fragment() {
 
         val invNumTV = view.findViewById<TextView>(R.id.adinvNumTextView)
         val devNameET = view.findViewById<EditText>(R.id.adDeviceName)
-        //TODO work
         val servProvET = view.findViewById<EditText>(R.id.adServiceProvider)
         val servEngET = view.findViewById<EditText>(R.id.adServiceEngineerCode)
         val faultET = view.findViewById<EditText>(R.id.adFaultCode)
-        //TODO IMP
 
         invNumTV.text = invPassed
         devNameET.setText(devPassed)
-        //TODO work
         servProvET.setText(servProvPassed)
         servEngET.setText(servEngPassed)
         faultET.setText(faultPassed)
-        //TODO IMP
 
 
         //========================BINDINGS====================================
@@ -76,13 +74,11 @@ class AddDeviceFragment : Fragment() {
         toQRAssignButton.setOnClickListener() {
             val devNameText = devNameET.text.toString()
 
-            //TODO work
             val workText = "testwork"
             val servProvText = servProvET.text.toString()
             val servEngText = servEngET.text.toString()
             val faultText = faultET.text.toString()
 
-            //TODO IPM
             val ipmText = "testIPM"
             Log.v("QRAssignButton test?","is this working")
             navMod.ADtoQRAssign(cat = catPassed, dev = devNameText, work = workText, servProv = servProvText,
@@ -94,22 +90,24 @@ class AddDeviceFragment : Fragment() {
             val bdevName = devNameET.text.toString()
             val binvNumText = invNumTV.text.toString()
 
-            //TODO check UUID too
             if(bdevName != ""){
                 val bdevNameText = devNameET.text.toString()
-                //TODO work
                 val bworkText = "testwork"
                 val bservProvText = servProvET.text.toString()
                 val bservEngText = servEngET.text.toString()
                 val bfaultText = faultET.text.toString()
-
-                //TODO IMP
                 val bipmText = "testIMP"
 
-                //TODO finish out the controller call
-                //TODO status?
+                // This is required because the Kotlin getDate requires API > 26 and we need to
+                // support API 21 +
+                // Getting today's date
+                val date = Calendar.getInstance().time
+                val formatter = SimpleDateFormat.getDateInstance()
+                val formatedDate = formatter.format(date)
+
                 val mr = MaintenanceRecord(id = binvNumText, workOrderNum = bworkText, serviceProvider = bservProvText, serviceEngineeringCode = bservEngText,
-                faultCode = bfaultText, ipmProcedure = bipmText, status = "0", timestamp = System.currentTimeMillis()/1000)
+                faultCode = bfaultText, ipmProcedure = bipmText, status = "0", timestamp = System.currentTimeMillis()/1000,
+                    weeklyMaintenance = formatedDate, monthlyMaintenance = formatedDate, yearlyMaintenance = formatedDate)
                 dbCtrl?.addNewDevice(p = DevicePath(catPassed, bdevName), mr)
                 navMod.ADtoL3(catPassed, bdevName, findNavController())
             }
