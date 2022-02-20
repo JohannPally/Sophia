@@ -110,6 +110,8 @@ class QRSearchFragment : Fragment() {
         }
         else {
             Log.v("SAVE QR corrupt", "Error")
+            Toast.makeText(context as Context, "Please scan correct QR Code", Toast.LENGTH_LONG).show()
+            navMod.QRSearchtoL1(findNavController())
         }
     }
 

@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_QRFragment_to_L3Fragment"
             app:destination="@id/L3Fragment" />
+        <action
+            android:id="@+id/action_QRSearchFragment_to_L1Fragment"
+            app:destination="@id/L1Fragment" />
     </fragment>
     <fragment
         android:id="@+id/addDeviceFragment"
@@ -159,5 +162,8 @@
         <action
             android:id="@+id/action_QRValidateUser_to_L1Fragment"
             app:destination="@id/L1Fragment" />
+        <action
+            android:id="@+id/action_QRValidateUser_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
 </navigation>

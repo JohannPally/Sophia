@@ -16,9 +16,13 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    //TODO add button to Welcome screen to QRsearch?
     fun WtoQRValidate(navController: NavController) {
         val action = WelcomeFragmentDirections.actionWelcomeFragmentToQRValidateUser()
+        navController.navigate(action)
+    }
+
+    fun QRValidatetoW(navController: NavController) {
+        val action = QRValidateUserDirections.actionQRValidateUserToWelcomeFragment()
         navController.navigate(action)
     }
 
@@ -110,6 +114,11 @@ class NavMod : ViewModel() {
 
     fun QRSearchtoL3(category: String, device: String, navController: NavController) {
         val action = QRSearchFragmentDirections.actionQRFragmentToL3Fragment(category, device)
+        navController.navigate(action)
+    }
+
+    fun QRSearchtoL1(navController: NavController) {
+        val action = QRSearchFragmentDirections.actionQRSearchFragmentToL1Fragment()
         navController.navigate(action)
     }
 

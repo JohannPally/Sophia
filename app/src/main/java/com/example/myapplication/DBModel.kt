@@ -130,12 +130,13 @@ class DatabaseModel(context: Context) {
     Getters and Setters for our DatabaseModel class relating to the ID databasae
      */
 
-    fun fragment_get_id(id: String): QrCodeIdData {
+    fun fragment_get_id(id: String): QrCodeIdData? {
         val idValue = idData[id]
         if (idValue != null) {
             return idValue
         } else {
-            error("Error fetching data from ID $id")
+            Log.v("Error get data from ID $id", "ERROR")
+            return null
         }
     }
 

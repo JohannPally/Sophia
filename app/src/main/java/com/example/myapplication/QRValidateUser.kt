@@ -20,6 +20,7 @@ import com.example.myapplication.databinding.FragmentQRValidateUserBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import kotlin.IllegalStateException
 
 
 class QRValidateUser : Fragment() {
@@ -107,37 +108,51 @@ class QRValidateUser : Fragment() {
      */
     private fun saveQRData(text: String) {
         val hashType: Type = object : TypeToken<HashMap<String, String>>() {}.type
-        val url_authkey_map: HashMap<String, String> = Gson().fromJson(text, hashType)
-        val url: String? = url_authkey_map["URL"]
-        val authkey: String? = url_authkey_map["AuthKey"]
+        var url_authkey_map: HashMap<String, String> = HashMap()
 
-        if (url != null) {
-            Log.v("URL Key Test", url)
-        }
-        if (authkey != null) {
-            Log.v("URL Test", authkey)
-        }
+        try {
+            Log.v("ENTERED URL TRY", "TRY")
+            url_authkey_map = Gson().fromJson(text, hashType)
+            val url: String? = url_authkey_map["URL"]
+            val authkey: String? = url_authkey_map["AuthKey"]
 
-        //TODO shared preferences
-            //ligma balls
-        val sharedPref = activity?.getSharedPreferences(
-            getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
-
-        // Update the sharedPrefs so tha thte user is authenticated
-        if (authkey != null) {
             if (url != null) {
-                editSharedPreferences(authkey, url)
+                Log.v("URL Key Test", url)
             }
+            if (authkey != null) {
+                Log.v("URL Test", authkey)
+            }
+
+            val sharedPref = activity?.getSharedPreferences(
+                getString(R.string.preferences_file_key), Context.MODE_PRIVATE
+            )
+
+            // Update the sharedPrefs so that the user is authenticated
+            if (authkey != null) {
+                if (url != null) {
+                    editSharedPreferences(authkey, url)
+                }
+            }
+
+            val defaultValue = resources.getString(R.string.default_keys)
+            val testAK = sharedPref?.getString(R.string.authkey_key.toString(), "h")
+            val testUK = sharedPref?.getString(R.string.url_key.toString(), "i")
+            Log.v(testAK, "Auth key testing")
+            Log.v(testUK, "URL key testing")
+
+            navMod.QRValidatetoL1(findNavController());
+        }
+
+        catch ( e : Exception) {
+            Log.v("ENTERED CATCH", "CATCH")
+            Toast.makeText(context as Context, "Please scan authentication QR Code", Toast.LENGTH_LONG).show()
+            // TODO -- Could add a navigation back to Welcome screen and a toast to tell them to scan correct QR code
+            navMod.QRValidatetoW(findNavController())
         }
 
 
-        val defaultValue = resources.getString(R.string.default_keys)
-        val testAK = sharedPref?.getString(R.string.authkey_key.toString(), "h")
-        val testUK = sharedPref?.getString(R.string.url_key.toString(), "i")
-        Log.v(testAK, "Auth key testing")
-        Log.v(testUK, "URL key testing")
 
-        navMod.QRValidatetoL1(findNavController());
+
 
 
     }

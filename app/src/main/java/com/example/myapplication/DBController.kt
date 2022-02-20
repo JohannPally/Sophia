@@ -71,9 +71,12 @@ class DBController(context: Context) {
     }
      */
 
-    fun getPathFromQRId(id:String): DevicePath {
-        var deviceInfo : QrCodeIdData  = model.fragment_get_id(id)
-        return DevicePath(deviceInfo.category, deviceInfo.device)
+    fun getPathFromQRId(id:String): DevicePath? {
+        var deviceInfo : QrCodeIdData? = model.fragment_get_id(id)
+        if (deviceInfo != null) {
+            return DevicePath(deviceInfo.category, deviceInfo.device)
+        }
+        return null
     }
 
     private fun addNewDeviceQR(qrCodeId:String, p: DevicePath) {

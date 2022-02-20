@@ -31,15 +31,15 @@ class L3Fragment : Fragment() {
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentL3Binding.inflate(inflater, container, false)
-        return binding.root
-
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//
+//        _binding = FragmentL3Binding.inflate(inflater, container, false)
+//        return binding.root
+//
+//    }
 
     val args: L3FragmentArgs by navArgs()
 
