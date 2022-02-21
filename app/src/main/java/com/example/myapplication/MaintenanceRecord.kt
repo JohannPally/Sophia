@@ -13,7 +13,11 @@ data class MaintenanceRecord(
     var ipmProcedure: String,
     var status: String,
     var timestamp: Long,
+    /*
     var weeklyMaintenance: String,
     var monthlyMaintenance: String,
     var yearlyMaintenance: String
+
+     */
+
 )

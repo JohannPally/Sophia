@@ -125,9 +125,12 @@ class L3Fragment : Fragment() {
             serviceEngineerCodeTextView.text = localManRec.serviceEngineeringCode
             faultCodeTextView.text = localManRec.faultCode
             ipmProcedureTextView.text = localManRec.ipmProcedure
+            /*
             weeklyMaintenanceDate.text = localManRec.weeklyMaintenance
             monthlyMaintenanceDate.text = localManRec.monthlyMaintenance
             yearlyMaintenanceDate.text = localManRec.yearlyMaintenance
+
+             */
         }
 
         inventoryNumTextView.onFocusChangeListener =
@@ -190,6 +193,7 @@ class L3Fragment : Fragment() {
                 };
             }
 
+        /*
         weeklyMaintenanceDate.onFocusChangeListener =
             View.OnFocusChangeListener { p0, hasFocus ->
                 if (localManRec != null && !hasFocus) {
@@ -219,6 +223,8 @@ class L3Fragment : Fragment() {
                     }
                 };
             }
+
+         */
 
         if (localManRec != null) {
             showStatus(view, localManRec)
