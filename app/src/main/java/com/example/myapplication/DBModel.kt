@@ -14,6 +14,7 @@ import android.util.Log
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
+private var templatesFilename: String = "templates.json"
 private val serverURL:String = "http://10.0.2.2:4567"
 
 //TODO NOTES
@@ -26,12 +27,52 @@ class DatabaseModel(context: Context) {
 
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
     lateinit var idData : HashMap<String, QrCodeIdData>
+    lateinit var templates : HashMap<String, DeviceTemplate>
     val context: Context = context
     var cm : ConnectivityManager
     var logs = arrayListOf<Pair<String, String>>()
     init {
         this.cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        createBothFromFile(context)
+        val dbHashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
+        val idHashMapType: Type = object : TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
+        val templateHashMapType: Type = object : TypeToken<HashMap<String, DeviceTemplate>?>() {}.type
+        try {
+            this.database =
+                createFromFile(
+                    context,
+                    dbFilename,
+                    dbHashMapType
+                ) as HashMap<String, HashMap<String, MaintenanceRecord>>
+        } catch (e: FileNotFoundException) {
+            // If there isn't a file (Most likely first boot), retrieve DB file from server
+            this.database = hashMapOf()
+            this.updateDB()
+        }
+        try {
+            this.idData =
+                createFromFile(
+                    context,
+                    idFilename,
+                    idHashMapType
+                ) as HashMap<String, QrCodeIdData>
+        } catch (e: FileNotFoundException) {
+            // If there isn't a file (Most likely first boot), retrieve ID file from server
+            this.idData = hashMapOf()
+            this.updateIDs()
+        }
+        try {
+            this.templates =
+                createFromFile(
+                    context,
+                    templatesFilename,
+                    templateHashMapType
+                ) as HashMap<String, DeviceTemplate>
+        } catch (e: FileNotFoundException) {
+            // If there isn't a file (Most likely first boot), retrieve ID file from server
+            this.templates = hashMapOf()
+            this.updateTemplates()
+        }
+        println(this.templates)
     }
 
     /*
@@ -47,10 +88,9 @@ class DatabaseModel(context: Context) {
         bufferedWriter.close()
     }
 
-    private fun createBothFromFile(context: Context) {
+    private fun createFromFile(context: Context, filename: String, hashMapType: Type) : Any {
         try {
-            val file = File(context.filesDir, dbFilename)
-//            val file = File( "app/java/com/example/myapplication/exDB.json")
+            val file = File(context.filesDir, filename)
             val fileReader = FileReader(file)
 
             val bufferedReader = BufferedReader(fileReader)
@@ -62,37 +102,10 @@ class DatabaseModel(context: Context) {
             bufferedReader.close()
 
             val jsonInput = stringBuilder.toString()
-            val hashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
-            val readDB: HashMap<String, HashMap<String, MaintenanceRecord>> = Gson().fromJson(jsonInput, hashMapType)
-            this.database = readDB
+            return Gson().fromJson(jsonInput, hashMapType)
         } catch (e: FileNotFoundException) {
             saveToLocalFile("{}", dbFilename)
-            this.database = hashMapOf();
-            updateDB();
-        }
-        try {
-            val idFile = File(context.filesDir, idFilename)
-            val idFileReader = FileReader(idFile)
-
-            val idBufferedReader = BufferedReader(idFileReader)
-            val idStringBuilder = StringBuilder()
-            val idAllLines: List<String> = idBufferedReader.readLines()
-            for (line in idAllLines) {
-                idStringBuilder.append(line).append("\n")
-            }
-            idBufferedReader.close()
-
-            val idJsonInput = idStringBuilder.toString()
-            val idHashMapType: Type = object : TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
-            val readIds: HashMap<String, QrCodeIdData> = Gson().fromJson(idJsonInput, idHashMapType)
-            Log.v("HIT THIS", "TAP")
-            this.idData = readIds
-
-            //return readDB;
-        } catch (e: FileNotFoundException) {
-            saveToLocalFile("{}", idFilename)
-            this.idData = hashMapOf();
-            updateDB();
+            throw e;
         }
     }
 
@@ -483,6 +496,29 @@ class DatabaseModel(context: Context) {
                     val fullIDJson = Gson().toJson(idData)
                     Log.d("SAVING Web to FILE", "updatedIDs")
                     saveToLocalFile(fullIDJson, idFilename)
+                }
+            }.start()
+        }
+    }
+
+    /**
+     * Update templates with backend templates
+     */
+    fun updateTemplates() {
+        if (isOnline()) {
+            Thread {
+                val newDB = get_server("$serverURL/templates/")
+                if (newDB.isNotEmpty()) {
+                    val hashMapType: Type =
+                        object :
+                            TypeToken<HashMap<String, DeviceTemplate>?>() {}.type
+                    val readDB: HashMap<String, DeviceTemplate> =
+                        Gson().fromJson(newDB, hashMapType)
+                    this.templates = readDB
+
+                    val templateJSON = Gson().toJson(templates)
+                    Log.d("SAVING Web to FILE", "updatedTemplates")
+                    saveToLocalFile(templateJSON, templatesFilename)
                 }
             }.start()
         }
