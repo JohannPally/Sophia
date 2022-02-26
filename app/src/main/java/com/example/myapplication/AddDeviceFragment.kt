@@ -106,8 +106,8 @@ class AddDeviceFragment : Fragment() {
                 val formatedDate = formatter.format(date)
 
                 val mr = MaintenanceRecord(id = binvNumText, workOrderNum = bworkText, serviceProvider = bservProvText, serviceEngineeringCode = bservEngText,
-                faultCode = bfaultText, ipmProcedure = bipmText, status = "0", timestamp = System.currentTimeMillis()/1000,
-                    weeklyMaintenance = formatedDate, monthlyMaintenance = formatedDate, yearlyMaintenance = formatedDate)
+                faultCode = bfaultText, ipmProcedure = bipmText, status = "0", timestamp = System.currentTimeMillis()/1000)
+//                    weeklyMaintenance = formatedDate, monthlyMaintenance = formatedDate, yearlyMaintenance = formatedDate)
                 dbCtrl?.addNewDevice(p = DevicePath(catPassed, bdevName), mr)
                 navMod.ADtoL3(catPassed, bdevName, findNavController())
             }

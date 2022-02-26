@@ -33,6 +33,19 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        var testDB = AppDatabase.getInstance(applicationContext)
+        val mrDao = testDB.maintenanceRecordDAO()
+        val levelsDao = testDB.levelsDAO()
+        val topLevel = LevelSQL(0, "first level", null);
+        levelsDao.insert(topLevel)
+        println(levelsDao.getAll()[0].parent);
+        println(topLevel.id)
+        mrDao.insert(MaintenanceRecordSQL(0,"first sql device", "1", null, null, null, null, 1, 12, levelsDao.getAll()[0].id))
+        mrDao.insert(MaintenanceRecordSQL(0,"second sql device", "1", null, null, null, null, 1, 12, levelsDao.getAll()[0].id))
+        println("ALL: " + mrDao.getAll().size);
+        println(levelsDao.getTopLevel().size);
+        println("LINO 37")
+
 
         //TODO can make this a global variable instead of passing into frags
         //but have to make a temp var and then assign the public var = temp var
