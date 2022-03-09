@@ -35,6 +35,9 @@ class L1Fragment : Fragment() {
     //Does this refer to the one we made in the Main Activity?
     private val navMod: NavMod by activityViewModels()
 
+    // Access to the Data Table
+    var testDB = MainActivity.testDB
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,9 +63,12 @@ class L1Fragment : Fragment() {
 
         val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
         //TODO: replace with real getter for categories
+
+        Log.d("Mantej --", testDB.maintenanceRecordDAO().getAll()[0].deviceName)
+
+
         val Cats = dbCtrl?.getCats()
-        Log.v("Cats",dbCtrl.toString())
-        val testCats = setOf("Emergency Room", "Operating Room", "Intensive Care Unit", "Cardiac Care Unit")
+
         val adapter = Cats?.let{Category_Item_Adapter(it, navMod, findNavController())}
         //TODO: Maybe instead of changing how the RV fits in the view, space the textview and button themselves in item layout
         rvCats.adapter = adapter

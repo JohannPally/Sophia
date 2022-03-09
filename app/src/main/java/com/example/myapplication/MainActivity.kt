@@ -22,9 +22,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     public var dbctrl: DBController? = null
 
+    // Wrapping this in companion object so its accessible across all files
+    companion object {
+        lateinit var testDB : AppDatabase
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        testDB = AppDatabase.getInstance(applicationContext)
         dbctrl = DBController(applicationContext);
         //Log.v("???", dbctrl.toString())
 
@@ -33,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        var testDB = AppDatabase.getInstance(applicationContext)
         val mrDao = testDB.maintenanceRecordDAO()
         val levelsDao = testDB.levelsDAO()
         val topLevel = LevelSQL(0, "first level", null);

@@ -55,7 +55,6 @@ class L2Fragment : Fragment() {
         val rvDevs: RecyclerView = view.findViewById<RecyclerView>(R.id.rvDevices)
         //TODO: replace with real getter for categories
         val Devs = dbCtrl?.getDevs(catArg)
-        val testDevs = setOf("Stethascope", "Deflibrilator")
         val adapter = Devs?.let { Device_Item_Adapter(catArg, it, navMod, findNavController()) }
         rvDevs.adapter = adapter
         rvDevs.layoutManager = LinearLayoutManager(activity)

@@ -78,14 +78,14 @@ class WelcomeFragment: Fragment() {
             Log.v(testAK, "Auth key debug before")
             Log.v(testUK, "URL key debug before")
 
-            if (testAK.equals(resources.getString(R.string.default_keys)) and testUK.equals(resources.getString(R.string.default_keys))) {
-                navMod.WtoQRValidate(findNavController())
-            }
+//            if (testAK.equals(resources.getString(R.string.default_keys)) and testUK.equals(resources.getString(R.string.default_keys))) {
+//                navMod.WtoQRValidate(findNavController())
+//            }
 
-            else {
-                Log.v("Authenticate Successful", "Success")
-                navMod.WtoL1(findNavController())
-            }
+            //else {
+            Log.v("Authenticate Successful", "Success")
+            navMod.WtoL1(findNavController())
+           // }
 
             val defaultValueA = resources.getString(R.string.default_keys)
             val testAKA = sharedPref?.getString(getString(R.string.authkey_key), defaultValue)

@@ -24,6 +24,7 @@ data class MaintenanceRecordSQL(
     parentColumns = ["id"],
     childColumns = ["parent"],
     onDelete = CASCADE)])
+
 data class LevelSQL(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "level_name") val levelName: String,
