@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_QRValidateUser"
             app:destination="@id/QRValidateUser" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_recurseFragment"
+            app:destination="@id/recurseFragment" />
     </fragment>
     <fragment
         android:id="@+id/QRSearchFragment"
@@ -166,4 +169,21 @@
             android:id="@+id/action_QRValidateUser_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recurseFragment"
+        android:name="com.example.myapplication.RecurseFragment"
+        android:label="fragment_recurse"
+        tools:layout="@layout/fragment_recurse" >
+        <action
+            android:id="@+id/action_recurseFragment_self"
+            app:destination="@id/recurseFragment" />
+        <action
+            android:id="@+id/action_recurseFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.myapplication.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
 </navigation>
