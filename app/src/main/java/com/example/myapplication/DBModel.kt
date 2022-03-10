@@ -36,6 +36,7 @@ class DatabaseModel(context: Context) {
         val dbHashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
         val idHashMapType: Type = object : TypeToken<HashMap<String, QrCodeIdData>?>() {}.type
         val templateHashMapType: Type = object : TypeToken<HashMap<String, DeviceTemplate>?>() {}.type
+        MainActivity.testDB = AppDatabase.getInstance(context)
         try {
             this.database =
                 createFromFile(
@@ -118,7 +119,6 @@ class DatabaseModel(context: Context) {
         return prefs.getString(context.getString(R.string.authkey_key), "Error Retrieving AuthKey")!!
     }
 
-
     fun setAuthKey(newAuthKey: String) {
         val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
         var editor = prefs.edit()
@@ -131,7 +131,6 @@ class DatabaseModel(context: Context) {
         return prefs.getString(context.getString(R.string.url_key), "Error Retrieving URL")!!
     }
 
-
     fun setBackendUrl(newURL: String) {
         val prefs = context.getSharedPreferences(context.getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
         var editor = prefs.edit()
@@ -142,7 +141,6 @@ class DatabaseModel(context: Context) {
     /*
     Getters and Setters for our DatabaseModel class relating to the ID databasae
      */
-
     fun fragment_get_id(id: String): QrCodeIdData? {
         val idValue = idData[id]
         if (idValue != null) {
@@ -153,7 +151,6 @@ class DatabaseModel(context: Context) {
         }
     }
 
-
     fun fragment_set_id(id: String, category: String = "", device: String = "") {
         val qrIdData = QrCodeIdData(category, device)
 
@@ -163,8 +160,6 @@ class DatabaseModel(context: Context) {
         println("SAVING ID DATA FILE")
         saveToLocalFile(fullIdJson, idFilename)
     }
-
-
 
     /*
     Getters and Setters for our DatabaseModel class relating to the main Database
@@ -239,6 +234,15 @@ class DatabaseModel(context: Context) {
         }
 
          */
+    }
+
+    fun getCatsfromDB(): Set<String> {
+        var locations =  MainActivity.testDB.levelsDAO().getAll()
+        var result = arrayListOf<String>()
+        for ( i in locations) {
+            result.add(i.levelName)
+        }
+        return result.toSet()
     }
 
     fun fragment_set_db(p: DevicePath, MR: MaintenanceRecord) {

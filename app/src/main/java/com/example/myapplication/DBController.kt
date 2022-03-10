@@ -24,24 +24,10 @@ class DBController(context: Context) {
         )
     }
 
-    //L1
+    //L1 Call Using SQL
     fun getCats(): Set<String> {
-        return model.fragment_get_db(EmptyPath()) as Set<String>
+        return model.getCatsfromDB()
     }
-
-    /*
-    fun addCat(cat:String){
-        //might need to be Json input
-    }
-
-    fun dltCat(cat:String){
-        //might need to be Json input
-    }
-
-    fun edtCat(cat:String){
-        //might need to be Json input
-    }
-     */
 
 
     //L2
@@ -50,26 +36,21 @@ class DBController(context: Context) {
         return model.fragment_get_db(CategoryPath(cat))as Set<String>
     }
 
-    /*
-    fun addDev(cat:String){
-        //might need to be Json input
-    }
-     */
+//    // L2 call using SQL
+//    fun SQLgetDevices(category: String): Set<String> {
+//        return model.getDevicesfromDB()
+//    }
 
-    //something to move a device from one category to the other? Sounds like an L3 task
     //L3
     fun getInf(p: Path): MaintenanceRecord {
-        //Log.d("pair", dev.toString());
-        return model.fragment_get_db(p) as MaintenanceRecord;
+        return model.fragment_get_db(p) as MaintenanceRecord
     }
 
-    /*
-    fun getInfFromQRId(id:String): MaintenanceRecord {
-        var deviceInfo : QrCodeIdData  = model.fragment_get_id(id)
-        return getInf(Path(deviceInfo.category, deviceInfo.device))
-       // return getInf(Pair(deviceInfo.category, deviceInfo.device));
-    }
-     */
+//    // L3 call using SQl
+//    fun getMaintenanceRecord(category: String, deviceName: String) : MaintenanceRecord {
+//        return model.getMaintenanceRecord(category, deviceName)
+//    }
+
 
     fun getPathFromQRId(id:String): DevicePath? {
         var deviceInfo : QrCodeIdData? = model.fragment_get_id(id)
@@ -80,22 +61,12 @@ class DBController(context: Context) {
     }
 
     private fun addNewDeviceQR(qrCodeId:String, p: DevicePath) {
-        //TODO set p.category, p.device -> Path
         model.fragment_set_id(qrCodeId, p.category, p.device)
     }
 
     fun editInfo(p: DevicePath, mr: MaintenanceRecord) {
         model.fragment_set_db(p, mr)
     }
-
-    /*
-    fun setDeviceAsInactive(p: DevicePath) {
-        var currentMR : MaintenanceRecord = getInf(p)
-        currentMR.status = "-1"
-        model.fragment_set_db(p, currentMR)
-    }
-
-     */
 
     fun addNewDevice(p: DevicePath, mr: MaintenanceRecord) {
         if (mr.id != ""){
@@ -106,11 +77,6 @@ class DBController(context: Context) {
         model.fragment_set_db(p, mr);
     }
 
-    /*
-    fun removeDevice(dev:Pair<String, String>) {
-        model.fragment_delete(category = dev.first, device = dev.second);
-    }
-     */
 
     fun sync_updateDB(){
         model.sync()

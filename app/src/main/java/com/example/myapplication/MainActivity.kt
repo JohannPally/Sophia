@@ -38,17 +38,16 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        // TODO This is where we build our mock DB
         val mrDao = testDB.maintenanceRecordDAO()
         val levelsDao = testDB.levelsDAO()
-        val topLevel = LevelSQL(0, "first level", null);
-        levelsDao.insert(topLevel)
-        println(levelsDao.getAll()[0].parent);
-        println(topLevel.id)
-        mrDao.insert(MaintenanceRecordSQL(0,"first sql device", "1", null, null, null, null, 1, 12, levelsDao.getAll()[0].id))
-        mrDao.insert(MaintenanceRecordSQL(0,"second sql device", "1", null, null, null, null, 1, 12, levelsDao.getAll()[0].id))
-        println("ALL: " + mrDao.getAll().size);
-        println(levelsDao.getTopLevel().size);
-        println("LINO 37")
+        val NICULevel = LevelSQL(0, "NICU", null);
+        val ERLevel = LevelSQL(0, "ER", null);
+        levelsDao.insert(NICULevel)
+        levelsDao.insert(ERLevel)
+        mrDao.insert(MaintenanceRecordSQL(0,"Oxygen Conc", "1", "TestP", "TestE", "TestF", "TestI", 1, 12, levelsDao.getAll()[0].id))
+        mrDao.insert(MaintenanceRecordSQL(0,"Breath Pump", "2", "TestP2", "TestE2", "TestF2", "TestI2", 1, 123, levelsDao.getAll()[0].id))
+
 
 
         //TODO can make this a global variable instead of passing into frags
