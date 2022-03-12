@@ -11,6 +11,7 @@ import java.net.URL
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
+import java.util.HashSet
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -234,6 +235,18 @@ class DatabaseModel(context: Context) {
         }
 
          */
+    }
+
+    fun get_level_table(parent:Int?):Set<LevelSQL> {
+        //TODO fill this out with the proper levelsDAO() getter - for Mantej
+        //Note that parent is ? so implement the appropriate null getter
+        return HashSet<LevelSQL>()
+    }
+
+    fun get_mr_table(parent:Int?):Set<MaintenanceRecordSQL>{
+        //TODO fill this out with the proper mrDAO() getter - for Mantej
+        //Note that parent is ? so implement the appropriate null getter
+        return HashSet<MaintenanceRecordSQL>()
     }
 
     fun getCatsfromDB(): Set<String> {

@@ -21,8 +21,8 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun QRValidatetoW(navController: NavController) {
-        val action = QRValidateUserDirections.actionQRValidateUserToWelcomeFragment()
+    fun WtoRecurse(navController: NavController) {
+        val action = WelcomeFragmentDirections.actionWelcomeFragmentToRecurseFragment(-1)
         navController.navigate(action)
     }
 
@@ -32,6 +32,12 @@ class NavMod : ViewModel() {
      *         navController - The reference to the navigation controller present in the fragment
      * Outputs: None
      */
+
+    fun QRValidatetoW(navController: NavController) {
+        val action = QRValidateUserDirections.actionQRValidateUserToWelcomeFragment()
+        navController.navigate(action)
+    }
+
     fun QRValidatetoL1(navController: NavController) {
         val action = QRValidateUserDirections.actionQRValidateUserToL1Fragment()
         navController.navigate(action)
@@ -76,7 +82,8 @@ class NavMod : ViewModel() {
     }
 
     fun L2toAddDev(category: String, navController: NavController) {
-        val action = L2FragmentDirections.actionL2FragmentToAddDeviceFragment(categoryPassed = category)
+        val action =
+            L2FragmentDirections.actionL2FragmentToAddDeviceFragment(categoryPassed = category)
         navController.navigate(action)
     }
 
@@ -100,8 +107,25 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun ADtoQRAssign(cat: String, dev: String, work: String, servProv: String, servEng: String, fault: String, ipm: String, navController: NavController){
-        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(categoryPassed = cat, devText = dev, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, ipmText = ipm)
+    fun ADtoQRAssign(
+        cat: String,
+        dev: String,
+        work: String,
+        servProv: String,
+        servEng: String,
+        fault: String,
+        ipm: String,
+        navController: NavController
+    ) {
+        val action = AddDeviceFragmentDirections.actionAddDeviceFragmentToQRAssignID(
+            categoryPassed = cat,
+            devText = dev,
+            workText = work,
+            servProvText = servProv,
+            servEngText = servEng,
+            faultText = fault,
+            ipmText = ipm
+        )
         navController.navigate(action)
     }
 
@@ -135,11 +159,43 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun QRAssigntoAD(cat: String, dev: String, inv: String, work: String, servProv: String, servEng: String, fault: String, imp: String, navController: NavController){
-        val action = QRAssignIDFragmentDirections.actionQRAssignIDToAddDeviceFragment(categoryPassed = cat, devText = dev, invText = inv, workText = work, servProvText = servProv, servEngText =  servEng, faultText = fault, impText = imp)
+    fun QRAssigntoAD(
+        cat: String,
+        dev: String,
+        inv: String,
+        work: String,
+        servProv: String,
+        servEng: String,
+        fault: String,
+        imp: String,
+        navController: NavController
+    ) {
+        val action = QRAssignIDFragmentDirections.actionQRAssignIDToAddDeviceFragment(
+            categoryPassed = cat,
+            devText = dev,
+            invText = inv,
+            workText = work,
+            servProvText = servProv,
+            servEngText = servEng,
+            faultText = fault,
+            impText = imp
+        )
         navController.navigate(action)
     }
 
+    /**
+     * Function that handles the navigation from Recurse fragment to others
+     * Inputs: param - The data to pass onto Recurse fragment
+     *         navController - The reference to the navigation controller present in the fragment
+     * Outputs: None
+     */
+    fun RecursetoRecurse(navController: NavController, parent:Int?) {
+        val action = RecurseFragmentDirections.actionRecurseFragmentSelf(parent?:-1)
+        navController.navigate(action)
+    }
 
-
+    fun RecursetoInfo(navController: NavController) {
+        val action = RecurseFragmentDirections.actionRecurseFragmentToInfoFragment()
+        navController.navigate(action)
+    }
 }

@@ -46,6 +46,18 @@ class DBController(context: Context) {
         return model.fragment_get_db(p) as MaintenanceRecord
     }
 
+    fun get_level_table(parent:Int?): Set<LevelSQL>{
+        return model.get_level_table(parent)
+    }
+
+    fun get_mr_table(parent:Int?): Set<MaintenanceRecordSQL>{
+        return model.get_mr_table(parent)
+    }
+
+    fun get_all(parent:Int): Pair<Set<LevelSQL>, Set<MaintenanceRecordSQL>>{
+        return Pair(get_level_table(parent), get_mr_table(parent))
+    }
+
 //    // L3 call using SQl
 //    fun getMaintenanceRecord(category: String, deviceName: String) : MaintenanceRecord {
 //        return model.getMaintenanceRecord(category, deviceName)
