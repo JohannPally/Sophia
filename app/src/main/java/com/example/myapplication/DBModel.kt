@@ -29,6 +29,10 @@ class DatabaseModel(context: Context) {
     lateinit var database : HashMap<String, HashMap<String, MaintenanceRecord>>
     lateinit var idData : HashMap<String, QrCodeIdData>
     lateinit var templates : HashMap<String, DeviceTemplate>
+
+    // Access to the Data Table
+    var testDB = MainActivity.testDB
+
     val context: Context = context
     var cm : ConnectivityManager
     var logs = arrayListOf<Pair<String, String>>()
@@ -238,15 +242,28 @@ class DatabaseModel(context: Context) {
     }
 
     fun get_level_table(parent:Int?):Set<LevelSQL> {
-        //TODO fill this out with the proper levelsDAO() getter - for Mantej
-        //Note that parent is ? so implement the appropriate null getter
-        return HashSet<LevelSQL>()
+        // Behavior: If parent is null, it returns the entire level table.
+        // If parent is non-null, it returns the specific sublevel of the level table
+        // with the given parent ID.
+        var levels: Set<LevelSQL>
+
+        if (parent != null) {
+            levels = MainActivity.testDB.levelsDAO().getSubLevel(parent).toSet()
+        }
+        else {
+            levels = MainActivity.testDB.levelsDAO().getAll().toSet()
+        }
+        return levels
     }
 
     fun get_mr_table(parent:Int?):Set<MaintenanceRecordSQL>{
-        //TODO fill this out with the proper mrDAO() getter - for Mantej
-        //Note that parent is ? so implement the appropriate null getter
-        return HashSet<MaintenanceRecordSQL>()
+        // Behavior: If parent is null, it returns the entire MR table.
+        // If parent is non-null, it returns the specific MR with the given parent ID.
+        return if (parent != null) {
+            setOf(MainActivity.testDB.maintenanceRecordDAO().findById(parent))
+        } else {
+            MainActivity.testDB.maintenanceRecordDAO().getAll().toSet()
+        }
     }
 
     fun getCatsfromDB(): Set<String> {
