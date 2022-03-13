@@ -241,28 +241,23 @@ class DatabaseModel(context: Context) {
          */
     }
 
-    fun get_level_table(parent:Int?):Set<LevelSQL> {
-        // Behavior: If parent is null, it returns the entire level table.
-        // If parent is non-null, it returns the specific sublevel of the level table
-        // with the given parent ID.
-        var levels: Set<LevelSQL>
-
-        if (parent != null) {
-            levels = MainActivity.testDB.levelsDAO().getSubLevel(parent).toSet()
+    fun getLevelTable(parent:Int?):Set<LevelSQL> {
+        // Behavior: If parent is null, it returns a set of LevelSQLs whose parent ID is null
+        // If parent is non-null, it returns a set of LevelSQLs with the given parent ID
+        return if (parent != null) {
+            MainActivity.testDB.levelsDAO().findByParentID(parent).toSet()
+        } else {
+            MainActivity.testDB.levelsDAO().findByParentIDTop().toSet()
         }
-        else {
-            levels = MainActivity.testDB.levelsDAO().getAll().toSet()
-        }
-        return levels
     }
 
-    fun get_mr_table(parent:Int?):Set<MaintenanceRecordSQL>{
-        // Behavior: If parent is null, it returns the entire MR table.
-        // If parent is non-null, it returns the specific MR with the given parent ID.
+    fun getMRTable(parent:Int?):Set<MaintenanceRecordSQL>{
+        // Behavior: If parent is null, it returns a set of MRs whose parent ID is null
+        // If parent is non-null, it returns the a set of MRs with the given parent ID.
         return if (parent != null) {
-            setOf(MainActivity.testDB.maintenanceRecordDAO().findById(parent))
+            MainActivity.testDB.maintenanceRecordDAO().findByParentID(parent).toSet()
         } else {
-            MainActivity.testDB.maintenanceRecordDAO().getAll().toSet()
+            MainActivity.testDB.maintenanceRecordDAO().findByParentIDTop().toSet()
         }
     }
 

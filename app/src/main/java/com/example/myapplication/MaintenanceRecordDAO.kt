@@ -4,6 +4,13 @@ import androidx.room.*
 
 @Dao
 interface MaintenanceRecordDAO {
+
+    @Query( "SELECT * FROM mr_table WHERE parent = :pid ")
+    fun findByParentID(pid: Int): Array<MaintenanceRecordSQL>
+
+    @Query( "SELECT * FROM mr_table WHERE parent is null")
+    fun findByParentIDTop(): Array<MaintenanceRecordSQL>
+
     @Query("SELECT * FROM mr_table WHERE id = :id LIMIT 1")
     fun findById(id: Int): MaintenanceRecordSQL
 
