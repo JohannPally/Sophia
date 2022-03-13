@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,16 +23,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class RecurseFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var dbCtrl: DBController ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -35,6 +35,65 @@ class RecurseFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recurse, container, false)
+    }
+
+    private val navMod: NavMod by activityViewModels()
+    val args: RecurseFragmentArgs by navArgs()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var activity = activity
+        if (activity is MainActivity) {
+            dbCtrl = activity.dbctrl;
+        }
+
+        initTextFields(view)
+
+        //========================BINDINGS====================================
+        val recurse_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.recurse_rv)
+        //TODO ensure parent is right ID
+        val level_arr = dbCtrl?.get_level_table(args.parent)
+        val mr_arr = dbCtrl?.get_mr_table(args.parent)
+
+        if(level_arr!=null && mr_arr!=null){
+            //TODO pass in the two arrs
+            var adapter = Recurse_Item_Adapter(navMod, findNavController())
+            recurse_rv.adapter = adapter
+            recurse_rv.layoutManager = LinearLayoutManager(activity)
+        }
+
+    }
+
+    fun initTextFields(view: View){
+        /*
+        val l1TestingsearchTextView = view.findViewById<TextView>(R.id.l1searchTextView)
+        val l1TestingsearchButton = view.findViewById<TextView>(R.id.l1searchButton)
+
+        l1TestingsearchButton.setOnClickListener {
+
+            searchInput = l1TestingsearchTextView.text.toString() // this is the search text input from view things
+
+            val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
+            val Cats = dbCtrl?.getCats()
+
+            var catsAndDevs = mutableSetOf<String>()
+
+            if (Cats != null) {
+                for (cat in Cats) {
+                    catsAndDevs.add(cat)
+                }
+                for (cat in Cats) {
+                    dbCtrl?.getDevs(cat)?.forEach { item -> catsAndDevs.add("$cat.$item") }
+                }
+            }
+
+            // Filter Set of Categories
+            val filterCatsAndDevs = HashSet(catsAndDevs?.filter { catOrDevName -> catOrDevName.contains(searchInput.toString(), ignoreCase = true) })
+
+            val adapter = filterCatsAndDevs?.let{Category_Item_Adapter(it, navMod, findNavController())} // change here from Cats to filterCats
+            rvCats.adapter = adapter
+        }
+         */
     }
 
     companion object {
