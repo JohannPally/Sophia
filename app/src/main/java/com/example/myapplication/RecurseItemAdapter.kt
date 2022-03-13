@@ -6,9 +6,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.Exception
+import java.util.*
 
 
-class Recurse_Item_Adapter (private val navMod: NavMod, private val navCtrl: NavController) :
+class Recurse_Item_Adapter (private val level_mr_set: Set<Objects>, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<Recurse_Item_Adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,6 +32,31 @@ class Recurse_Item_Adapter (private val navMod: NavMod, private val navCtrl: Nav
 
     // Involves populating data into the item through holder
     override fun onBindViewHolder(viewHolder: Recurse_Item_Adapter.ViewHolder, position: Int) {
+        val item = level_mr_set.elementAt(position)
+        val item_tv = viewHolder.itemTextView
+        val select_button = viewHolder.selectButton
+
+        try{
+            item as LevelSQL
+            item_tv.setText(item.levelName)
+            select_button.setText(">")
+            select_button.setOnClickListener() {
+                navMod.RecursetoRecurse(navCtrl, item.parent)
+            }
+
+        } catch (e: Exception){
+            try{
+                item as MaintenanceRecordSQL
+                item_tv.setText(item.deviceName)
+                select_button.setText("info")
+                select_button.setOnClickListener() {
+                    navMod.RecursetoInfo(navCtrl, item.id)
+                }
+            } catch (e: Exception){
+                throw e
+            }
+        }
+
         /*
         // Get the data model based on position
         val dev: String = devs.elementAt(position)
@@ -47,6 +74,6 @@ class Recurse_Item_Adapter (private val navMod: NavMod, private val navCtrl: Nav
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return level_mr_set.size
     }
 }

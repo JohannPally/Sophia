@@ -241,20 +241,22 @@ class DatabaseModel(context: Context) {
          */
     }
 
-    fun getLevelTable(parent:Int?):Set<LevelSQL> {
+    fun getLevelTable(parent:Int):Set<LevelSQL> {
+        //TODO changed the == null check to -1 since can't pass null through fragment args if type Int
+
         // Behavior: If parent is null, it returns a set of LevelSQLs whose parent ID is null
         // If parent is non-null, it returns a set of LevelSQLs with the given parent ID
-        return if (parent != null) {
+        return if (parent != -1) {
             MainActivity.testDB.levelsDAO().findByParentID(parent).toSet()
         } else {
             MainActivity.testDB.levelsDAO().findByParentIDTop().toSet()
         }
     }
 
-    fun getMRTable(parent:Int?):Set<MaintenanceRecordSQL>{
+    fun getMRTable(parent:Int):Set<MaintenanceRecordSQL>{
         // Behavior: If parent is null, it returns a set of MRs whose parent ID is null
         // If parent is non-null, it returns the a set of MRs with the given parent ID.
-        return if (parent != null) {
+        return if (parent != -1) {
             MainActivity.testDB.maintenanceRecordDAO().findByParentID(parent).toSet()
         } else {
             MainActivity.testDB.maintenanceRecordDAO().findByParentIDTop().toSet()

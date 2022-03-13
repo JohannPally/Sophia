@@ -194,7 +194,7 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
-    fun RecursetoInfo(navController: NavController) {
+    fun RecursetoInfo(navController: NavController, id: Int?) {
         val action = RecurseFragmentDirections.actionRecurseFragmentToInfoFragment()
         navController.navigate(action)
     }

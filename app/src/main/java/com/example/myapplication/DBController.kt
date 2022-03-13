@@ -2,7 +2,9 @@ package com.example.myapplication
 
 import android.content.Context
 import android.util.Log
+import java.lang.Exception
 import java.util.*
+import kotlin.collections.HashSet
 
 class DBController(context: Context) {
 
@@ -46,16 +48,29 @@ class DBController(context: Context) {
         return model.fragment_get_db(p) as MaintenanceRecord
     }
 
-    fun get_level_table(parent:Int?): Set<LevelSQL>{
-        return model.get_level_table(parent)
+    fun get_level_table(parent:Int): Set<LevelSQL>{
+        return model.getLevelTable(parent)
     }
 
-    fun get_mr_table(parent:Int?): Set<MaintenanceRecordSQL>{
-        return model.get_mr_table(parent)
+    fun get_mr_table(parent:Int): Set<MaintenanceRecordSQL>{
+        return model.getMRTable(parent)
     }
 
-    fun get_all(parent:Int): Pair<Set<LevelSQL>, Set<MaintenanceRecordSQL>>{
-        return Pair(get_level_table(parent), get_mr_table(parent))
+    fun get_all(parent:Int): HashSet<Objects>{
+        val out = HashSet<Objects>()
+        //TODO error handle EmptySet -> HashSet
+        //TODO can't cast to type Objects
+        try{
+            var temp = get_level_table(parent) as HashSet<Objects>
+            out.addAll(temp)
+        }catch (e: Exception){
+        }
+        try{
+            var temp = get_mr_table(parent) as HashSet<Objects>
+            out.addAll(temp)
+        }catch (e: Exception){
+        }
+        return out
     }
 
 //    // L3 call using SQl

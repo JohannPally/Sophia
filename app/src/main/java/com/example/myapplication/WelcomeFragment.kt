@@ -100,6 +100,11 @@ class WelcomeFragment: Fragment() {
             dbCtrl?.sync_updateDB()
         }
 
+        val testButton = view.findViewById<Button>(R.id.test_button)
+        testButton.setOnClickListener() {
+            navMod.WtoRecurse(findNavController())
+        }
+
     }
 
     /**
