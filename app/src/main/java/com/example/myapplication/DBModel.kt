@@ -254,6 +254,7 @@ class DatabaseModel(context: Context) {
     }
 
     fun getMRTable(parent:Int):Set<MaintenanceRecordSQL>{
+        Log.v("MR Table being called", "Mantej")
         // Behavior: If parent is null, it returns a set of MRs whose parent ID is null
         // If parent is non-null, it returns the a set of MRs with the given parent ID.
         return if (parent != -1) {

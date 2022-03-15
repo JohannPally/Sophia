@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var testDB : AppDatabase
     }
 
+    @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         testDB = AppDatabase.getInstance(applicationContext)
@@ -38,16 +40,20 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        // TODO This is where we build our mock DB
+        // @ Johann TODO This is where we build our mock DB
+            testDB.clearAllTables() // -- Run this to delete all tables and clear the data
+        // if you keep re- running the app, it will keep creating duplicates of this dummy data
         val mrDao = testDB.maintenanceRecordDAO()
         val levelsDao = testDB.levelsDAO()
         val NICULevel = LevelSQL(0, "NICU", null);
         val ERLevel = LevelSQL(0, "ER", null);
+        val InfantWard = LevelSQL(0, "Infant Ward", null)
         levelsDao.insert(NICULevel)
         levelsDao.insert(ERLevel)
+        levelsDao.insert(InfantWard)
         mrDao.insert(MaintenanceRecordSQL(0,"Oxygen Conc", "1", "TestP", "TestE", "TestF", "TestI", 1, 12, levelsDao.getAll()[0].id))
-        mrDao.insert(MaintenanceRecordSQL(0,"Breath Pump", "2", "TestP2", "TestE2", "TestF2", "TestI2", 1, 123, levelsDao.getAll()[0].id))
-
+        mrDao.insert(MaintenanceRecordSQL(0,"Breath Pump", "2", "TestP2", "TestE2", "TestF2", "TestI2", 1, 123, levelsDao.getAll()[1].id))
+        mrDao.insert(MaintenanceRecordSQL(0, "SP02 Sensor", "3", "TestP3", "TestE3", "TestF3", "TestI3", 1, 1234, levelsDao.getAll()[2].id))
 
 
         //TODO can make this a global variable instead of passing into frags
