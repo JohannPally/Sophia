@@ -51,10 +51,13 @@ class RecurseFragment : Fragment() {
 
         //========================BINDINGS====================================
         val recurse_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.recurse_rv)
-        val level_mr_set = dbCtrl?.get_all(args.parent)
+        val both = dbCtrl?.get_all(args.parent)
+        val levels = both?.first
+        val mrs = both?.second
 
-        if(level_mr_set!=null){
-            var adapter = Recurse_Item_Adapter(level_mr_set, navMod, findNavController())
+        println(both?.first.toString()+"\n"+both?.second.toString())
+        if(levels!=null && mrs!=null){
+            var adapter = Recurse_Item_Adapter(levels, mrs, navMod, findNavController())
             recurse_rv.adapter = adapter
             recurse_rv.layoutManager = LinearLayoutManager(activity)
         }

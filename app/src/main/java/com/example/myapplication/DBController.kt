@@ -56,21 +56,8 @@ class DBController(context: Context) {
         return model.getMRTable(parent)
     }
 
-    fun get_all(parent:Int): HashSet<Objects>{
-        val out = HashSet<Objects>()
-        //TODO error handle EmptySet -> HashSet
-        //TODO can't cast to type Objects
-        try{
-            var temp = get_level_table(parent) as HashSet<Objects>
-            out.addAll(temp)
-        }catch (e: Exception){
-        }
-        try{
-            var temp = get_mr_table(parent) as HashSet<Objects>
-            out.addAll(temp)
-        }catch (e: Exception){
-        }
-        return out
+    fun get_all(parent:Int): Pair<Set<LevelSQL>, Set<MaintenanceRecordSQL>>{
+        return Pair(get_level_table(parent), get_mr_table(parent))
     }
 
 //    // L3 call using SQl

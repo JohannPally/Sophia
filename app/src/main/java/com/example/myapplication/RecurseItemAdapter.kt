@@ -1,4 +1,5 @@
 package com.example.myapplication
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import java.lang.Exception
 import java.util.*
 
 
-class Recurse_Item_Adapter (private val level_mr_set: Set<Objects>, private val navMod: NavMod, private val navCtrl: NavController) :
+class Recurse_Item_Adapter (private val levels: Set<LevelSQL>, private val mrs: Set<MaintenanceRecordSQL>, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<Recurse_Item_Adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,49 +32,34 @@ class Recurse_Item_Adapter (private val level_mr_set: Set<Objects>, private val 
     }
 
     // Involves populating data into the item through holder
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(viewHolder: Recurse_Item_Adapter.ViewHolder, position: Int) {
-        val item = level_mr_set.elementAt(position)
-        val item_tv = viewHolder.itemTextView
-        val select_button = viewHolder.selectButton
+        if(position < levels.size){
+            val item = levels.elementAt(position)
+            val item_tv = viewHolder.itemTextView
+            val select_button = viewHolder.selectButton
 
-        try{
-            item as LevelSQL
             item_tv.setText(item.levelName)
             select_button.setText(">")
             select_button.setOnClickListener() {
-                navMod.RecursetoRecurse(navCtrl, item.parent)
-            }
-
-        } catch (e: Exception){
-            try{
-                item as MaintenanceRecordSQL
-                item_tv.setText(item.deviceName)
-                select_button.setText("info")
-                select_button.setOnClickListener() {
-                    navMod.RecursetoInfo(navCtrl, item.id)
-                }
-            } catch (e: Exception){
-                throw e
+                navMod.RecursetoRecurse(navCtrl, item.id)
             }
         }
+        else{
+            val item = mrs.elementAt(position-levels.size)
+            val item_tv = viewHolder.itemTextView
+            val select_button = viewHolder.selectButton
 
-        /*
-        // Get the data model based on position
-        val dev: String = devs.elementAt(position)
-        // Set item views based on your views and data model
-        val textView = viewHolder.devNameTextView
-        textView.text = dev
-        val button = viewHolder.selectDevButton
-        //button.text = if (contact.isOnline) "Message" else "Offline"
-        button.text = "Select"
-        //button.isEnabled = contact.isOnline
-        button.setOnClickListener() {
-            navMod.L2toL3(catArg, dev, navCtrl)
+            item_tv.setText(item.deviceName)
+            item_tv.setTextColor(R.color.brown_neutral)
+            select_button.setText(">")
+            select_button.setOnClickListener() {
+                navMod.RecursetoInfo(navCtrl, item.id)
+            }
         }
-         */
     }
 
     override fun getItemCount(): Int {
-        return level_mr_set.size
+        return levels.size+mrs.size
     }
 }
