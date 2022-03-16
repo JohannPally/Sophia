@@ -57,8 +57,12 @@ class DBController(context: Context) {
     }
 
     fun get_all(parent:Int): Pair<Set<LevelSQL>, Set<MaintenanceRecordSQL>>{
-        Log.v("Get all parent", parent.toString())
+        //Log.v("Get all parent", parent.toString())
         return Pair(get_level_table(parent), get_mr_table(parent))
+    }
+
+    fun get_mr(id: Int):MaintenanceRecordSQL{
+        return model.getMR(id)
     }
 
 //    // L3 call using SQl

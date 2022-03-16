@@ -264,6 +264,10 @@ class DatabaseModel(context: Context) {
         }
     }
 
+    fun getMR(id: Int):MaintenanceRecordSQL{
+        return MaintenanceRecordSQL(id = -1, deviceName = "Test Name", faultCode = "000", ipmProcedure = "This could be a procedure?", parent = -1, serviceEngineeringCode = "000", serviceProvider = "Test Provider", status = 0, timestamp = 0, workOrderNum = "000" );
+    }
+
     fun getCatsfromDB(): Set<String> {
         var locations =  MainActivity.testDB.levelsDAO().getAll()
         var result = arrayListOf<String>()

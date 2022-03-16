@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +22,7 @@ class InfoFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var dbCtrl: DBController ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,33 @@ class InfoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_info, container, false)
+    }
+
+    private val navMod: NavMod by activityViewModels()
+    val args: InfoFragmentArgs by navArgs()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var activity = activity
+        if (activity is MainActivity) {
+            dbCtrl = activity.dbctrl;
+        }
+
+        //==================BINDINGS=====================
+
+        var mr = dbCtrl?.get_mr(args.id)
+
+        var devName = mr?.deviceName
+        var fltCode = mr?.faultCode
+        var ipmProc = mr?.ipmProcedure
+        var servEngCode = mr?.serviceEngineeringCode
+        var servProv = mr?.serviceProvider
+        var workOrdNum = mr?.workOrderNum
+        var timStmp = mr?.timestamp
+
+
+
     }
 
     companion object {
