@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,7 +66,19 @@ class InfoFragment : Fragment() {
         var workOrdNum = mr?.workOrderNum
         var timStmp = mr?.timestamp
 
+        var devName_TV = view.findViewById<TextView>(R.id.info_devName_tv)
+        var fltCode_TV = view.findViewById<TextView>(R.id.info_fltCode_tv)
+        var ipmProc_TV = view.findViewById<TextView>(R.id.info_ipmProc_tv)
+        var servEngCode_TV = view.findViewById<TextView>(R.id.info_servEngCode_tv)
+        var servProv_TV = view.findViewById<TextView>(R.id.info_servProv_tv)
+        var workOrdNum_TV = view.findViewById<TextView>(R.id.info_workOrdNum_tv)
 
+        devName_TV.setText(devName)
+        fltCode_TV.setText(fltCode)
+        ipmProc_TV.setText(ipmProc)
+        servEngCode_TV.setText(servEngCode)
+        servProv_TV.setText(servProv)
+        workOrdNum_TV.setText(workOrdNum)
 
     }
 
