@@ -242,8 +242,6 @@ class DatabaseModel(context: Context) {
     }
 
     fun getLevelTable(parent:Int):Set<LevelSQL> {
-        //TODO changed the == null check to -1 since can't pass null through fragment args if type Int
-
         // Behavior: If parent is null, it returns a set of LevelSQLs whose parent ID is null
         // If parent is non-null, it returns a set of LevelSQLs with the given parent ID
         return if (parent != -1) {
@@ -254,7 +252,6 @@ class DatabaseModel(context: Context) {
     }
 
     fun getMRTable(parent:Int):Set<MaintenanceRecordSQL>{
-        Log.v("MR Table being called", "Mantej")
         // Behavior: If parent is null, it returns a set of MRs whose parent ID is null
         // If parent is non-null, it returns the a set of MRs with the given parent ID.
         return if (parent != -1) {
@@ -266,7 +263,24 @@ class DatabaseModel(context: Context) {
 
     fun getMR(mrID: Int): MaintenanceRecordSQL {
         return MainActivity.testDB.maintenanceRecordDAO().findById(mrID)
-        //return MaintenanceRecordSQL(id = -1, deviceName = "Test Name", faultCode = "000", ipmProcedure = "This could be a procedure?", parent = -1, serviceEngineeringCode = "000", serviceProvider = "Test Provider", status = 0, timestamp = 0, workOrderNum = "000" );
+    }
+
+    fun addMaintenanceRecord(id: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int) {
+        // This function creates an MR SQL object from the inputs and pushes it into the SQL DB
+        var mrObject = MaintenanceRecordSQL(
+            id,
+            deviceName,
+            workOrderNum,
+            serviceProvider,
+            serviceEngineeringCode,
+            faultCode,
+            ipmProcedure,
+            status,
+            timeStamp,
+            parent
+        )
+        Log.v("Added MR Object", "DBModel")
+        MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
 
     }
 

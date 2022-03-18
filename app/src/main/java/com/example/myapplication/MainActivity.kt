@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         // @ Johann TODO This is where we build our mock DB
-            testDB.clearAllTables() // -- Run this to delete all tables and clear the data
+        testDB.clearAllTables() // -- Run this to delete all tables and clear the data
         // if you keep re- running the app, it will keep creating duplicates of this dummy data
         val mrDao = testDB.maintenanceRecordDAO()
         val levelsDao = testDB.levelsDAO()
