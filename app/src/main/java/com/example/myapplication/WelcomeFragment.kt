@@ -63,12 +63,14 @@ class WelcomeFragment: Fragment() {
                 var defaultValue = getString(R.string.default_keys)
                 defaultSharedPreference(defaultValue, defaultValue)
             }
+
             else{
                 Toast.makeText(context as Context, "Cleared UP: $loginText", Toast.LENGTH_LONG).show()
             }
 
 
-
+        // TODO http://localhost:4567/webui.html
+            // TODO dont scan 133
             // TODO check if user is authenticated
             val sharedPref = activity?.getSharedPreferences(
                 getString(R.string.preferences_file_key), Context.MODE_PRIVATE)
@@ -78,7 +80,7 @@ class WelcomeFragment: Fragment() {
             Log.v(testAK, "Auth key debug before")
             Log.v(testUK, "URL key debug before")
 
-            if (testAK.equals(resources.getString(R.string.default_keys)) and testUK.equals(resources.getString(R.string.default_keys))) {
+            if ((loginText != "1234") and testAK.equals(resources.getString(R.string.default_keys)) and testUK.equals(resources.getString(R.string.default_keys))) {
                 navMod.WtoQRValidate(findNavController())
             }
 
@@ -86,6 +88,8 @@ class WelcomeFragment: Fragment() {
                 Log.v("Authenticate Successful", "Success")
                 navMod.WtoL1(findNavController())
             }
+
+
 
             val defaultValueA = resources.getString(R.string.default_keys)
             val testAKA = sharedPref?.getString(getString(R.string.authkey_key), defaultValue)
