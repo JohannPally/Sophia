@@ -142,9 +142,7 @@ class DatabaseModel(context: Context) {
 
     fun fragment_set_id(id: String, category: String = "", device: String = "") {
         val qrIdData = QrCodeIdData(category, device)
-
         idData[id] = qrIdData
-
         val fullIdJson = Gson().toJson(idData)
         println("SAVING ID DATA FILE")
         saveToLocalFile(fullIdJson, idFilename)
