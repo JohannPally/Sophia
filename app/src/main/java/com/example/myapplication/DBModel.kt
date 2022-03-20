@@ -241,10 +241,15 @@ class DatabaseModel(context: Context) {
          */
     }
 
+//<<<<<<< HEAD
     fun fragment_set_db(p: DevicePath, MR: MaintenanceRecord) {
         var json = Gson().toJson(MR)
         // TODO: Unhardcode the auth string
         json = "{\"Key\": \"SAHTesting449496\", \"Data\": $json}";
+//=======
+//    fun fragment_set_db(category: String = "", device: String = "", MR: MaintenanceRecord) {
+//        val json = Gson().toJson(MR)
+//>>>>>>> parent of 0159a8f (Added auth key)
 
         MR.timestamp = (System.currentTimeMillis() / 1000)
 
