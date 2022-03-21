@@ -65,6 +65,26 @@ class DBController(context: Context) {
         return model.getMR(id)
     }
 
+    fun add_mr(id:Int, devName:String, parent:Int):Int{
+        //TODO need work order num?
+        //TODO, any way to not have to empty string all these?
+        //TODO timestamp logic
+        model.addMaintenanceRecord(
+            id = id,
+            deviceName = devName,
+            workOrderNum = "0",
+            serviceProvider = "",
+            serviceEngineeringCode = "",
+            faultCode = "",
+            ipmProcedure = "",
+            status = 0,
+            timeStamp = 0,
+            parent = parent
+        )
+        //TODO get the foreign key back?
+        return 0
+    }
+
 //    // L3 call using SQl
 //    fun getMaintenanceRecord(category: String, deviceName: String) : MaintenanceRecord {
 //        return model.getMaintenanceRecord(category, deviceName)

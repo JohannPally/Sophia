@@ -198,4 +198,21 @@ class NavMod : ViewModel() {
         val action = RecurseFragmentDirections.actionRecurseFragmentToInfoFragment(id)
         navController.navigate(action)
     }
+
+    fun RecursetoRecurseAdd(navController: NavController, parent: Int) {
+        val action = RecurseFragmentDirections.actionRecurseFragmentToRecurseAddFragment(parent)
+        navController.navigate(action);
+    }
+
+    /**
+     * Function that handles the navigation from Add fragment to others
+     * Inputs: param - The data to pass onto Recurse fragment
+     *         navController - The reference to the navigation controller present in the fragment
+     * Outputs: None
+     */
+
+    fun RecurseAddtoInfo(navController: NavController, id: Int) {
+        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToInfoFragment(id)
+        navController.navigate(action)
+    }
 }

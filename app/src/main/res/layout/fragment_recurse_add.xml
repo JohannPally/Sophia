@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecurseAddFragment">
+
+    <TextView
+        android:id="@+id/nameTV_radd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/nameET_radd"
+        app:layout_constraintStart_toStartOf="@+id/qridTV_radd"
+        app:layout_constraintTop_toTopOf="@+id/nameET_radd" />
+
+    <EditText
+        android:id="@+id/nameET_radd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Example Name"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="18dp" />
+
+    <TextView
+        android:id="@+id/qridTV_radd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QR ID #"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="76dp" />
+
+    <EditText
+        android:id="@+id/qridET_radd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="000"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/qridTV_radd"
+        app:layout_constraintStart_toStartOf="@+id/nameET_radd"
+        app:layout_constraintTop_toTopOf="@+id/qridTV_radd" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton_radd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_code_scanner_flash_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.244" />
+</androidx.constraintlayout.widget.ConstraintLayout>

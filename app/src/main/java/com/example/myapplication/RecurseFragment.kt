@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,6 +61,11 @@ class RecurseFragment : Fragment() {
             var adapter = Recurse_Item_Adapter(levels, mrs, navMod, findNavController())
             recurse_rv.adapter = adapter
             recurse_rv.layoutManager = LinearLayoutManager(activity)
+        }
+
+        val toAddButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.toRecurseAddButton)
+        toAddButton.setOnClickListener(){
+           navMod.RecursetoRecurseAdd(findNavController(), args.parent)
         }
 
     }
