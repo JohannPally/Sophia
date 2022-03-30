@@ -54,7 +54,7 @@ class Recurse_Item_Adapter (private val levels: Set<LevelSQL>, private val mrs: 
             item_tv.setTextColor(R.color.brown_neutral)
             select_button.setText(">")
             select_button.setOnClickListener() {
-                navMod.RecursetoInfo(navCtrl, item.id)
+                item.id?.let { it1 -> navMod.RecursetoInfo(navCtrl, it1) }
             }
         }
     }

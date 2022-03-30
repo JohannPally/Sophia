@@ -65,12 +65,12 @@ class DBController(context: Context) {
         return model.getMR(id)
     }
 
-    fun add_mr(id:Int, devName:String, parent:Int):Int{
+    fun add_mr(qrid:Int, devName:String, parent:Int):Int{
         //TODO need work order num?
         //TODO, any way to not have to empty string all these?
         //TODO timestamp logic
         model.addMaintenanceRecord(
-            id = id,
+            qrid = qrid,
             deviceName = devName,
             workOrderNum = "0",
             serviceProvider = "",

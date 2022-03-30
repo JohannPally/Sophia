@@ -11,7 +11,6 @@ import java.net.URL
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
-import java.util.HashSet
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -265,19 +264,19 @@ class DatabaseModel(context: Context) {
         return MainActivity.testDB.maintenanceRecordDAO().findById(mrID)
     }
 
-    fun addMaintenanceRecord(id: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int) {
+    fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int) {
         // This function creates an MR SQL object from the inputs and pushes it into the SQL DB
         var mrObject = MaintenanceRecordSQL(
-            id,
-            deviceName,
-            workOrderNum,
-            serviceProvider,
-            serviceEngineeringCode,
-            faultCode,
-            ipmProcedure,
-            status,
-            timeStamp,
-            parent
+            id = null,
+            deviceName = deviceName,
+            workOrderNum = workOrderNum,
+            serviceProvider = serviceProvider,
+            serviceEngineeringCode = serviceEngineeringCode,
+            faultCode = faultCode,
+            ipmProcedure = ipmProcedure,
+            status = status,
+            timestamp = timeStamp,
+            parent = parent
         )
         Log.v("Added MR Object", "DBModel")
         MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)

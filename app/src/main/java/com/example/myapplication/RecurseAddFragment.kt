@@ -60,7 +60,7 @@ class RecurseAddFragment : Fragment() {
         val nameTV: EditText = view.findViewById<EditText>(R.id.nameET_radd)
         val qridTV: EditText = view.findViewById<EditText>(R.id.qridET_radd)
         addButton.setOnClickListener(){
-            var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), id = Integer.parseInt(qridTV.text.toString()), parent = args.parent)
+            var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridTV.text.toString()), parent = args.parent)
             if (id != null) {
                 navMod.RecurseAddtoInfo(findNavController(), id)
             }
