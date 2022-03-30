@@ -12,9 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/nameET_radd"
-        app:layout_constraintStart_toStartOf="@+id/qridTV_radd"
-        app:layout_constraintTop_toTopOf="@+id/nameET_radd" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046" />
 
     <EditText
         android:id="@+id/nameET_radd"
@@ -23,27 +26,37 @@
         android:ems="10"
         android:hint="Example Name"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="18dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/nameTV_radd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.364"
+        app:layout_constraintStart_toEndOf="@+id/nameTV_radd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/qridTV_radd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="44dp"
         android:text="QR ID #"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="76dp" />
+        app:layout_constraintStart_toStartOf="@+id/nameTV_radd"
+        app:layout_constraintTop_toBottomOf="@+id/nameTV_radd" />
 
     <EditText
         android:id="@+id/qridET_radd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
         android:ems="10"
         android:hint="000"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/qridTV_radd"
-        app:layout_constraintStart_toStartOf="@+id/nameET_radd"
-        app:layout_constraintTop_toTopOf="@+id/qridTV_radd" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/qridTV_radd"
+        app:layout_constraintTop_toBottomOf="@+id/nameET_radd"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton_radd"
@@ -53,8 +66,8 @@
         android:src="@drawable/ic_code_scanner_flash_on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.194" />
 </androidx.constraintlayout.widget.ConstraintLayout>
