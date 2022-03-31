@@ -21,7 +21,7 @@ interface MaintenanceRecordDAO {
     fun insertAll(maintenanceRecords: Array<MaintenanceRecordSQL>)
 
     @Insert
-    fun insert(maintenanceRecord: MaintenanceRecordSQL)
+    fun insert(maintenanceRecord: MaintenanceRecordSQL): Long
 
     @Delete
     fun delete(maintenanceRecord: MaintenanceRecordSQL)

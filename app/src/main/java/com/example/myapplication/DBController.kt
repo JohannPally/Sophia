@@ -65,11 +65,11 @@ class DBController(context: Context) {
         return model.getMR(id)
     }
 
-    fun add_mr(qrid:Int, devName:String, parent:Int):Int{
+    fun add_mr(qrid:Int, devName:String, parent:Int):Long{
         //TODO need work order num?
         //TODO, any way to not have to empty string all these?
         //TODO timestamp logic
-        model.addMaintenanceRecord(
+        var pID = model.addMaintenanceRecord(
             qrid = qrid,
             deviceName = devName,
             workOrderNum = "0",
@@ -81,8 +81,8 @@ class DBController(context: Context) {
             timeStamp = 0,
             parent = parent
         )
-        //TODO get the foreign key back?
-        return 0
+        //TODO get the foreign key back? MANTEJ
+        return pID
     }
 
 //    // L3 call using SQl

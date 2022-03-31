@@ -62,7 +62,7 @@ class RecurseAddFragment : Fragment() {
         addButton.setOnClickListener(){
             var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridTV.text.toString()), parent = args.parent)
             if (id != null) {
-                navMod.RecurseAddtoInfo(findNavController(), id)
+                navMod.RecurseAddtoInfo(findNavController(), id.toInt())
             }
         }
 

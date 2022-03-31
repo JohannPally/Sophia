@@ -264,7 +264,7 @@ class DatabaseModel(context: Context) {
         return MainActivity.testDB.maintenanceRecordDAO().findById(mrID)
     }
 
-    fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int) {
+    fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int): Long {
         // This function creates an MR SQL object from the inputs and pushes it into the SQL DB
         var mrObject = MaintenanceRecordSQL(
             id = null,
@@ -279,7 +279,9 @@ class DatabaseModel(context: Context) {
             parent = parent
         )
         Log.v("Added MR Object", "DBModel")
-        MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+        var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+        // TOOD The insert value ID is not being saved anywhere MANTEJ
+        return pID
 
     }
 
