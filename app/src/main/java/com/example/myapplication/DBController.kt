@@ -81,7 +81,6 @@ class DBController(context: Context) {
             timeStamp = 0,
             parent = parent
         )
-        //TODO get the foreign key back? MANTEJ
         return pID
     }
 

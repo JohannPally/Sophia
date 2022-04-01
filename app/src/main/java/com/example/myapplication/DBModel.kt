@@ -280,7 +280,6 @@ class DatabaseModel(context: Context) {
         )
         Log.v("Added MR Object", "DBModel")
         var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
-        // TOOD The insert value ID is not being saved anywhere MANTEJ
         return pID
 
     }

@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
         val NICULevel = LevelSQL(null, "NICU", null);
         val ERLevel = LevelSQL(null, "ER", null);
         val InfantWard = LevelSQL(null, "Infant Ward", null)
-//        levelsDao.insert(NICULevel)
-//        levelsDao.insert(ERLevel)
-//        levelsDao.insert(InfantWard)
+        levelsDao.insert(NICULevel)
+        levelsDao.insert(ERLevel)
+        levelsDao.insert(InfantWard)
 //        mrDao.insert(MaintenanceRecordSQL(null,"Oxygen Conc", "1", "TestP", "TestE", "TestF", "TestI", 1, 12, levelsDao.getAll()[0].id))
 //        mrDao.insert(MaintenanceRecordSQL(null,"Breath Pump", "2", "TestP2", "TestE2", "TestF2", "TestI2", 1, 123, levelsDao.getAll()[1].id))
 //        mrDao.insert(MaintenanceRecordSQL(null, "SP02 Sensor", "3", "TestP3", "TestE3", "TestF3", "TestI3", 1, 1234, levelsDao.getAll()[2].id))

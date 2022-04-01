@@ -209,5 +209,37 @@
             android:name="parent"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_recurseAddFragment_to_RAddQRScan"
+            app:destination="@id/RecurseAddQRScan" />
+        <argument
+            android:name="rAddName"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument
+            android:name="rAddId"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+    <fragment
+        android:id="@+id/RecurseAddQRScan"
+        android:name="com.example.myapplication.RAddQRScan"
+        android:label="fragment_r_add_q_r_scan"
+        tools:layout="@layout/fragment_r_add_q_r_scan" >
+        <action
+            android:id="@+id/action_RAddQRScan_to_recurseAddFragment"
+            app:destination="@id/recurseAddFragment" />
+        <argument
+            android:name="parent"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="rAddName"
+            app:argType="string"
+            app:defaultValue=""/>
+        <argument
+            android:name="rAddID"
+            app:argType="string"
+            app:defaultValue=""/>
     </fragment>
 </navigation>

@@ -67,7 +67,7 @@ class QRSearchFragment : Fragment() {
 
     }
 
-    private fun startScanning() {
+    fun startScanning(): String? {
         // Parameters (default values)
         codeScanner = CodeScanner(context as Context, scannerView)
         codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
@@ -77,11 +77,13 @@ class QRSearchFragment : Fragment() {
         codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
         codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
         codeScanner.isFlashEnabled = false // Whether to enable flash or not
+        var qrID = "null"
 
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             activity?.runOnUiThread {
                 saveQRData(it.text)
+                qrID = it.text
                 Toast.makeText(context as Context, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
             }
         }
@@ -95,6 +97,8 @@ class QRSearchFragment : Fragment() {
         scannerView.setOnClickListener {
             codeScanner.startPreview()
         }
+
+        return qrID
     }
 
     /**
