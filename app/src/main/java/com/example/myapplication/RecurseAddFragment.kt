@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -55,7 +56,7 @@ class RecurseAddFragment : Fragment() {
             dbCtrl = activity.dbctrl;
         }
 
-        initText(view, args)
+
 
         //======================BINDINGS=====================
         val nameTV: EditText = view.findViewById<EditText>(R.id.nameET_radd)
@@ -64,15 +65,12 @@ class RecurseAddFragment : Fragment() {
         scanIDButton.setOnClickListener(){
             navMod.RecurseAddtoRecurseAddQRScan(navController = findNavController(), p = args.parent, rN = nameTV.text.toString(), rI = qridvalTV.text.toString());
         }
-
-        //val qridTV: EditText = view.findViewById<EditText>(R.id.qridET_radd)
-
-
         val addButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.addButton_radd)
-        val qridTV: TextView = view.findViewById<TextView>(R.id.qridTV_radd)
+        Log.v("Name TV = ", nameTV.text.toString() )
         //TODO add error handling if QRid text is empty, basically just don't do an action
+        initText(view, args)
         addButton.setOnClickListener(){
-            var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridTV.text.toString()), parent = args.parent)
+            var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridvalTV.text.toString()), parent = args.parent)
             if (id != null) {
                 navMod.RecurseAddtoInfo(findNavController(), id.toInt())
             }
