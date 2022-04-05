@@ -46,7 +46,7 @@ class RAddQRScan : Fragment() {
 
     // Reference to the front end model that handles navigation from screen to screen
     private val navMod: NavMod by activityViewModels()
-    val args: RecurseAddFragmentArgs by navArgs()
+    val args: RAddQRScanArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +55,7 @@ class RAddQRScan : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,8 +111,9 @@ class RAddQRScan : Fragment() {
             activity?.runOnUiThread {
                 qrID = it.text
                 Toast.makeText(context as Context, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
-                param1 = qrID
-                navMod.RecurseAddQRScantoRecurseAdd(navController = findNavController(), p = args.parent, rN = args.rAddName, rI = qrID)
+                param1 = args.passedName
+                param2 = qrID
+                navMod.RecurseAddQRScantoRecurseAdd(navController = findNavController(), p = args.parent, rN = args.passedName, rI = qrID)
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS

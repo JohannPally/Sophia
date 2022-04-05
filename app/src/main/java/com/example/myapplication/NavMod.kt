@@ -241,6 +241,8 @@ class NavMod : ViewModel() {
 
     fun RecurseAddQRScantoRecurseAdd(navController: NavController, p:Int, rN:String, rI:String) {
         val action = RAddQRScanDirections.actionRAddQRScanToRecurseAddFragment(parent = p, rAddName = rN, rAddId = rI);
+        // TODO -- Pop back to the correct screen
+        navController.popBackStack(R.id.L2Fragment, false)
         navController.navigate(action)
     }
 }
