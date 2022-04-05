@@ -223,12 +223,12 @@ class NavMod : ViewModel() {
      */
 
     fun RecurseAddtoInfo(navController: NavController, id: Int) {
-        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToInfoFragment(id)
+        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToInfoFragment(id = id)
         navController.navigate(action)
     }
 
     fun RecurseAddtoRecurseAddQRScan(navController: NavController, p:Int, rN:String, rI:String) {
-        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToRAddQRScan(parent = p, rAddName = rN, rAddID = rI);
+        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToRAddQRScan(parent = p, rAddName = rN, rAddId = rI)
         navController.navigate(action)
     }
 

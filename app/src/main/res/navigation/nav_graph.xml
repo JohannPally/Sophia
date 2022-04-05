@@ -233,13 +233,5 @@
             android:name="parent"
             app:argType="integer"
             android:defaultValue="-1" />
-        <argument
-            android:name="rAddName"
-            app:argType="string"
-            app:defaultValue=""/>
-        <argument
-            android:name="rAddID"
-            app:argType="string"
-            app:defaultValue=""/>
     </fragment>
 </navigation>

@@ -45,7 +45,7 @@ class RecurseAddFragment : Fragment() {
     }
 
     private val navMod: NavMod by activityViewModels()
-    val args: RecurseFragmentArgs by navArgs()
+    val args: RecurseAddFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,7 +73,7 @@ class RecurseAddFragment : Fragment() {
 
 
         val addButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.addButton_radd)
-        val qridTV: EditText = view.findViewById<EditText>(R.id.qridET_radd)
+        val qridTV: EditText = view.findViewById<EditText>(R.id.qridTV_radd)
         addButton.setOnClickListener(){
             var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridTV.text.toString()), parent = args.parent)
             if (id != null) {
@@ -83,10 +83,11 @@ class RecurseAddFragment : Fragment() {
 
     }
 
-    public fun initText(v:View, a:RecurseAddFragmentArgs){
+     private fun initText(v:View, a:RecurseAddFragmentArgs){
         val nameTV: EditText = v.findViewById<EditText>(R.id.nameET_radd)
         val qridvalTV: TextView = v.findViewById<TextView>(R.id.qridvalTV_radd)
-        nameTV.setText(args.radd)
+        nameTV.setText(a.rAddName)
+         qridvalTV.text = a.rAddId
     }
 
     companion object {
