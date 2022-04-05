@@ -199,6 +199,11 @@ class NavMod : ViewModel() {
         navController.navigate(action)
     }
 
+    fun RecurseAddtoInfo(navController: NavController) {
+        val action = InfoFragmentDirections.actionInfoFragmentToRecurseFragment()
+        navController.navigate(action);
+    }
+
     fun RecursetoRecurseAdd(navController: NavController, parent: Int) {
         val action = RecurseFragmentDirections.actionRecurseFragmentToRecurseAddFragment(parent = parent)
         navController.navigate(action);
@@ -241,8 +246,6 @@ class NavMod : ViewModel() {
 
     fun RecurseAddQRScantoRecurseAdd(navController: NavController, p:Int, rN:String, rI:String) {
         val action = RAddQRScanDirections.actionRAddQRScanToRecurseAddFragment(parent = p, rAddName = rN, rAddId = rI);
-        // TODO -- Pop back to the correct screen
-        navController.popBackStack(R.id.L2Fragment, false)
         navController.navigate(action)
     }
 }

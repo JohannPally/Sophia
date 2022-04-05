@@ -196,6 +196,9 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_infoFragment_to_recurseFragment"
+            app:destination="@id/recurseFragment" />
     </fragment>
     <fragment
         android:id="@+id/recurseAddFragment"

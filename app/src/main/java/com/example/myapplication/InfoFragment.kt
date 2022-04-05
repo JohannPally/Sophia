@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
@@ -80,6 +83,11 @@ class InfoFragment : Fragment() {
         servProv_TV.setText(servProv)
         workOrdNum_TV.setText(workOrdNum)
 
+        // This button press takes you from the device info screen to device list screen
+        val deviceListBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.deviceList)
+        deviceListBtn.setOnClickListener(){
+                navMod.RecurseAddtoInfo(findNavController())
+            }
     }
 
     companion object {
