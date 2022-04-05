@@ -228,7 +228,7 @@ class NavMod : ViewModel() {
     }
 
     fun RecurseAddtoRecurseAddQRScan(navController: NavController, p:Int, rN:String, rI:String) {
-        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToRAddQRScan(parent = p, rAddName = rN, rAddId = rI)
+        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToRAddQRScan(parent = p, passedName = rN, passedID = rI)
         navController.navigate(action)
     }
 

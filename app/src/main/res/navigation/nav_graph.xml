@@ -233,5 +233,13 @@
             android:name="parent"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="passedName"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument
+            android:name="passedID"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
 </navigation>

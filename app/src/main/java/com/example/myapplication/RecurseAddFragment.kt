@@ -56,24 +56,21 @@ class RecurseAddFragment : Fragment() {
         }
 
         initText(view, args)
+
         //======================BINDINGS=====================
-        // TODO - Click a button, scan qr code and get the ID from there.
         val nameTV: EditText = view.findViewById<EditText>(R.id.nameET_radd)
         val qridvalTV: TextView = view.findViewById<TextView>(R.id.qridvalTV_radd)
         val scanIDButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.scanIDButton_radd)
         scanIDButton.setOnClickListener(){
             navMod.RecurseAddtoRecurseAddQRScan(navController = findNavController(), p = args.parent, rN = nameTV.text.toString(), rI = qridvalTV.text.toString());
-//            var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qrData), parent = args.parent)
-//            if (id != null) {
-//                navMod.RecurseAddtoInfo(findNavController(), id.toInt())
-//            }
         }
 
         //val qridTV: EditText = view.findViewById<EditText>(R.id.qridET_radd)
 
 
         val addButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.addButton_radd)
-        val qridTV: EditText = view.findViewById<EditText>(R.id.qridTV_radd)
+        val qridTV: TextView = view.findViewById<TextView>(R.id.qridTV_radd)
+        //TODO add error handling if QRid text is empty, basically just don't do an action
         addButton.setOnClickListener(){
             var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridTV.text.toString()), parent = args.parent)
             if (id != null) {
@@ -87,7 +84,8 @@ class RecurseAddFragment : Fragment() {
         val nameTV: EditText = v.findViewById<EditText>(R.id.nameET_radd)
         val qridvalTV: TextView = v.findViewById<TextView>(R.id.qridvalTV_radd)
         nameTV.setText(a.rAddName)
-         qridvalTV.text = a.rAddId
+         //TODO, might need to cast addID to Integer/Number format first?
+        qridvalTV.text = a.rAddId
     }
 
     companion object {
