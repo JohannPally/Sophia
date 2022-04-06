@@ -14,6 +14,9 @@ interface MaintenanceRecordDAO {
     @Query("SELECT * FROM mr_table WHERE id = :id LIMIT 1")
     fun findById(id: Int): MaintenanceRecordSQL
 
+    @Query("SELECT * FROM mr_table WHERE device_name = :name LIMIT 1")
+    fun findByName(name: String): MaintenanceRecordSQL
+
     @Query("SELECT * FROM mr_table")
     fun getAll(): Array<MaintenanceRecordSQL>
 

@@ -209,6 +209,13 @@ class NavMod : ViewModel() {
         navController.navigate(action);
     }
 
+    fun RecurseToSearch(navController: NavController) {
+        val action = RecurseFragmentDirections.actionRecurseFragmentToSearchFragment()
+        navController.navigate(action);
+
+    }
+
+
 //    fun RecursetoQR(navController: NavController, parent: Int) {
 //        val action = RecurseFragmentDirections.actio
 //        navController.navigate(action);

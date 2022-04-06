@@ -1,19 +1,24 @@
 Todo
 
-[Resolved - Mantej Singh: 05/04/2022: 16:11]
+[Resolved - Mantej Singh: 04/04/2022: 16:11]
 Bug Fix 1. Fix bug where adding a device requires scan and then label.
     Notes:
        - When returning from QRAdd screen, it wipes the name of the device.
 
-[Resolved - Mantej Singh: 05/05/2022: 16:37]
+[Resolved - Mantej Singh: 04/05/2022: 16:37]
 Bug Fix 2. Currently, on save btn click -> goes to device card -> back button press -> device edit page
     -> back btn press -> QR scanner
     Ideal behavior -- back button press on device card page brings you back to list
 
-[Resolved - Mantej Singh: 05/05/2022: 19:42]
+[Resolved - Mantej Singh: 04/05/2022: 19:42]
 Dev Func 1. Populate the card view with more default parameters
 
-[Resolved - Mantej Singh: 05/05/2022: 20:47]
+[Resolved - Mantej Singh: 04/05/2022: 20:47]
 Dev Func 2. Allow card view to take in user typed input
 
-Dev Func 3. Get search functionality set up on main screen
+[Resolved - Mantej Singh: 04/06/2022: 11:10]
+Dev Func 3. Get search functionality set up on main screen to return MR object
+
+Dev Func 4. Populate the search screen with data received from search + error handling
+
+Dev Func 4. Search by QR Scanning

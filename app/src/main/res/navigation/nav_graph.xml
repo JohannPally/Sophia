@@ -187,6 +187,9 @@
         <action
             android:id="@+id/action_recurseFragment_to_recurseAddFragment"
             app:destination="@id/recurseAddFragment" />
+        <action
+            android:id="@+id/action_recurseFragment_to_SearchFragment"
+            app:destination="@id/SearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
@@ -244,5 +247,12 @@
             android:name="passedID"
             app:argType="string"
             android:defaultValue=""/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="com.example.myapplication.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
     </fragment>
 </navigation>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -66,6 +67,11 @@ class RecurseFragment : Fragment() {
         val toAddButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.toRecurseAddButton)
         toAddButton.setOnClickListener(){
            navMod.RecursetoRecurseAdd(findNavController(), args.parent)
+        }
+
+        val toSearchButton: MaterialButton = view.findViewById<MaterialButton>(R.id.searchBtn)
+        toSearchButton.setOnClickListener(){
+            navMod.RecurseToSearch(findNavController())
         }
 
     }
