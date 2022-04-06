@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Context
 import android.util.Log
 import java.lang.Exception
+import java.lang.Integer.parseInt
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -65,19 +66,16 @@ class DBController(context: Context) {
         return model.getMR(id)
     }
 
-    fun add_mr(qrid:Int, devName:String, parent:Int):Long{
-        //TODO need work order num?
-        //TODO, any way to not have to empty string all these?
-        //TODO timestamp logic
+    fun add_mr(qrid:Int, devName:String, workOrderNum: String, serviceProvider: String, status: Int, parent:Int):Long{
         var pID = model.addMaintenanceRecord(
             qrid = qrid,
             deviceName = devName,
-            workOrderNum = "0",
-            serviceProvider = "",
+            workOrderNum = workOrderNum,
+            serviceProvider = serviceProvider,
             serviceEngineeringCode = "",
             faultCode = "",
             ipmProcedure = "",
-            status = 0,
+            status = status,
             timeStamp = 0,
             parent = parent
         )

@@ -61,6 +61,9 @@ class RecurseAddFragment : Fragment() {
         //======================BINDINGS=====================
         val nameTV: EditText = view.findViewById<EditText>(R.id.nameET_radd)
         val qridvalTV: TextView = view.findViewById<TextView>(R.id.qridvalTV_radd)
+        val workOrderValTV: EditText = view.findViewById<EditText>(R.id.workOrderValTV_radd)
+        val statusValTV: EditText = view.findViewById<EditText>(R.id.statusTVval_radd)
+        val providerValTV: EditText = view.findViewById<EditText>(R.id.ServiceProviderTVval_radd)
 
         val scanIDButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.scanIDButton_radd)
         scanIDButton.setOnClickListener(){
@@ -72,7 +75,12 @@ class RecurseAddFragment : Fragment() {
         //TODO add error handling if QRid text is empty, basically just don't do an action
         initText(view, args)
         addButton.setOnClickListener(){
-            var id = dbCtrl?.add_mr(devName = nameTV.text.toString(), qrid = Integer.parseInt(qridvalTV.text.toString()), parent = args.parent)
+            var id = dbCtrl?.add_mr(qrid = Integer.parseInt(qridvalTV.text.toString()),
+                                    devName = nameTV.text.toString(),
+                                    workOrderNum = workOrderValTV.text.toString(),
+                                    status = Integer.parseInt(statusValTV.text.toString()),
+                                    serviceProvider = providerValTV.text.toString(),
+                                    parent = args.parent)
             if (id != null) {
                 navMod.RecurseAddtoInfo(findNavController(), id.toInt())
             }

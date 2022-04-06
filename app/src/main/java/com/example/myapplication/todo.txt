@@ -10,5 +10,10 @@ Bug Fix 2. Currently, on save btn click -> goes to device card -> back button pr
     -> back btn press -> QR scanner
     Ideal behavior -- back button press on device card page brings you back to list
 
+[Resolved - Mantej Singh: 05/05/2022: 19:42]
+Dev Func 1. Populate the card view with more default parameters
 
-Dev Func 1. Get search functionality set up on main screen
+[Resolved - Mantej Singh: 05/05/2022: 20:47]
+Dev Func 2. Allow card view to take in user typed input
+
+Dev Func 3. Get search functionality set up on main screen

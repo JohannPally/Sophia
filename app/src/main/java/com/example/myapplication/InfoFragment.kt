@@ -9,10 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,26 +59,28 @@ class InfoFragment : Fragment() {
         var mr = dbCtrl?.get_mr(args.id)
 
         var devName = mr?.deviceName
+        var qrID = mr?.id
         var fltCode = mr?.faultCode
         var ipmProc = mr?.ipmProcedure
         var servEngCode = mr?.serviceEngineeringCode
         var servProv = mr?.serviceProvider
         var workOrdNum = mr?.workOrderNum
-        var timStmp = mr?.timestamp
+        var status = mr?.status
+        var timeStmp = mr?.timestamp
 
         var devName_TV = view.findViewById<TextView>(R.id.info_devName_tv)
-        var fltCode_TV = view.findViewById<TextView>(R.id.info_fltCode_tv)
-        var ipmProc_TV = view.findViewById<TextView>(R.id.info_ipmProc_tv)
+        var qrCode_TV = view.findViewById<TextView>(R.id.info_QRCode_tv)
+        var status_TV = view.findViewById<TextView>(R.id.info_status_tv)
         var servEngCode_TV = view.findViewById<TextView>(R.id.info_servEngCode_tv)
         var servProv_TV = view.findViewById<TextView>(R.id.info_servProv_tv)
         var workOrdNum_TV = view.findViewById<TextView>(R.id.info_workOrdNum_tv)
 
-        devName_TV.setText(devName)
-        fltCode_TV.setText(fltCode)
-        ipmProc_TV.setText(ipmProc)
-        servEngCode_TV.setText(servEngCode)
-        servProv_TV.setText(servProv)
-        workOrdNum_TV.setText(workOrdNum)
+        devName_TV.text = "Device: " + devName
+        qrCode_TV.text = "QR ID: " + qrID.toString()
+        status_TV.text = "Device Status: " + status.toString()
+        //servEngCode_TV.text = servEngCode
+        servProv_TV.text = "Service Provider: " + servProv
+        workOrdNum_TV.text = "WorkOrder Number: " + workOrdNum
 
         // This button press takes you from the device info screen to device list screen
         val deviceListBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.deviceList)

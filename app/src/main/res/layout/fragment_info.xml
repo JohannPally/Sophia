@@ -12,76 +12,65 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="10dp"
-        app:cardElevation="10dp"
         app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
         app:cardMaxElevation="12dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105">
+        app:layout_constraintVertical_bias="0.231">
 
         <TextView
-            android:id="@+id/info_fltCode_tv"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/info_ipmProc_tv"
-            android:layout_width="wrap_content"
+            android:id="@+id/info_QRCode_tv"
+            android:layout_width="349dp"
             android:layout_height="20dp"
             android:layout_gravity="left"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:textSize="10sp"
-            android:textStyle="normal"/>
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@+id/info_status_tv"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:id="@+id/info_ipmProc_tv"
-            app:layout_constraintTop_toBottomOf="@id/info_fltCode_tv"
+            android:id="@+id/info_status_tv"
+            android:layout_width="350dp"
+            android:layout_height="20dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="2dp"
+            android:textSize="16sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/info_servEngCode_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:textSize="10sp"
-            android:textStyle="normal"/>
-
-        <TextView
-            android:id="@+id/info_servEngCode_tv"
-            app:layout_constraintTop_toBottomOf="@id/info_ipmProc_tv"
-            app:layout_constraintBottom_toTopOf="@+id/info_servProv_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:textSize="10sp"
-            android:textStyle="normal"/>
+            app:layout_constraintTop_toBottomOf="@id/info_QRCode_tv" />
 
         <TextView
             android:id="@+id/info_servProv_tv"
-            app:layout_constraintTop_toBottomOf="@id/info_servEngCode_tv"
-            app:layout_constraintBottom_toTopOf="@+id/info_workOrdNum_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="349dp"
             android:layout_height="20dp"
             android:layout_gravity="left"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="70dp"
             android:layout_marginBottom="2dp"
-            android:textSize="10sp"
-            android:textStyle="normal"/>
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@+id/info_workOrdNum_tv"
+            app:layout_constraintTop_toBottomOf="@id/info_servEngCode_tv" />
 
         <TextView
             android:id="@+id/info_workOrdNum_tv"
-            app:layout_constraintTop_toBottomOf="@id/info_servProv_tv"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
+            android:layout_width="349dp"
             android:layout_height="20dp"
             android:layout_gravity="left"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="105dp"
             android:layout_marginBottom="2dp"
-            android:textSize="10sp"
-            android:textStyle="normal"/>
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info_servProv_tv" />
 
     </androidx.cardview.widget.CardView>
 
