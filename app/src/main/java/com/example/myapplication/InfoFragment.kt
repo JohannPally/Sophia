@@ -82,11 +82,11 @@ class InfoFragment : Fragment() {
         servProv_TV.text = "Service Provider: " + servProv
         workOrdNum_TV.text = "WorkOrder Number: " + workOrdNum
 
-        // This button press takes you from the device info screen to device list screen
-        val deviceListBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.deviceList)
-        deviceListBtn.setOnClickListener(){
-                navMod.RecurseAddtoInfo(findNavController())
-            }
+//        // This button press takes you from the device info screen to device list screen
+//        val deviceListBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.deviceList)
+//        deviceListBtn.setOnClickListener(){
+//                navMod.RecurseAddtoInfo(findNavController())
+//            }
     }
 
     companion object {

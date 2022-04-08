@@ -39,4 +39,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/toQRSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_code_scanner_auto_focus_on"
+        app:layout_constraintBottom_toTopOf="@+id/toRecurseAddButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".98" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,6 +74,10 @@ class RecurseFragment : Fragment() {
             navMod.RecurseToSearch(findNavController())
         }
 
+        val toQRSearchButton: FloatingActionButton = view.findViewById<FloatingActionButton>(R.id.toQRSearchButton)
+        toQRSearchButton.setOnClickListener(){
+            navMod.RecursetoRecurseQRSearch(findNavController())
+        }
     }
 
     fun initTextFields(view: View){

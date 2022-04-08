@@ -215,6 +215,11 @@ class NavMod : ViewModel() {
 
     }
 
+    fun RecursetoRecurseQRSearch(navController: NavController) {
+        val action = RecurseFragmentDirections.actionRecurseFragmentToRecurseQRSearchFragment();
+        navController.navigate(action)
+    }
+
 
 //    fun RecursetoQR(navController: NavController, parent: Int) {
 //        val action = RecurseFragmentDirections.actio
@@ -255,4 +260,17 @@ class NavMod : ViewModel() {
         val action = RAddQRScanDirections.actionRAddQRScanToRecurseAddFragment(parent = p, rAddName = rN, rAddId = rI);
         navController.navigate(action)
     }
+
+    /**
+     * Function that handles the navigation from Add fragment to others
+     * Inputs: param - The data to pass onto Recurse fragment
+     *         navController - The reference to the navigation controller present in the fragment
+     * Outputs: None
+     */
+
+    fun RecurseQRSearchtoInfo(navController: NavController, id:Int) {
+        val action = RecurseQRSearchFragmentDirections.actionRecurseQRSearchFragmentToInfoFragment(id);
+        navController.navigate(action)
+    }
+
 }
