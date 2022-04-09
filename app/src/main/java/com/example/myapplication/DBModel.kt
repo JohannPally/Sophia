@@ -12,10 +12,20 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
 
+
+
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.ResultSet
+import java.sql.SQLException
+import java.sql.Statement
+
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
 private var templatesFilename: String = "templates.json"
-private val serverURL:String = "http://10.0.2.2:4567"
+private val serverURL:String = "http://spencers_2nd_pc.dyndns.rice.edu:4567"
+private val netport =  4567
+lateinit var connection: Connection
 
 //TODO NOTES
 //1. we're only going to have a single file with all the devices and categories
@@ -78,6 +88,7 @@ class DatabaseModel(context: Context) {
             this.updateTemplates()
         }
         println(this.templates)
+        getServerConnection()
     }
 
     /*
@@ -444,9 +455,13 @@ class DatabaseModel(context: Context) {
             urlc.requestMethod = "GET"
             urlc.connect()
             Log.i("Get Server1.5:",urlc.responseCode.toString())
+            if (urlc.responseCode == 404) {
+                return "";
+            }
 
         } catch (e: IOException) {
             Log.i("Get Server1.5:","404")
+            Log.i("Get Server1.6:", e.toString())
             return ""
         }
         with(urlc) {
@@ -454,6 +469,9 @@ class DatabaseModel(context: Context) {
             println("URL : $url")
             println("Response Code : $responseCode")
             code = responseCode
+            if (code == 404) {
+                return ""
+            }
 
             BufferedReader(InputStreamReader(inputStream)).use {
                 var inputLine = it.readLine()
@@ -574,6 +592,35 @@ class DatabaseModel(context: Context) {
                 }
             }.start()
         }
+    }
+
+    fun getServerConnection() {
+        println("SAH:TESTING:getServerConnection Start")
+        Thread {
+            while (isOnline()) {
+                println("SAH:TESTING:getServerConnection 1")
+                val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
+                val serverPort = 1433
+                val Classes = "net.sourceforge.jtds.jdbc.Driver"
+                val database = "master"
+                val username = "Testing"
+                val password = "~n2+LK(QmDv=Wv,X"
+                val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
+                println("SAH:TESTING:getServerConnection 2")
+                try {
+                    Class.forName(Classes)
+                    println("SAH:TESTING:getServerConnection 3")
+                    connection = DriverManager.getConnection(url, username, password)
+                    println("SAH:TESTING:getServerConnection 4")
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: SQLException) {
+                    e.printStackTrace()
+                }
+                println("SAH:TESTING:getServerConnection 5")
+            }
+        }.start()
+        println("SAH:TESTING:getServerConnection")
     }
 }
 
