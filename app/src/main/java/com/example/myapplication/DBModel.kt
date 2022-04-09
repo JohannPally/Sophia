@@ -1,24 +1,20 @@
 package com.example.myapplication
 
+
 import android.content.Context
+import android.net.ConnectivityManager
+import android.os.Build
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.*
 import java.lang.reflect.Type
 import java.net.HttpURLConnection
+import java.net.InetAddress
 import java.net.URL
-
-import android.net.ConnectivityManager
-import android.os.Build
-import android.util.Log
-
-
-
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.ResultSet
 import java.sql.SQLException
-import java.sql.Statement
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -607,6 +603,11 @@ class DatabaseModel(context: Context) {
                 val password = "~n2+LK(QmDv=Wv,X"
                 val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
                 println("SAH:TESTING:getServerConnection 2")
+                val address: InetAddress = InetAddress.getByName(serverURLLocal)
+                println("SAH:TESTING:getServerConnection 2.1")
+                val reached = address.isReachable(1000)
+                val bytes = address.getHostAddress()
+                println("SAH:TESTING:getServerConnection 2.5:$reached:$bytes")
                 try {
                     Class.forName(Classes)
                     println("SAH:TESTING:getServerConnection 3")
