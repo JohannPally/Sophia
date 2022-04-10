@@ -19,7 +19,7 @@ import java.sql.SQLException
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
 private var templatesFilename: String = "templates.json"
-private val serverURL:String = "http://spencers_2nd_pc.dyndns.rice.edu:4567"
+private val serverURL:String = "spencers_2nd_pc.dyndns.rice.edu"
 private val netport =  4567
 lateinit var connection: Connection
 
@@ -291,6 +291,14 @@ class DatabaseModel(context: Context) {
 
     }
 
+    fun getHelper(){
+        //isOnline
+    }
+
+    fun insertHelper(){
+        //sync
+    }
+
     fun getCatsfromDB(): Set<String> {
         var locations =  MainActivity.testDB.levelsDAO().getAll()
         var result = arrayListOf<String>()
@@ -314,7 +322,7 @@ class DatabaseModel(context: Context) {
         println("SAVING DB FILE")
         saveToLocalFile(fullDBJson, dbFilename)
 
-        val url = "$serverURL/DB/${p.category}/${p.device}/"
+        val url = "http://$serverURL:$netport/DB/${p.category}/${p.device}/"
 //        post_server(url, json)
         logging(url, json)
     }
@@ -518,6 +526,8 @@ class DatabaseModel(context: Context) {
             this.cm.getActiveNetworkInfo()
         }
         return net != null
+        //iterate through logs and clear logs, update local
+        //maybe sync?
     }
 
     /**
@@ -526,7 +536,7 @@ class DatabaseModel(context: Context) {
     fun updateDB() {
         if (isOnline()) {
             Thread {
-                val newDB = get_server("$serverURL/DB/")
+                val newDB = get_server("http://$serverURL:$netport/DB/")
                 if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
@@ -550,7 +560,7 @@ class DatabaseModel(context: Context) {
     fun updateIDs() {
         if (isOnline()) {
             Thread {
-                val newDB = get_server("$serverURL/ID/")
+                val newDB = get_server("http://$serverURL:$netport/ID/")
                 if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
@@ -573,7 +583,7 @@ class DatabaseModel(context: Context) {
     fun updateTemplates() {
         if (isOnline()) {
             Thread {
-                val newDB = get_server("$serverURL/templates/")
+                val newDB = get_server("http://$serverURL:$netport/templates/")
                 if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
@@ -592,8 +602,8 @@ class DatabaseModel(context: Context) {
 
     fun getServerConnection() {
         println("SAH:TESTING:getServerConnection Start")
-        Thread {
-            while (isOnline()) {
+        if (isOnline()) {
+            Thread {
                 println("SAH:TESTING:getServerConnection 1")
                 val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
                 val serverPort = 1433
@@ -603,11 +613,11 @@ class DatabaseModel(context: Context) {
                 val password = "~n2+LK(QmDv=Wv,X"
                 val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
                 println("SAH:TESTING:getServerConnection 2")
-                val address: InetAddress = InetAddress.getByName(serverURLLocal)
-                println("SAH:TESTING:getServerConnection 2.1")
-                val reached = address.isReachable(1000)
-                val bytes = address.getHostAddress()
-                println("SAH:TESTING:getServerConnection 2.5:$reached:$bytes")
+//                val address: InetAddress = InetAddress.getByName(serverURLLocal)
+//                println("SAH:TESTING:getServerConnection 2.1")
+//                val reached = address.isReachable(1000)
+//                val bytes = address.getHostAddress()
+//                println("SAH:TESTING:getServerConnection 2.5:$reached:$bytes")
                 try {
                     Class.forName(Classes)
                     println("SAH:TESTING:getServerConnection 3")
@@ -619,8 +629,8 @@ class DatabaseModel(context: Context) {
                     e.printStackTrace()
                 }
                 println("SAH:TESTING:getServerConnection 5")
-            }
-        }.start()
+            }.start()
+        }
         println("SAH:TESTING:getServerConnection")
     }
 }
