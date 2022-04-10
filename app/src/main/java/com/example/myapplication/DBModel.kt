@@ -19,7 +19,7 @@ import java.sql.SQLException
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
 private var templatesFilename: String = "templates.json"
-private val serverURL:String = "http://spencers_2nd_pc.dyndns.rice.edu"
+private val serverURL:String = "spencers_2nd_pc.dyndns.rice.edu"
 private val netport =  4567
 lateinit var connection: Connection
 
@@ -322,7 +322,7 @@ class DatabaseModel(context: Context) {
         println("SAVING DB FILE")
         saveToLocalFile(fullDBJson, dbFilename)
 
-        val url = "$serverURL:$netport/DB/${p.category}/${p.device}/"
+        val url = "http://$serverURL:$netport/DB/${p.category}/${p.device}/"
 //        post_server(url, json)
         logging(url, json)
     }
@@ -536,7 +536,7 @@ class DatabaseModel(context: Context) {
     fun updateDB() {
         if (isOnline()) {
             Thread {
-                val newDB = get_server("$serverURL:$netport/DB/")
+                val newDB = get_server("http://$serverURL:$netport/DB/")
                 if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
@@ -560,7 +560,7 @@ class DatabaseModel(context: Context) {
     fun updateIDs() {
         if (isOnline()) {
             Thread {
-                val newDB = get_server("$serverURL:$netport/ID/")
+                val newDB = get_server("http://$serverURL:$netport/ID/")
                 if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
@@ -583,7 +583,7 @@ class DatabaseModel(context: Context) {
     fun updateTemplates() {
         if (isOnline()) {
             Thread {
-                val newDB = get_server("$serverURL:$netport/templates/")
+                val newDB = get_server("http://$serverURL:$netport/templates/")
                 if (newDB.isNotEmpty()) {
                     val hashMapType: Type =
                         object :
