@@ -613,11 +613,11 @@ class DatabaseModel(context: Context) {
                 val password = "~n2+LK(QmDv=Wv,X"
                 val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
                 println("SAH:TESTING:getServerConnection 2")
-                val address: InetAddress = InetAddress.getByName(serverURLLocal)
-                println("SAH:TESTING:getServerConnection 2.1")
-                val reached = address.isReachable(1000)
-                val bytes = address.getHostAddress()
-                println("SAH:TESTING:getServerConnection 2.5:$reached:$bytes")
+//                val address: InetAddress = InetAddress.getByName(serverURLLocal)
+//                println("SAH:TESTING:getServerConnection 2.1")
+//                val reached = address.isReachable(1000)
+//                val bytes = address.getHostAddress()
+//                println("SAH:TESTING:getServerConnection 2.5:$reached:$bytes")
                 try {
                     Class.forName(Classes)
                     println("SAH:TESTING:getServerConnection 3")
