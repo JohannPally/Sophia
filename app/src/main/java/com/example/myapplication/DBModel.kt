@@ -602,8 +602,8 @@ class DatabaseModel(context: Context) {
 
     fun getServerConnection() {
         println("SAH:TESTING:getServerConnection Start")
-        Thread {
-            while (isOnline()) {
+        while (isOnline()) {
+            Thread {
                 println("SAH:TESTING:getServerConnection 1")
                 val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
                 val serverPort = 1433
@@ -629,7 +629,7 @@ class DatabaseModel(context: Context) {
                     e.printStackTrace()
                 }
                 println("SAH:TESTING:getServerConnection 5")
-            }
+            }.start()
         }
         println("SAH:TESTING:getServerConnection")
     }
