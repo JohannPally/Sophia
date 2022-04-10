@@ -189,7 +189,7 @@
             app:destination="@id/recurseAddFragment" />
         <action
             android:id="@+id/action_recurseFragment_to_SearchFragment"
-            app:destination="@id/SearchFragment" />
+            app:destination="@id/RecurseSearchFragment" />
         <action
             android:id="@+id/action_recurseFragment_to_recurseQRSearchFragment"
             app:destination="@id/recurseQRSearchFragment" />
@@ -253,11 +253,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/SearchFragment"
+        android:id="@+id/RecurseSearchFragment"
         android:name="com.example.myapplication.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-    </fragment>
+        android:label="fragment_recurse_search"
+        tools:layout="@layout/fragment_search"></fragment>
     <fragment
         android:id="@+id/recurseQRSearchFragment"
         android:name="com.example.myapplication.RecurseQRSearchFragment"

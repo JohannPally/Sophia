@@ -19,7 +19,7 @@ import java.sql.SQLException
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
 private var templatesFilename: String = "templates.json"
-private val serverURL:String = "http://spencers_2nd_pc.dyndns.rice.edu:4567"
+private val serverURL:String = "http://10.0.2.2:4567"
 private val netport =  4567
 lateinit var connection: Connection
 
@@ -291,6 +291,14 @@ class DatabaseModel(context: Context) {
 
     }
 
+    fun getHelper(){
+        //isOnline
+    }
+
+    fun insertHelper(){
+        //sync
+    }
+
     fun getCatsfromDB(): Set<String> {
         var locations =  MainActivity.testDB.levelsDAO().getAll()
         var result = arrayListOf<String>()
@@ -518,6 +526,8 @@ class DatabaseModel(context: Context) {
             this.cm.getActiveNetworkInfo()
         }
         return net != null
+        //iterate through logs and clear logs, update local
+        //maybe sync?
     }
 
     /**
@@ -620,7 +630,7 @@ class DatabaseModel(context: Context) {
                 }
                 println("SAH:TESTING:getServerConnection 5")
             }
-        }.start()
+        }
         println("SAH:TESTING:getServerConnection")
     }
 }
