@@ -602,7 +602,7 @@ class DatabaseModel(context: Context) {
 
     fun getServerConnection() {
         println("SAH:TESTING:getServerConnection Start")
-        while (isOnline()) {
+        if (isOnline()) {
             Thread {
                 println("SAH:TESTING:getServerConnection 1")
                 val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
