@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import java.util.Date
 
 @Entity(tableName = "mr_table", foreignKeys = [ForeignKey(entity = LevelSQL::class,
     parentColumns = ["id"],
@@ -17,7 +18,12 @@ data class MaintenanceRecordSQL(
     @ColumnInfo(name = "ipm_procedure") val ipmProcedure: String?,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "timestamp") val timestamp: Int,
-    @ColumnInfo(name = "parent") val parent: Int?,
+    //initial start date
+    @ColumnInfo(name = "parent") val date: Date?,
+    //cycle length
+    @ColumnInfo(name = "parent") val numdays: Int?,
+    //[<stat, date, task>]
+    @ColumnInfo(name = "parent") val tasks: Array<Triple<String, Date, Int>>?,
 )
 
 @Entity(tableName = "levels_table", foreignKeys = [ForeignKey(entity = LevelSQL::class,

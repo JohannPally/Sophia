@@ -28,14 +28,14 @@
         <entry key="app/src/main/res/layout/fragment_q_r_validate_user.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/fragment_qr.xml" value="0.1818642350557244" />
         <entry key="app/src/main/res/layout/fragment_r_add_q_r_scan.xml" value="0.178125" />
-        <entry key="app/src/main/res/layout/fragment_recurse.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_recurse.xml" value="0.24048913043478262" />
         <entry key="app/src/main/res/layout/fragment_recurse_add.xml" value="0.230517578125" />
-        <entry key="app/src/main/res/layout/fragment_recurse_q_r_search.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.14438222249348956" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_welcome_screen.xml" value="0.271286231884058" />
         <entry key="app/src/main/res/layout/qr_fragment.xml" value="0.1818642350557244" />
-        <entry key="app/src/main/res/layout/recurse_item_layout.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/recurse_item_layout.xml" value="0.37447916666666664" />
+        <entry key="app/src/main/res/layout/task_time_layout.xml" value="0.3632246376811594" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2341537245572393" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1388888888888889" />
       </map>

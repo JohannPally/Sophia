@@ -9,7 +9,11 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import java.time.LocalDateTime
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,8 +59,30 @@ class InfoFragment : Fragment() {
         }
 
         //==================BINDINGS=====================
-
+        val tasks_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.tasks_recyclerView)
         var mr = dbCtrl?.get_mr(args.id)
+
+        val tasks = mr?.tasks
+        val startdate = mr?.date
+        var cyclelen = mr?.numdays
+
+        if(tasks != null){
+            if(startdate != null && cyclelen !=null){
+                var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
+                tasks_rv.adapter = adapter
+                tasks_rv.layoutManager = LinearLayoutManager(activity)
+            } else {
+                cyclelen = 7
+                //TODO need someway to get date
+                //TODO need to display the cycle len in the right textview (bottom left of view)
+                var adapter = TaskItemAdapter(tasks = tasks, cycle = 7, startdate = LocalDateTime.now(), navMod = navMod, navCtrl = findNavController())
+                tasks_rv.adapter = adapter
+                tasks_rv.layoutManager = LinearLayoutManager(activity)
+            }
+        } else {
+
+        }
+        //TODO define what additem does (add empty task to the rv set and refresh and push to MR object in db
 
         var devName = mr?.deviceName
         var qrID = mr?.id
