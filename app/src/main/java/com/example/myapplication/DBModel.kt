@@ -41,6 +41,9 @@ class DatabaseModel(context: Context) {
     val context: Context = context
     var cm : ConnectivityManager
     var logs = arrayListOf<Pair<String, String>>()
+
+    // Boolean flag indicates if it's a new MR (true) or a modified one (false)
+    var sqlLogs = arrayListOf<Pair<MaintenanceRecordSQL, Boolean>>()
     init {
         this.cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val dbHashMapType: Type = object : TypeToken<HashMap<String, HashMap<String, MaintenanceRecord>>?>() {}.type
@@ -286,7 +289,7 @@ class DatabaseModel(context: Context) {
             parent = parent
         )
         Log.v("Added MR Object", "DBModel")
-        var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+        val pID = insertHelper(mrObject);
         return pID
 
     }
@@ -295,8 +298,43 @@ class DatabaseModel(context: Context) {
         //isOnline
     }
 
-    fun insertHelper(){
-        //sync
+    fun syncSQLLogsToServer() {
+        Thread {
+            while (isOnline() && sqlLogs.size > 0) {
+                val log = sqlLogs.removeAt(0)
+                val sqlStatement: String;
+                val mrObject = log.first;
+                if (log.second) {
+                    // New maintenance record
+                    sqlStatement = "INSERT INTO mr_table VALUES ${mrObject.deviceName}, ${mrObject.workOrderNum}, ${mrObject.serviceProvider}, ${mrObject.serviceEngineeringCode}, ${mrObject.faultCode}, ${mrObject.ipmProcedure}, ${mrObject.status}, ${mrObject.timestamp}, ${mrObject.parent}";
+                } else {
+                    sqlStatement = "UPDATE mr_table SET deviceName = ${mrObject.deviceName}, workOrderNum = ${mrObject.workOrderNum}, serviceProvider = ${mrObject.serviceProvider}, serviceEngineeringCode = ${mrObject.serviceEngineeringCode}, faultCode = ${mrObject.faultCode}, ipmProcedure = ${mrObject.ipmProcedure}, status = ${mrObject.status}, timestamp = ${mrObject.timestamp}, parent = ${mrObject.parent} WHERE id = ${mrObject.id}";
+                }
+                val response = sendSqlStatementToServer(sqlStatement);
+                if (response != 200L) {
+                    sqlLogs.add(0, log)
+                    break
+                }
+            }
+        }.start()
+    }
+
+    fun insertHelper(mrObject: MaintenanceRecordSQL): Long {
+        // TODO: Uncomment
+//        if (isOnline()) {
+        if (false) {
+            val sqlStatement = "INSERT INTO mr_table VALUES ${mrObject.deviceName}, ${mrObject.workOrderNum}, ${mrObject.serviceProvider}, ${mrObject.serviceEngineeringCode}, ${mrObject.faultCode}, ${mrObject.ipmProcedure}, ${mrObject.status}, ${mrObject.timestamp}, ${mrObject.parent}";
+            return sendSqlStatementToServer(sqlStatement);
+        } else {
+            var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+            sqlLogs.add(Pair(mrObject, true));
+            return pID;
+        }
+    }
+
+    fun sendSqlStatementToServer(sqlStatement: String): Long {
+        // TODO: Send Message to Server
+        return 0;
     }
 
     fun getCatsfromDB(): Set<String> {
@@ -633,5 +671,7 @@ class DatabaseModel(context: Context) {
         }
         println("SAH:TESTING:getServerConnection")
     }
+
+
 }
 
