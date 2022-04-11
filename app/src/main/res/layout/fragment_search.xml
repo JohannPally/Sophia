@@ -1,18 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/slate_grey"
     tools:context=".SearchFragment">
 
-    <EditText
-        android:id="@+id/searchTV"
-        android:layout_width="317dp"
-        android:layout_height="wrap_content" />
+<!--    <EditText-->
+<!--        android:id="@+id/searchTV"-->
+<!--        android:layout_width="317dp"-->
+<!--        android:layout_height="wrap_content" />-->
 
-    <Button
-        android:id="@+id/queryButton"
+<!--    <Button-->
+<!--        android:id="@+id/queryButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Find" />-->
+
+    <TableRow
+        android:id="@+id/searchTableRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Find" />
-</FrameLayout>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".04">
+
+        <EditText
+            android:id="@+id/searchTV"
+            android:ems="10"
+            android:hint="@string/hint"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:textColor="@color/brown_neutral"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias=".04"/>
+
+        <Button
+            android:id="@+id/queryButton"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintVertical_bias=".04"
+            android:text="@string/search" />
+
+    </TableRow>
+</androidx.constraintlayout.widget.ConstraintLayout>

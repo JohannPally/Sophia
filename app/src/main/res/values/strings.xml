@@ -32,5 +32,7 @@
     <string name="url_key">URL</string>
     <string name="default_keys">DEFAULT_KEYS</string>
     <string name="authenticateText">Authenticate</string>
+    <string name="hint">hint</string>
+    <string name="search">Search!</string>
 
 </resources>
