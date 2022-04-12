@@ -15,6 +15,8 @@ import java.net.URL
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.*
+import kotlin.collections.HashMap
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -286,7 +288,10 @@ class DatabaseModel(context: Context) {
             ipmProcedure = ipmProcedure,
             status = status,
             timestamp = timeStamp,
-            parent = parent
+            parent = parent,
+            date = Calendar.getInstance(),
+            numdays = 0,
+            tasks = arrayOf(Triple("A", Calendar.getInstance(), 1))
         )
         Log.v("Added MR Object", "DBModel")
         val pID = insertHelper(mrObject);
