@@ -18,12 +18,13 @@ data class MaintenanceRecordSQL(
     @ColumnInfo(name = "ipm_procedure") val ipmProcedure: String?,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "timestamp") val timestamp: Int,
+    @ColumnInfo(name = "parent") val parent: Int?,
     //initial start date
-    @ColumnInfo(name = "parent") val date: Date?,
+    @ColumnInfo(name = "date") val date: Date?,
     //cycle length
-    @ColumnInfo(name = "parent") val numdays: Int?,
+    @ColumnInfo(name = "numdays") val numdays: Int?,
     //[<stat, date, task>]
-    @ColumnInfo(name = "parent") val tasks: Array<Triple<String, Date, Int>>?,
+    @ColumnInfo(name = "tasks") val tasks: Array<Triple<String, Date, Int>>?,
 )
 
 @Entity(tableName = "levels_table", foreignKeys = [ForeignKey(entity = LevelSQL::class,
