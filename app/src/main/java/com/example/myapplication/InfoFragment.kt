@@ -1,11 +1,15 @@
 package com.example.myapplication
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -50,6 +54,7 @@ class InfoFragment : Fragment() {
     private val navMod: NavMod by activityViewModels()
     val args: InfoFragmentArgs by navArgs()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,10 +65,11 @@ class InfoFragment : Fragment() {
 
         //==================BINDINGS=====================
         val tasks_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.tasks_recyclerView)
+        val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
         var mr = dbCtrl?.get_mr(args.id)
 
-        val tasks = mr?.tasks
-        val startdate = mr?.date
+        var tasks = mr?.tasks
+        var startdate = mr?.date
         var cyclelen = mr?.numdays
 
         if(tasks != null){
@@ -71,18 +77,25 @@ class InfoFragment : Fragment() {
                 var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
                 tasks_rv.adapter = adapter
                 tasks_rv.layoutManager = LinearLayoutManager(activity)
+
             } else {
-                cyclelen = 7
-                //TODO need someway to get date
-                //TODO need to display the cycle len in the right textview (bottom left of view)
-                var adapter = TaskItemAdapter(tasks = tasks, cycle = 7, startdate = LocalDateTime.now(), navMod = navMod, navCtrl = findNavController())
-                tasks_rv.adapter = adapter
-                tasks_rv.layoutManager = LinearLayoutManager(activity)
+                //TODO print error box, but should be unreachable
             }
         } else {
-
+            cyclelen = 7
+            cycle_et.setText("7");
+            tasks = arrayOf(Triple("Type task name here...", Calendar.getInstance(), 0))
+            startdate = Calendar.getInstance()
+            //TODO push change to the MR object
+            var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
+            tasks_rv.adapter = adapter
+            tasks_rv.layoutManager = LinearLayoutManager(activity)
         }
-        //TODO define what additem does (add empty task to the rv set and refresh and push to MR object in db
+
+        val add_button: Button = view.findViewById<Button>(R.id.addtaskbutton_info)
+        add_button.setOnClickListener(){
+            //TODO define what additem does (add empty task to the rv set and refresh and push to MR object in db
+        }
 
         var devName = mr?.deviceName
         var qrID = mr?.id

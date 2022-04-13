@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity(tableName = "mr_table", foreignKeys = [ForeignKey(entity = LevelSQL::class,

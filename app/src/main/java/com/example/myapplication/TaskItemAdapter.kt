@@ -9,13 +9,15 @@ import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.Exception
+import java.time.LocalDateTime
 import java.util.*
 
 
-class TaskItemAdapter (private val tasks: Array<Triple<String, Date, Int>>, private val startdate: Date, private val cycle: Int, private val navMod: NavMod, private val navCtrl: NavController) :
+class TaskItemAdapter (private val tasks: Array<Triple<String, Calendar, Int>>, private val startdate: Calendar, private val cycle: Int, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<TaskItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         // Your holder should contain and initialize a member variable
         // for any view that will be set as you render a row
         val taskNameTV: TextView = itemView.findViewById(R.id.task_name_info)
@@ -54,7 +56,7 @@ class TaskItemAdapter (private val tasks: Array<Triple<String, Date, Int>>, priv
 
     //TODO have to implemenet changes for modding over startdate and number of days remaining
     @SuppressLint("ResourceAsColor")
-    public fun  setButtonColor(task: Triple<String, Date, Int>, holder: TaskItemAdapter.ViewHolder){
+    public fun  setButtonColor(task: Triple<String, Calendar, Int>, holder: TaskItemAdapter.ViewHolder){
         //TODO might change from passing task to passing int
         if(task.third == 0){
             holder.taskStatButton.setBackgroundColor(R.color.hazard_red);

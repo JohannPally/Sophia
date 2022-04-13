@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.*
@@ -15,6 +16,7 @@ import java.net.URL
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -276,6 +278,7 @@ class DatabaseModel(context: Context) {
         return MainActivity.testDB.maintenanceRecordDAO().findById(mrID)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int): Long {
         // This function creates an MR SQL object from the inputs and pushes it into the SQL DB
         var mrObject = MaintenanceRecordSQL(
@@ -290,8 +293,8 @@ class DatabaseModel(context: Context) {
             timestamp = timeStamp,
             parent = parent,
             date = Calendar.getInstance(),
-            numdays = 0,
-            tasks = arrayOf(Triple("A", Calendar.getInstance(), 1))
+            numdays = 7,
+            tasks = arrayOf(Triple("A", Calendar.getInstance(), 1), Triple("B", Calendar.getInstance(), 0))
         )
         Log.v("Added MR Object", "DBModel")
         val pID = insertHelper(mrObject);
