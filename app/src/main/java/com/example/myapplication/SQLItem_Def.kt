@@ -19,14 +19,16 @@ data class MaintenanceRecordSQL(
     @ColumnInfo(name = "ipm_procedure") val ipmProcedure: String?,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "timestamp") val timestamp: Int,
-    @ColumnInfo(name = "parent") val parent: Int?,
-    //initial start date
-    @ColumnInfo(name = "date") val date: Calendar?,
-    //cycle length
-    @ColumnInfo(name = "numdays") val numdays: Int?,
-    //[<stat, date, task>]
-    @ColumnInfo(name = "tasks") val tasks: Array<Triple<String, Calendar, Int>>?,
+    @ColumnInfo(name = "parent") val parent: Int?
+//    //initial start date
+//    @ColumnInfo(name = "date") val date: Calendar?,
+//    //cycle length
+//    @ColumnInfo(name = "numdays") val numdays: Int?,
+//    //[<stat, date, task>]
+//    @ColumnInfo(name = "tasks") val tasks: Array<Triple<String, Calendar, Int>>?,
 )
+//TODO
+//MR TABLE <- Checklist Table (String, Date, Int) <- Task Table (String, Date, Int)
 
 @Entity(tableName = "levels_table", foreignKeys = [ForeignKey(entity = LevelSQL::class,
     parentColumns = ["id"],
@@ -37,4 +39,30 @@ data class LevelSQL(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo(name = "level_name") val levelName: String,
     @ColumnInfo(name = "parent") val parent: Int?,
+)
+
+@Entity(tableName = "checklist_table", foreignKeys = [ForeignKey(entity = CheckListSQL::class,
+    parentColumns = ["id"],
+    childColumns = ["parent"],
+    onDelete = CASCADE)])
+
+data class CheckListSQL(
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @ColumnInfo(name = "parent") val parent: Int?, //id of MR
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "cycle") val cycle: Int,
+    @ColumnInfo(name = "startdate") val startdate: String, //start date
+)
+
+@Entity(tableName = "tasks_table", foreignKeys = [ForeignKey(entity = TaskSQL::class,
+    parentColumns = ["id"],
+    childColumns = ["parent"],
+    onDelete = CASCADE)])
+
+data class TaskSQL(
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @ColumnInfo(name = "parent") val parent: Int?, //id of CheckList
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "status") val status: Int,
+    @ColumnInfo(name = "updatedate") val updatedate: String, //last updated
 )
