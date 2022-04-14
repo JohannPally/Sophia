@@ -55,6 +55,6 @@ data class TaskSQL(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo(name = "parent") val parent: Int?, //id of CheckList
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "status") val status: Int,
-    @ColumnInfo(name = "updatedate") val updatedate: String, //last updated
+    @ColumnInfo(name = "status") var status: Int,
+    @ColumnInfo(name = "updatedate") var updatedate: String, //last updated
 )

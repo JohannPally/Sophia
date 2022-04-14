@@ -27,6 +27,9 @@ interface LevelsDAO {
     @Insert
     fun insert(levels: LevelSQL)
 
+    @Update
+    fun pushUpdate(level: LevelSQL)
+
     @Delete
     fun delete(level: LevelSQL)
 }

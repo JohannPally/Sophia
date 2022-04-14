@@ -26,6 +26,9 @@ interface TaskDAO {
     @Insert
     fun insert(task: TaskSQL): Long
 
+    @Update
+    fun pushUpdate(task: TaskSQL)
+
     @Delete
     fun delete(task: TaskSQL)
 }

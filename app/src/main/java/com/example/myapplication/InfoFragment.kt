@@ -70,20 +70,6 @@ class InfoFragment : Fragment() {
         val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
         var mr = dbCtrl?.get_mr(args.id)
 
-        //TEST
-        val currentDate : Calendar = Calendar.getInstance()
-        val newDate : Calendar = Calendar.getInstance()
-        newDate.add(Calendar.DATE, 2)
-        val elapsedDays = (newDate.timeInMillis - currentDate.timeInMillis) / 86400000
-
-        val lastUpdateDate: Calendar = Calendar.getInstance()
-        val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
-        lastUpdateDate.time = sdf.parse(currentDate.time.toString())
-
-        Log.v("time-test I", elapsedDays.toString())
-        Log.v("time-test II", lastUpdateDate.toString())
-
-        // TEST
         //TODO update logic with new getter for tasks and checklist
 //        var tasks = mr?.tasks
 //        var startdate = mr?.date

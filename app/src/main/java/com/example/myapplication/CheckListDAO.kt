@@ -26,6 +26,9 @@ interface CheckListDAO {
     @Insert
     fun insert(checkList: CheckListSQL): Long
 
+    @Update
+    fun pushUpdate(checkList: TaskSQL)
+
     @Delete
     fun delete(checkList: CheckListSQL)
 }

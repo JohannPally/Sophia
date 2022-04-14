@@ -63,7 +63,7 @@ class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: C
      * EEE MMM dd HH:mm:ss z yyyy
      * e.g. Mon Mar 14 16:02:37 GMT 2011
      */
-    public fun getTaskStatus(task: TaskSQL, date: String, cyclelen : Int ) {
+    public fun getTaskStatus(task: TaskSQL) {
 
         val currentDate : Calendar = Calendar.getInstance()
 
@@ -72,15 +72,18 @@ class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: C
         lastUpdateDate.time = sdf.parse(task.updatedate)
 
         val elapsedDays = (currentDate.timeInMillis - lastUpdateDate.timeInMillis) / 86400000
-        //val cycleLen = // TODO Mantej 04/14 get this using parent ID of task to get checkList entry
+        val checkListObject : CheckListSQL? = task.parent?.let { MainActivity.testDB.CheckListDAO().findById(it) }
+        val cycleLen : Int = checkListObject?.cycle ?: -1
 
-
-
-        // TEST
-//        Log.v("time-test", currentDate.toString())
-//        Log.v("time-test II", newDate.toString())
-//        Log.v("Diff", diff.toString())
-        // TEST
+        if (cycleLen != -1) {
+            if (elapsedDays >= cycleLen) {
+                task.status = 0
+            }
+            else {
+                task.status = 1
+            }
+        }
+        MainActivity.testDB.TaskSQLDAO().pushUpdate(task)
     }
 
     //TODO have to implemenet changes for modding over startdate and number of days remaining
