@@ -23,7 +23,7 @@ interface MaintenanceRecordDAO {
     @Insert
     fun insertAll(maintenanceRecords: Array<MaintenanceRecordSQL>)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(maintenanceRecord: MaintenanceRecordSQL): Long
 
     @Update

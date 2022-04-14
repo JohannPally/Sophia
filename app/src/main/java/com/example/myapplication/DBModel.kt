@@ -11,13 +11,8 @@ import com.google.gson.reflect.TypeToken
 import java.io.*
 import java.lang.reflect.Type
 import java.net.HttpURLConnection
-import java.net.InetAddress
 import java.net.URL
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.SQLException
-import java.time.LocalDateTime
-import java.util.*
+import java.sql.*
 import java.util.logging.Level
 import kotlin.collections.HashMap
 
@@ -332,8 +327,34 @@ class DatabaseModel(context: Context) {
 
     }
 
-    fun getHelper(){
-        //isOnline
+    fun getHelper() {
+        if (::connection.isInitialized) {
+            val st_2: Statement = connection.createStatement()
+            var resultSet: ResultSet = st_2.executeQuery("SELECT * FROM mr_table;")
+            println("Retrieving ${resultSet.metaData.columnCount}");
+            while (resultSet.next()) {
+                println("PARENT: " + if (resultSet.getInt("parent") == 0) -1 else resultSet.getInt("parent"))
+                var mrObject = MaintenanceRecordSQL(
+                    id = resultSet.getInt("id"),
+                    deviceName = resultSet.getString("device_name"),
+                    workOrderNum = resultSet.getString("work_order_num"),
+                    serviceProvider = resultSet.getString("service_provider"),
+                    serviceEngineeringCode = resultSet.getString("service_engineering_code"),
+                    faultCode = resultSet.getString("fault_code"),
+                    ipmProcedure = resultSet.getString("ipm_procedure"),
+                    status = resultSet.getInt("status"),
+                    timestamp = resultSet.getInt("timestamp"),
+                    parent = if (resultSet.getInt("parent") == 0) null else resultSet.getInt("parent"),
+                )
+                try {
+                    MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+                    println("Added")
+                } catch (e: Exception) {
+                    println("Error inserting into DB: $e");
+                }
+            }
+            println("Final: ${MainActivity.testDB.maintenanceRecordDAO().getAll().size}")
+        }
     }
 
     fun syncSQLLogsToServer() {
@@ -344,11 +365,11 @@ class DatabaseModel(context: Context) {
                 val mrObject = log.first;
                 if (log.second) {
                     // New maintenance record
-                    sqlStatement = "INSERT INTO mr_table VALUES ${mrObject.deviceName}, ${mrObject.workOrderNum}, ${mrObject.serviceProvider}, ${mrObject.serviceEngineeringCode}, ${mrObject.faultCode}, ${mrObject.ipmProcedure}, ${mrObject.status}, ${mrObject.timestamp}, ${mrObject.parent}";
+                    sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" }) VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""});";
                 } else {
                     sqlStatement = "UPDATE mr_table SET deviceName = ${mrObject.deviceName}, workOrderNum = ${mrObject.workOrderNum}, serviceProvider = ${mrObject.serviceProvider}, serviceEngineeringCode = ${mrObject.serviceEngineeringCode}, faultCode = ${mrObject.faultCode}, ipmProcedure = ${mrObject.ipmProcedure}, status = ${mrObject.status}, timestamp = ${mrObject.timestamp}, parent = ${mrObject.parent} WHERE id = ${mrObject.id}";
                 }
-                val response = sendSqlStatementToServer(sqlStatement);
+                val response = sendSqlUpdateToServer(sqlStatement);
                 if (response != 200L) {
                     sqlLogs.add(0, log)
                     break
@@ -358,11 +379,9 @@ class DatabaseModel(context: Context) {
     }
 
     fun insertHelper(mrObject: MaintenanceRecordSQL): Long {
-        // TODO: Uncomment
-//        if (isOnline()) {
-        if (false) {
-            val sqlStatement = "INSERT INTO mr_table VALUES ${mrObject.deviceName}, ${mrObject.workOrderNum}, ${mrObject.serviceProvider}, ${mrObject.serviceEngineeringCode}, ${mrObject.faultCode}, ${mrObject.ipmProcedure}, ${mrObject.status}, ${mrObject.timestamp}, ${mrObject.parent}";
-            return sendSqlStatementToServer(sqlStatement);
+        if (isOnline()) {
+            val sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" }) VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""});";
+            return sendSqlUpdateToServer(sqlStatement);
         } else {
             var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
             sqlLogs.add(Pair(mrObject, true));
@@ -370,9 +389,19 @@ class DatabaseModel(context: Context) {
         }
     }
 
-    fun sendSqlStatementToServer(sqlStatement: String): Long {
-        // TODO: Send Message to Server
-        return 0;
+    fun sendSqlUpdateToServer(sqlStatement: String): Long {
+        println("CALLLED $sqlStatement")
+        Thread {
+            if (connection != null) {
+                try {
+                    var statement = connection.createStatement()
+                    statement.executeUpdate(sqlStatement);
+                } catch (e: SQLException) {
+                    e.printStackTrace();
+                }
+            }
+        }.start()
+        return 0
     }
 
     fun getCatsfromDB(): Set<String> {
@@ -684,9 +713,9 @@ class DatabaseModel(context: Context) {
                 val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
                 val serverPort = 1433
                 val Classes = "net.sourceforge.jtds.jdbc.Driver"
-                val database = "master"
-                val username = "Testing"
-                val password = "~n2+LK(QmDv=Wv,X"
+                val database = "R360 CMMS"
+                val username = "sa"
+                val password = "jDK{K@y%2b){cnU6"
                 val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
                 println("SAH:TESTING:getServerConnection 2")
 //                val address: InetAddress = InetAddress.getByName(serverURLLocal)
@@ -699,6 +728,7 @@ class DatabaseModel(context: Context) {
                     println("SAH:TESTING:getServerConnection 3")
                     connection = DriverManager.getConnection(url, username, password)
                     println("SAH:TESTING:getServerConnection 4")
+                    getHelper()
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()
                 } catch (e: SQLException) {

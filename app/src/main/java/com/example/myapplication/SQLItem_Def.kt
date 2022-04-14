@@ -10,7 +10,7 @@ import java.util.*
     childColumns = ["parent"],
     onDelete = CASCADE)])
 data class MaintenanceRecordSQL(
-    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @PrimaryKey val id: Int?,
     @ColumnInfo(name = "device_name") val deviceName: String,
     @ColumnInfo(name = "work_order_num") val workOrderNum: String,
     @ColumnInfo(name = "service_provider") val serviceProvider: String?,

@@ -115,8 +115,10 @@ class DBController(context: Context) {
 
 
     fun sync_updateDB(){
-        model.sync()
-        model.updateDB()
+//        model.sync()
+//        model.updateDB()
+        model.syncSQLLogsToServer()
+        model.getHelper()
     }
 
 }
