@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-class TaskItemAdapter (private val tasks: Array<Triple<String, Calendar, Int>>, private val startdate: Calendar, private val cycle: Int, private val navMod: NavMod, private val navCtrl: NavController) :
+class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: CheckListSQL, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<TaskItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,56 +42,27 @@ class TaskItemAdapter (private val tasks: Array<Triple<String, Calendar, Int>>, 
         val task_date_et = holder.taskDateET
         val task_stat_button = holder.taskStatButton
 
-        task_name_tv.setText(task.first)
-        task_date_et.setText(task.second.toString())
-        task_stat_button.setText(task.third.toString())
+        task_name_tv.setText(task.name)
+        task_date_et.setText(task.updatedate)
+        setStatus(task, holder)
         task_stat_button.setOnClickListener(){
-            task_date_et.setText(task.second.toString())
-            //TODO finish up setting new date and changing color
+            //TODO change update date in TaskSQL
+            //TODO call setStatus again with the updated task
         }
-        setButtonColor(task, holder)
 
 
     }
 
     //TODO have to implemenet changes for modding over startdate and number of days remaining
     @SuppressLint("ResourceAsColor")
-    public fun  setButtonColor(task: Triple<String, Calendar, Int>, holder: TaskItemAdapter.ViewHolder){
+    public fun  setStatus(task: TaskSQL, holder: TaskItemAdapter.ViewHolder){
         //TODO might change from passing task to passing int
-        if(task.third == 0){
+        if(task.status == 0){
             holder.taskStatButton.setBackgroundColor(R.color.hazard_red);
-        } else if(task.third == 1){
+        } else if(task.status == 1){
             holder.taskStatButton.setBackgroundColor(R.color.active_green);
         }
     }
-
-    // Involves populating data into the item through holder
-//    @SuppressLint("ResourceAsColor")
-//    override fun onBindViewHolder(viewHolder: Recurse_Item_Adapter.ViewHolder, position: Int) {
-//        if(position < levels.size){
-//            val item = levels.elementAt(position)
-//            val item_tv = viewHolder.itemTextView
-//            val select_button = viewHolder.selectButton
-//
-//            item_tv.setText(item.levelName)
-//            select_button.setText(">")
-//            select_button.setOnClickListener() {
-//                navMod.RecursetoRecurse(navCtrl, item.id)
-//            }
-//        }
-//        else{
-//            val item = mrs.elementAt(position-levels.size)
-//            val item_tv = viewHolder.itemTextView
-//            val select_button = viewHolder.selectButton
-//
-//            item_tv.setText(item.deviceName)
-//            item_tv.setTextColor(R.color.brown_neutral)
-//            select_button.setText(">")
-//            select_button.setOnClickListener() {
-//                item.id?.let { it1 -> navMod.RecursetoInfo(navCtrl, it1) }
-//            }
-//        }
-//    }
 
     override fun getItemCount(): Int {
         return tasks.size

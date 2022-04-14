@@ -68,29 +68,30 @@ class InfoFragment : Fragment() {
         val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
         var mr = dbCtrl?.get_mr(args.id)
 
-        var tasks = mr?.tasks
-        var startdate = mr?.date
-        var cyclelen = mr?.numdays
-
-        if(tasks != null){
-            if(startdate != null && cyclelen !=null){
-                var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
-                tasks_rv.adapter = adapter
-                tasks_rv.layoutManager = LinearLayoutManager(activity)
-
-            } else {
-                //TODO print error box, but should be unreachable
-            }
-        } else {
-            cyclelen = 7
-            cycle_et.setText("7");
-            tasks = arrayOf(Triple("Type task name here...", Calendar.getInstance(), 0))
-            startdate = Calendar.getInstance()
-            //TODO push change to the MR object
-            var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
-            tasks_rv.adapter = adapter
-            tasks_rv.layoutManager = LinearLayoutManager(activity)
-        }
+        //TODO update logic with new getter for tasks and checklist
+//        var tasks = mr?.tasks
+//        var startdate = mr?.date
+//        var cyclelen = mr?.numdays
+//
+//        if(tasks != null){
+//            if(startdate != null && cyclelen !=null){
+//                var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
+//                tasks_rv.adapter = adapter
+//                tasks_rv.layoutManager = LinearLayoutManager(activity)
+//
+//            } else {
+//                //TODO print error box, but should be unreachable
+//            }
+//        } else {
+//            cyclelen = 7
+//            cycle_et.setText("7");
+//            tasks = arrayOf(Triple("Type task name here...", Calendar.getInstance(), 0))
+//            startdate = Calendar.getInstance()
+//            //TODO push change to the MR object
+//            var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
+//            tasks_rv.adapter = adapter
+//            tasks_rv.layoutManager = LinearLayoutManager(activity)
+//        }
 
         val add_button: Button = view.findViewById<Button>(R.id.addtaskbutton_info)
         add_button.setOnClickListener(){
