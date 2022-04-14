@@ -291,10 +291,7 @@ class DatabaseModel(context: Context) {
             ipmProcedure = ipmProcedure,
             status = status,
             timestamp = timeStamp,
-            parent = parent,
-            date = Calendar.getInstance(),
-            numdays = 7,
-            tasks = arrayOf(Triple("A", Calendar.getInstance(), 1), Triple("B", Calendar.getInstance(), 0))
+            parent = parent
         )
         Log.v("Added MR Object", "DBModel")
         val pID = insertHelper(mrObject);
