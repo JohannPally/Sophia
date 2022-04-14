@@ -72,14 +72,14 @@ class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: C
         lastUpdateDate.time = sdf.parse(task.updatedate)
 
         val elapsedDays = (currentDate.timeInMillis - lastUpdateDate.timeInMillis) / 86400000
-        val cycleLen = // TODO Mantej 04/14 get this using parent ID of task to get checkList entry
+        //val cycleLen = // TODO Mantej 04/14 get this using parent ID of task to get checkList entry
 
 
 
         // TEST
-        Log.v("time-test", currentDate.toString())
-        Log.v("time-test II", newDate.toString())
-        Log.v("Diff", diff.toString())
+//        Log.v("time-test", currentDate.toString())
+//        Log.v("time-test II", newDate.toString())
+//        Log.v("Diff", diff.toString())
         // TEST
     }
 

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [MaintenanceRecordSQL::class, LevelSQL::class], version = 3, exportSchema = false)
+@Database(entities = [MaintenanceRecordSQL::class, LevelSQL::class, CheckListSQL::class, TaskSQL::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun maintenanceRecordDAO(): MaintenanceRecordDAO

@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
 
@@ -75,9 +76,12 @@ class InfoFragment : Fragment() {
         newDate.add(Calendar.DATE, 2)
         val elapsedDays = (newDate.timeInMillis - currentDate.timeInMillis) / 86400000
 
-        Log.v("Diff", diff.toString())
-        Log.v("time-test I", diff.toString())
-        Log.v("time-test II", newDate.timeInMillis.toString())
+        val lastUpdateDate: Calendar = Calendar.getInstance()
+        val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
+        lastUpdateDate.time = sdf.parse(currentDate.time.toString())
+
+        Log.v("time-test I", elapsedDays.toString())
+        Log.v("time-test II", lastUpdateDate.toString())
 
         // TEST
         //TODO update logic with new getter for tasks and checklist
