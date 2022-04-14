@@ -1,5 +1,6 @@
 package com.example.myapplication
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.Exception
-import java.time.LocalDateTime
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -51,6 +51,36 @@ class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: C
         }
 
 
+    }
+
+    /**
+     * This function determines what the current status of the task is based on the
+     * current date, the last update and the cycle length of the task.
+     * It mutates the TaskSQL object to reflect the new status.
+     * Returns nothing.
+     *
+     * Assumption: Since all dates are in String, they must conform to this format
+     * EEE MMM dd HH:mm:ss z yyyy
+     * e.g. Mon Mar 14 16:02:37 GMT 2011
+     */
+    public fun getTaskStatus(task: TaskSQL, date: String, cyclelen : Int ) {
+
+        val currentDate : Calendar = Calendar.getInstance()
+
+        val lastUpdateDate: Calendar = Calendar.getInstance()
+        val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
+        lastUpdateDate.time = sdf.parse(task.updatedate)
+
+        val elapsedDays = (currentDate.timeInMillis - lastUpdateDate.timeInMillis) / 86400000
+        val cycleLen = // TODO Mantej 04/14 get this using parent ID of task to get checkList entry
+
+
+
+        // TEST
+        Log.v("time-test", currentDate.toString())
+        Log.v("time-test II", newDate.toString())
+        Log.v("Diff", diff.toString())
+        // TEST
     }
 
     //TODO have to implemenet changes for modding over startdate and number of days remaining

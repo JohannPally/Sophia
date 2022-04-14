@@ -11,6 +11,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun maintenanceRecordDAO(): MaintenanceRecordDAO
     abstract fun levelsDAO(): LevelsDAO
+    abstract fun CheckListDAO(): CheckListDAO
+    abstract fun TaskSQLDAO(): TaskDAO
 
     companion object {
         private var instance: AppDatabase? = null

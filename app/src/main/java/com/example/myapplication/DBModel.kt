@@ -18,6 +18,7 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.time.LocalDateTime
 import java.util.*
+import java.util.logging.Level
 import kotlin.collections.HashMap
 
 private var dbFilename: String = "database.json"
@@ -255,7 +256,7 @@ class DatabaseModel(context: Context) {
     }
 
     fun getLevelTable(parent:Int):Set<LevelSQL> {
-        // Behavior: If parent is null, it returns a set of LevelSQLs whose parent ID is null
+        // Behavior: If parent is -1, it returns a set of LevelSQLs whose parent ID is null
         // If parent is non-null, it returns a set of LevelSQLs with the given parent ID
         return if (parent != -1) {
             MainActivity.testDB.levelsDAO().findByParentID(parent).toSet()
@@ -264,8 +265,12 @@ class DatabaseModel(context: Context) {
         }
     }
 
+    fun getLevel(levelID: Int): LevelSQL {
+        return MainActivity.testDB.levelsDAO().findById(levelID)
+    }
+
     fun getMRTable(parent:Int):Set<MaintenanceRecordSQL>{
-        // Behavior: If parent is null, it returns a set of MRs whose parent ID is null
+        // Behavior: If parent is -1, it returns a set of MRs whose parent ID is null
         // If parent is non-null, it returns the a set of MRs with the given parent ID.
         return if (parent != -1) {
             MainActivity.testDB.maintenanceRecordDAO().findByParentID(parent).toSet()
@@ -276,6 +281,34 @@ class DatabaseModel(context: Context) {
 
     fun getMR(mrID: Int): MaintenanceRecordSQL {
         return MainActivity.testDB.maintenanceRecordDAO().findById(mrID)
+    }
+
+    fun getCheckListTable(parent:Int):Set<CheckListSQL>{
+        // Behavior: If parent is -1, it returns a set of MRs whose parent ID is null
+        // If parent is non-null, it returns the a set of MRs with the given parent ID.
+        return if (parent != -1) {
+            MainActivity.testDB.CheckListDAO().findByParentID(parent).toSet()
+        } else {
+            MainActivity.testDB.CheckListDAO().findByParentIDTop().toSet()
+        }
+    }
+
+    fun getCheckList(checkListID: Int): CheckListSQL {
+        return MainActivity.testDB.CheckListDAO().findById(checkListID)
+    }
+
+    fun getTasksTable(parent:Int):Set<TaskSQL>{
+        // Behavior: If parent is -1, it returns a set of MRs whose parent ID is null
+        // If parent is non-null, it returns the a set of MRs with the given parent ID.
+        return if (parent != -1) {
+            MainActivity.testDB.TaskSQLDAO().findByParentID(parent).toSet()
+        } else {
+            MainActivity.testDB.TaskSQLDAO().findByParentIDTop().toSet()
+        }
+    }
+
+    fun getTask(taskID: Int): TaskSQL {
+        return MainActivity.testDB.TaskSQLDAO().findById(taskID)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

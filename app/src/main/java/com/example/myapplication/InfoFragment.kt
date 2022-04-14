@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -68,6 +69,17 @@ class InfoFragment : Fragment() {
         val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
         var mr = dbCtrl?.get_mr(args.id)
 
+        //TEST
+        val currentDate : Calendar = Calendar.getInstance()
+        val newDate : Calendar = Calendar.getInstance()
+        newDate.add(Calendar.DATE, 2)
+        val elapsedDays = (newDate.timeInMillis - currentDate.timeInMillis) / 86400000
+
+        Log.v("Diff", diff.toString())
+        Log.v("time-test I", diff.toString())
+        Log.v("time-test II", newDate.timeInMillis.toString())
+
+        // TEST
         //TODO update logic with new getter for tasks and checklist
 //        var tasks = mr?.tasks
 //        var startdate = mr?.date

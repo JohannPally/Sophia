@@ -12,6 +12,9 @@ interface LevelsDAO {
     @Query("SELECT * FROM levels_table WHERE parent is null")
     fun findByParentIDTop(): Array<LevelSQL>
 
+    @Query("SELECT * FROM levels_table WHERE id = :id LIMIT 1")
+    fun findById(id: Int): LevelSQL
+
     @Query("SELECT * FROM levels_table")
     fun getAll(): Array<LevelSQL>
 
