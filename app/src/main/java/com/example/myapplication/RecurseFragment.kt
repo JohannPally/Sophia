@@ -48,8 +48,6 @@ class RecurseFragment : Fragment() {
             dbCtrl = activity.dbctrl
         }
 
-        initTextFields(view)
-
         //========================BINDINGS====================================
         val recurse_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.recurse_rv)
         val both = dbCtrl?.get_all(args.parent)
@@ -77,38 +75,6 @@ class RecurseFragment : Fragment() {
         toQRSearchButton.setOnClickListener(){
             navMod.RecursetoRecurseQRSearch(findNavController())
         }
-    }
-
-    fun initTextFields(view: View){
-        /*
-        val l1TestingsearchTextView = view.findViewById<TextView>(R.id.l1searchTextView)
-        val l1TestingsearchButton = view.findViewById<TextView>(R.id.l1searchButton)
-
-        l1TestingsearchButton.setOnClickListener {
-
-            searchInput = l1TestingsearchTextView.text.toString() // this is the search text input from view things
-
-            val rvCats: RecyclerView = view.findViewById<RecyclerView>(R.id.rvCategories)
-            val Cats = dbCtrl?.getCats()
-
-            var catsAndDevs = mutableSetOf<String>()
-
-            if (Cats != null) {
-                for (cat in Cats) {
-                    catsAndDevs.add(cat)
-                }
-                for (cat in Cats) {
-                    dbCtrl?.getDevs(cat)?.forEach { item -> catsAndDevs.add("$cat.$item") }
-                }
-            }
-
-            // Filter Set of Categories
-            val filterCatsAndDevs = HashSet(catsAndDevs?.filter { catOrDevName -> catOrDevName.contains(searchInput.toString(), ignoreCase = true) })
-
-            val adapter = filterCatsAndDevs?.let{Category_Item_Adapter(it, navMod, findNavController())} // change here from Cats to filterCats
-            rvCats.adapter = adapter
-        }
-         */
     }
 
     companion object {

@@ -7,10 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
+import kotlin.collections.HashSet
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,18 +49,23 @@ class SearchFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    fun searchDevice(name: String) {
-        var mrDevice =  MainActivity.testDB.maintenanceRecordDAO().findByName(name = name)
-        Log.v("Device Query is ", name)
-        displayDevice(mrDevice)
+    fun searchDevice(name: String): Set<MaintenanceRecordSQL> {
+        var mrDevice = MainActivity.testDB.maintenanceRecordDAO().findByPartialName(name = name)
+//        var levelsDevice = MainActivity.testDB.levelsDAO().findByPartialId(id = name)
+        Log.v("Device&Level Query is ", name)
+
+        return mrDevice.toSet()
     }
 
-    fun displayDevice(mrDevice: MaintenanceRecordSQL) {
-        Log.v("Device Name =", mrDevice.deviceName )
-        mrDevice.serviceProvider?.let { Log.v("Serv Provider =", it) }
-        Log.v("Work Order Num =", mrDevice.workOrderNum )
-        Log.v("Status =", mrDevice.status.toString() )
-    }
+//    fun displayDevice(mrDevice: MaintenanceRecordSQL) {
+//        Log.v("Device Name =", mrDevice.deviceName )
+//        mrDevice.serviceProvider?.let { Log.v("Serv Provider =", it) }
+//        Log.v("Work Order Num =", mrDevice.workOrderNum )
+//        Log.v("Status =", mrDevice.status.toString() )
+//    }
+
+    private val navMod: NavMod by activityViewModels()
+    val args: RecurseFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,11 +74,24 @@ class SearchFragment : Fragment() {
         if (activity is MainActivity) {
             dbCtrl = activity.dbctrl;
         }
+
+        val search_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.search_rv)
+        val both = dbCtrl?.get_all(args.parent)
+        val levels = both?.first
+        val mrs = both?.second
+
         val searchTV: EditText = view.findViewById<EditText>(R.id.searchTV)
         val queryDeviceBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.queryButton)
         queryDeviceBtn.setOnClickListener(){
+
             val deviceName = searchTV.text.toString()
-            searchDevice(deviceName)
+            var searchedMRs = searchDevice(deviceName)
+
+            if(levels!=null && mrs!=null){
+                var adapter = Recurse_Item_Adapter(levels, searchedMRs, navMod, findNavController())
+                search_rv.adapter = adapter
+                search_rv.layoutManager = LinearLayoutManager(activity)
+            }
         }
 
     }
