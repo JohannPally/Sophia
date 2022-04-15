@@ -15,8 +15,8 @@ interface LevelsDAO {
     @Query("SELECT * FROM levels_table WHERE id = :id LIMIT 1")
     fun findById(id: Int): LevelSQL
 
-//    @Query("SELECT * FROM levels_table WHERE id LIKE '%id%' ")
-//    fun findByPartialId(id: Int): LevelSQL
+    @Query("SELECT * FROM levels_table WHERE level_name LIKE '%' || :name || '%' ")
+    fun findByPartialName(name: String): Array<LevelSQL>
 
     @Query("SELECT * FROM levels_table")
     fun getAll(): Array<LevelSQL>

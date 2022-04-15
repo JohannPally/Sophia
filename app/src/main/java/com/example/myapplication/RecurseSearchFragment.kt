@@ -51,18 +51,17 @@ class SearchFragment : Fragment() {
 
     fun searchDevice(name: String): Set<MaintenanceRecordSQL> {
         var mrDevice = MainActivity.testDB.maintenanceRecordDAO().findByPartialName(name = name)
-//        var levelsDevice = MainActivity.testDB.levelsDAO().findByPartialId(id = name)
-        Log.v("Device&Level Query is ", name)
+        Log.v("Device Query is ", name)
 
         return mrDevice.toSet()
     }
 
-//    fun displayDevice(mrDevice: MaintenanceRecordSQL) {
-//        Log.v("Device Name =", mrDevice.deviceName )
-//        mrDevice.serviceProvider?.let { Log.v("Serv Provider =", it) }
-//        Log.v("Work Order Num =", mrDevice.workOrderNum )
-//        Log.v("Status =", mrDevice.status.toString() )
-//    }
+    fun searchLevels(name: String): Set<LevelSQL> {
+        var levelsDevice = MainActivity.testDB.levelsDAO().findByPartialName(name = name)
+        Log.v("Level Query is ", name)
+
+        return levelsDevice.toSet()
+    }
 
     private val navMod: NavMod by activityViewModels()
     val args: RecurseFragmentArgs by navArgs()
@@ -84,11 +83,12 @@ class SearchFragment : Fragment() {
         val queryDeviceBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.queryButton)
         queryDeviceBtn.setOnClickListener(){
 
-            val deviceName = searchTV.text.toString()
-            var searchedMRs = searchDevice(deviceName)
+            val query = searchTV.text.toString()
+            var searchedMRs = searchDevice(query)
+            var searchedLevels = searchLevels(query)
 
             if(levels!=null && mrs!=null){
-                var adapter = Recurse_Item_Adapter(levels, searchedMRs, navMod, findNavController(), 1)
+                val adapter = Recurse_Item_Adapter(searchedLevels, searchedMRs, navMod, findNavController(), 1)
                 search_rv.adapter = adapter
                 search_rv.layoutManager = LinearLayoutManager(activity)
             }
