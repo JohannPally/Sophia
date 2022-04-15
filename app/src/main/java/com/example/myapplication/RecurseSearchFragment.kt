@@ -88,7 +88,7 @@ class SearchFragment : Fragment() {
             var searchedMRs = searchDevice(deviceName)
 
             if(levels!=null && mrs!=null){
-                var adapter = Recurse_Item_Adapter(levels, searchedMRs, navMod, findNavController())
+                var adapter = Recurse_Item_Adapter(levels, searchedMRs, navMod, findNavController(), 1)
                 search_rv.adapter = adapter
                 search_rv.layoutManager = LinearLayoutManager(activity)
             }

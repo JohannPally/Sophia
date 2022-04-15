@@ -256,7 +256,14 @@
         android:id="@+id/RecurseSearchFragment"
         android:name="com.example.myapplication.SearchFragment"
         android:label="fragment_recurse_search"
-        tools:layout="@layout/fragment_search"></fragment>
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_RecurseSearchFragment_to_recurseFragment"
+            app:destination="@id/recurseFragment" />
+        <action
+            android:id="@+id/action_RecurseSearchFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recurseQRSearchFragment"
         android:name="com.example.myapplication.RecurseQRSearchFragment"

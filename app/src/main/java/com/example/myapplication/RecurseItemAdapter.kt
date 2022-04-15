@@ -11,7 +11,7 @@ import java.lang.Exception
 import java.util.*
 
 
-class Recurse_Item_Adapter (private val levels: Set<LevelSQL>, private val mrs: Set<MaintenanceRecordSQL>, private val navMod: NavMod, private val navCtrl: NavController) :
+class Recurse_Item_Adapter (private val levels: Set<LevelSQL>, private val mrs: Set<MaintenanceRecordSQL>, private val navMod: NavMod, private val navCtrl: NavController, private val case: Int) :
     RecyclerView.Adapter<Recurse_Item_Adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +42,10 @@ class Recurse_Item_Adapter (private val levels: Set<LevelSQL>, private val mrs: 
             item_tv.setText(item.levelName)
             select_button.setText(">")
             select_button.setOnClickListener() {
-                navMod.RecursetoRecurse(navCtrl, item.id)
+                when(case) {
+                    0 -> navMod.RecursetoRecurse(navCtrl, item.id)
+                    1 -> navMod.SearchtoRecurse(navCtrl, item.id)
+                }
             }
         }
         else{
@@ -54,7 +57,10 @@ class Recurse_Item_Adapter (private val levels: Set<LevelSQL>, private val mrs: 
             item_tv.setTextColor(R.color.brown_neutral)
             select_button.setText(">")
             select_button.setOnClickListener() {
-                item.id?.let { it1 -> navMod.RecursetoInfo(navCtrl, it1) }
+                when(case) {
+                    0 -> item.id?.let { it1 -> navMod.RecursetoInfo(navCtrl, it1) }
+                    1 -> item.id?.let { it1 -> navMod.SearchtoInfo(navCtrl, it1) }
+                }
             }
         }
     }

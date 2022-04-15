@@ -56,7 +56,7 @@ class RecurseFragment : Fragment() {
 
         println(both?.first.toString()+"\n"+both?.second.toString())
         if(levels!=null && mrs!=null){
-            var adapter = Recurse_Item_Adapter(levels, mrs, navMod, findNavController())
+            var adapter = Recurse_Item_Adapter(levels, mrs, navMod, findNavController(), 0)
             recurse_rv.adapter = adapter
             recurse_rv.layoutManager = LinearLayoutManager(activity)
         }
