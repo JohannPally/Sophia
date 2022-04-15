@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         // @ Johann TODO This is where we build our mock DB
         //testDB.clearAllTables() // -- Run this to delete all tables and clear the data
         // if you keep re- running the app, it will keep creating duplicates of this dummy data
-        val mrDao = testDB.maintenanceRecordDAO()
+//        val mrDao = testDB.maintenanceRecordDAO()
 //        val levelsDao = testDB.levelsDAO()
 //        val NICULevel = LevelSQL(null, "NICU", null);
 //        val ERLevel = LevelSQL(null, "ER", null);
