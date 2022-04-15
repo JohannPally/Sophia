@@ -4,6 +4,8 @@ package com.example.myapplication
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
@@ -13,8 +15,6 @@ import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.sql.*
-import java.util.logging.Level
-import kotlin.collections.HashMap
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -708,34 +708,36 @@ class DatabaseModel(context: Context) {
     fun getServerConnection() {
         println("SAH:TESTING:getServerConnection Start")
         if (isOnline()) {
-            Thread {
-                println("SAH:TESTING:getServerConnection 1")
-                val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
-                val serverPort = 1433
-                val Classes = "net.sourceforge.jtds.jdbc.Driver"
-                val database = "R360 CMMS"
-                val username = "sa"
-                val password = "jDK{K@y%2b){cnU6"
-                val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
-                println("SAH:TESTING:getServerConnection 2")
+            val oldPolicy = StrictMode.getThreadPolicy()
+            val policy = ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            println("SAH:TESTING:getServerConnection 1")
+            val serverURLLocal = "spencers_2nd_pc.dyndns.rice.edu"
+            val serverPort = 1433
+            val Classes = "net.sourceforge.jtds.jdbc.Driver"
+            val database = "R360 CMMS"
+            val username = "sa"
+            val password = "jDK{K@y%2b){cnU6"
+            val url = "jdbc:jtds:sqlserver://$serverURLLocal:$serverPort/$database"
+            println("SAH:TESTING:getServerConnection 2")
 //                val address: InetAddress = InetAddress.getByName(serverURLLocal)
 //                println("SAH:TESTING:getServerConnection 2.1")
 //                val reached = address.isReachable(1000)
 //                val bytes = address.getHostAddress()
 //                println("SAH:TESTING:getServerConnection 2.5:$reached:$bytes")
-                try {
-                    Class.forName(Classes)
-                    println("SAH:TESTING:getServerConnection 3")
-                    connection = DriverManager.getConnection(url, username, password)
-                    println("SAH:TESTING:getServerConnection 4")
-                    getHelper()
-                } catch (e: ClassNotFoundException) {
-                    e.printStackTrace()
-                } catch (e: SQLException) {
-                    e.printStackTrace()
-                }
-                println("SAH:TESTING:getServerConnection 5")
-            }.start()
+            try {
+                Class.forName(Classes)
+                println("SAH:TESTING:getServerConnection 3")
+                connection = DriverManager.getConnection(url, username, password)
+                println("SAH:TESTING:getServerConnection 4")
+                getHelper()
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            } catch (e: SQLException) {
+                e.printStackTrace()
+            }
+            println("SAH:TESTING:getServerConnection 5")
+            StrictMode.setThreadPolicy(oldPolicy)
         }
         println("SAH:TESTING:getServerConnection")
     }
