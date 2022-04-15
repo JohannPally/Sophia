@@ -4,6 +4,8 @@ package com.example.myapplication
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
@@ -13,8 +15,6 @@ import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.sql.*
-import java.util.logging.Level
-import kotlin.collections.HashMap
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -307,7 +307,7 @@ class DatabaseModel(context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int): Long {
+    fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int): Int {
         // This function creates an MR SQL object from the inputs and pushes it into the SQL DB
         var mrObject = MaintenanceRecordSQL(
             id = null,
@@ -370,7 +370,7 @@ class DatabaseModel(context: Context) {
                     sqlStatement = "UPDATE mr_table SET deviceName = ${mrObject.deviceName}, workOrderNum = ${mrObject.workOrderNum}, serviceProvider = ${mrObject.serviceProvider}, serviceEngineeringCode = ${mrObject.serviceEngineeringCode}, faultCode = ${mrObject.faultCode}, ipmProcedure = ${mrObject.ipmProcedure}, status = ${mrObject.status}, timestamp = ${mrObject.timestamp}, parent = ${mrObject.parent} WHERE id = ${mrObject.id}";
                 }
                 val response = sendSqlUpdateToServer(sqlStatement);
-                if (response != 200L) {
+                if (response != 200) {
                     sqlLogs.add(0, log)
                     break
                 }
@@ -378,30 +378,38 @@ class DatabaseModel(context: Context) {
         }.start()
     }
 
-    fun insertHelper(mrObject: MaintenanceRecordSQL): Long {
-        if (isOnline()) {
-            val sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" }) VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""});";
+    fun insertHelper(mrObject: MaintenanceRecordSQL): Int {
+        if (::connection.isInitialized) {
+            val sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" })\n" +
+                    "OUTPUT Inserted.ID\n" +
+                    "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""})" + ";";
+            Log.v("SQL in helper", sqlStatement)
             return sendSqlUpdateToServer(sqlStatement);
         } else {
-            var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+            var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject).toInt()
             sqlLogs.add(Pair(mrObject, true));
             return pID;
         }
     }
 
-    fun sendSqlUpdateToServer(sqlStatement: String): Long {
+    fun sendSqlUpdateToServer(sqlStatement: String): Int {
         println("CALLLED $sqlStatement")
-        Thread {
-            if (connection != null) {
-                try {
-                    var statement = connection.createStatement()
-                    statement.executeUpdate(sqlStatement);
-                } catch (e: SQLException) {
-                    e.printStackTrace();
-                }
+        val results : ResultSet
+        val oldThreadPolicy = StrictMode.getThreadPolicy()
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        if (::connection.isInitialized != null) {
+            try {
+                var statement = connection.createStatement()
+                val results = statement.executeQuery(sqlStatement);
+                StrictMode.setThreadPolicy(oldThreadPolicy)
+                return results.getInt(1)
+            } catch (e: SQLException) {
+                e.printStackTrace();
             }
-        }.start()
-        return 0
+        }
+        StrictMode.setThreadPolicy(oldThreadPolicy)
+        return -1
     }
 
     fun getCatsfromDB(): Set<String> {

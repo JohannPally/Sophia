@@ -1,7 +1,9 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import java.lang.Exception
 import java.lang.Integer.parseInt
 import java.util.*
@@ -66,7 +68,8 @@ class DBController(context: Context) {
         return model.getMR(id)
     }
 
-    fun add_mr(qrid:Int, devName:String, workOrderNum: String, serviceProvider: String, status: Int, parent:Int):Long{
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun add_mr(qrid:Int, devName:String, workOrderNum: String, serviceProvider: String, status: Int, parent:Int): Int {
         var pID = model.addMaintenanceRecord(
             qrid = qrid,
             deviceName = devName,
@@ -79,6 +82,7 @@ class DBController(context: Context) {
             timeStamp = 0,
             parent = parent
         )
+        model.getHelper()
         return pID
     }
 
@@ -114,7 +118,7 @@ class DBController(context: Context) {
     }
 
 
-    fun sync_updateDB(){
+    public fun sync_updateDB(){
 //        model.sync()
 //        model.updateDB()
         model.syncSQLLogsToServer()
