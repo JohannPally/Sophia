@@ -329,6 +329,9 @@ class DatabaseModel(context: Context) {
 
     fun getHelper() {
         if (::connection.isInitialized) {
+            val oldPolicy = StrictMode.getThreadPolicy()
+            val policy = ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
             val st_2: Statement = connection.createStatement()
             var resultSet: ResultSet = st_2.executeQuery("SELECT * FROM mr_table;")
             println("Retrieving ${resultSet.metaData.columnCount}");
@@ -354,6 +357,7 @@ class DatabaseModel(context: Context) {
                 }
             }
             println("Final: ${MainActivity.testDB.maintenanceRecordDAO().getAll().size}")
+            StrictMode.setThreadPolicy(policy)
         }
     }
 
@@ -403,7 +407,8 @@ class DatabaseModel(context: Context) {
                 var statement = connection.createStatement()
                 val results = statement.executeQuery(sqlStatement);
                 StrictMode.setThreadPolicy(oldThreadPolicy)
-                return results.getInt(1)
+                results.next()
+                return results.getInt("id")
             } catch (e: SQLException) {
                 e.printStackTrace();
             }
