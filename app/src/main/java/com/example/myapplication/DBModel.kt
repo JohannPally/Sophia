@@ -253,6 +253,9 @@ class DatabaseModel(context: Context) {
     fun getLevelTable(parent:Int):Set<LevelSQL> {
         // Behavior: If parent is -1, it returns a set of LevelSQLs whose parent ID is null
         // If parent is non-null, it returns a set of LevelSQLs with the given parent ID
+        if (isOnline()) {
+            getNewLevelsHelper();
+        }
         return if (parent != -1) {
             MainActivity.testDB.levelsDAO().findByParentID(parent).toSet()
         } else {
@@ -267,6 +270,9 @@ class DatabaseModel(context: Context) {
     fun getMRTable(parent:Int):Set<MaintenanceRecordSQL>{
         // Behavior: If parent is -1, it returns a set of MRs whose parent ID is null
         // If parent is non-null, it returns the a set of MRs with the given parent ID.
+        if (isOnline()) {
+            getNewMRsHelper();
+        }
         return if (parent != -1) {
             MainActivity.testDB.maintenanceRecordDAO().findByParentID(parent).toSet()
         } else {
@@ -319,7 +325,7 @@ class DatabaseModel(context: Context) {
             ipmProcedure = ipmProcedure,
             status = status,
             timestamp = timeStamp,
-            parent = parent
+            parent = if (parent == -1) null else parent
         )
         Log.v("Added MR Object", "DBModel")
         val pID = insertHelper(mrObject);
@@ -327,7 +333,7 @@ class DatabaseModel(context: Context) {
 
     }
 
-    fun getHelper() {
+    fun getNewMRsHelper() {
         if (::connection.isInitialized) {
             val oldPolicy = StrictMode.getThreadPolicy()
             val policy = ThreadPolicy.Builder().permitAll().build()
@@ -361,6 +367,31 @@ class DatabaseModel(context: Context) {
         }
     }
 
+    fun getNewLevelsHelper() {
+        if (::connection.isInitialized) {
+            val oldPolicy = StrictMode.getThreadPolicy()
+            val policy = ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            val st_2: Statement = connection.createStatement()
+            var resultSet: ResultSet = st_2.executeQuery("SELECT * FROM levels_table;")
+            println("Retrieving Levels ${resultSet.metaData.columnCount}");
+            while (resultSet.next()) {
+                var levelsObject = LevelSQL(
+                    id = resultSet.getInt("id"),
+                    levelName = resultSet.getString("level_name"),
+                    parent = if (resultSet.getInt("parent") == 0) null else resultSet.getInt("parent"),
+                )
+                try {
+                    MainActivity.testDB.levelsDAO().insert(levelsObject)
+                    println("Added")
+                } catch (e: Exception) {
+                    println("Error inserting into DB: $e");
+                }
+            }
+            StrictMode.setThreadPolicy(policy)
+        }
+    }
+
     fun syncSQLLogsToServer() {
         Thread {
             while (isOnline() && sqlLogs.size > 0) {
@@ -369,14 +400,23 @@ class DatabaseModel(context: Context) {
                 val mrObject = log.first;
                 if (log.second) {
                     // New maintenance record
-                    sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" }) VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""});";
+                    sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" })\n" +
+                            "OUTPUT Inserted.ID\n" +
+                            "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""});";
                 } else {
                     sqlStatement = "UPDATE mr_table SET deviceName = ${mrObject.deviceName}, workOrderNum = ${mrObject.workOrderNum}, serviceProvider = ${mrObject.serviceProvider}, serviceEngineeringCode = ${mrObject.serviceEngineeringCode}, faultCode = ${mrObject.faultCode}, ipmProcedure = ${mrObject.ipmProcedure}, status = ${mrObject.status}, timestamp = ${mrObject.timestamp}, parent = ${mrObject.parent} WHERE id = ${mrObject.id}";
                 }
-                val response = sendSqlUpdateToServer(sqlStatement);
-                if (response != 200) {
+                val results = sendSqlUpdateToServer(sqlStatement);
+                if (results == null) {
                     sqlLogs.add(0, log)
                     break
+                } else {
+                    if (log.second) {
+                        MainActivity.testDB.maintenanceRecordDAO().delete(mrObject)
+                        results.next()
+                        mrObject.id = results.getInt("id")
+                        MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
+                    }
                 }
             }
         }.start()
@@ -384,19 +424,28 @@ class DatabaseModel(context: Context) {
 
     fun insertHelper(mrObject: MaintenanceRecordSQL): Int {
         if (::connection.isInitialized) {
+            /** If connected to server, insert MR into server, get assigned ID back from server,
+             * insert MR with assigned ID into local DB. If not connected, insert into local DB
+             * with temporary ID. Add to SQL logs for future syncing. **/
             val sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" })\n" +
                     "OUTPUT Inserted.ID\n" +
                     "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""})" + ";";
             Log.v("SQL in helper", sqlStatement)
-            return sendSqlUpdateToServer(sqlStatement);
-        } else {
-            var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject).toInt()
-            sqlLogs.add(Pair(mrObject, true));
-            return pID;
+            println("MR OBJECT PARENT: ${mrObject.parent}")
+            val results = sendSqlUpdateToServer(sqlStatement)
+            if (results != null) {
+                results.next()
+                mrObject.id = results.getInt("id")
+                println(results.getInt("id"))
+                return MainActivity.testDB.maintenanceRecordDAO().insert(mrObject).toInt()
+            }
         }
+        var pID = MainActivity.testDB.maintenanceRecordDAO().insert(mrObject).toInt()
+        sqlLogs.add(Pair(mrObject, true));
+        return pID;
     }
 
-    fun sendSqlUpdateToServer(sqlStatement: String): Int {
+    fun sendSqlUpdateToServer(sqlStatement: String): ResultSet? {
         println("CALLLED $sqlStatement")
         val results : ResultSet
         val oldThreadPolicy = StrictMode.getThreadPolicy()
@@ -407,17 +456,19 @@ class DatabaseModel(context: Context) {
                 var statement = connection.createStatement()
                 val results = statement.executeQuery(sqlStatement);
                 StrictMode.setThreadPolicy(oldThreadPolicy)
-                results.next()
-                return results.getInt("id")
+                return results
             } catch (e: SQLException) {
                 e.printStackTrace();
             }
         }
         StrictMode.setThreadPolicy(oldThreadPolicy)
-        return -1
+        return null
     }
 
     fun getCatsfromDB(): Set<String> {
+        if (isOnline()) {
+            getNewLevelsHelper();
+        }
         var locations =  MainActivity.testDB.levelsDAO().getAll()
         var result = arrayListOf<String>()
         for ( i in locations) {
@@ -743,7 +794,7 @@ class DatabaseModel(context: Context) {
                 println("SAH:TESTING:getServerConnection 3")
                 connection = DriverManager.getConnection(url, username, password)
                 println("SAH:TESTING:getServerConnection 4")
-                getHelper()
+                getNewMRsHelper()
             } catch (e: ClassNotFoundException) {
                 e.printStackTrace()
             } catch (e: SQLException) {

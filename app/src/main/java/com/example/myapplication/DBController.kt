@@ -2,12 +2,8 @@ package com.example.myapplication
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import java.lang.Exception
-import java.lang.Integer.parseInt
 import java.util.*
-import kotlin.collections.HashSet
 
 class DBController(context: Context) {
 
@@ -82,7 +78,7 @@ class DBController(context: Context) {
             timeStamp = 0,
             parent = parent
         )
-        model.getHelper()
+        model.getNewMRsHelper()
         return pID
     }
 
@@ -122,7 +118,7 @@ class DBController(context: Context) {
 //        model.sync()
 //        model.updateDB()
         model.syncSQLLogsToServer()
-        model.getHelper()
+        model.getNewMRsHelper()
     }
 
 }
