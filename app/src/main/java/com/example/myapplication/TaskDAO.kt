@@ -11,8 +11,8 @@ interface TaskDAO {
     @Query( "SELECT * FROM tasks_table WHERE parent is null")
     fun findByParentIDTop(): Array<TaskSQL>
 
-    @Query("SELECT * FROM tasks_table WHERE id = :id LIMIT 1")
-    fun findById(id: Int): TaskSQL
+    @Query("SELECT * FROM tasks_table WHERE id = :id")
+    fun findById(id: Int): Array<TaskSQL>
 
     @Query("SELECT * FROM tasks_table WHERE name = :name LIMIT 1")
     fun findByName(name: String): TaskSQL

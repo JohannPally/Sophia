@@ -71,14 +71,33 @@ class InfoFragment : Fragment() {
         val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
         var mr = dbCtrl?.get_mr(args.id)
 
+        // Gets checklist using the MRID
+        var checkList = dbCtrl?.getCheckList(args.id)
+        var clID = checkList?.id
+        // Get Tasks
+        var taskList = clID?.let { dbCtrl?.getTasks(it) }
+
+
         //TODO @Mantej pass in the sets of tasks and the checklist into here
-        var adapter = TaskItemAdapter(tasks = , checklist = , navMod = navMod, navCtrl = findNavController())
-        tasks_rv.adapter = adapter
-        tasks_rv.layoutManager = LinearLayoutManager(activity)
+        if (taskList != null && checkList != null ) {
+            var adapter = TaskItemAdapter(
+                tasks = taskList,
+                checklist = checkList,
+                navMod = navMod,
+                navCtrl = findNavController()
+            )
+
+            tasks_rv.adapter = adapter
+            tasks_rv.layoutManager = LinearLayoutManager(activity)
+        }
         //TODO @Mantej from the checklist/checklistSQL get the cycle len and set the cycle_et text
+        var cycleLen = checkList?.cycle
+
         //note, we are sacrificing the ability to change/save the new cycle length and add task button
         // not enough time to make a new helper updateChecklist/updateTasks
-        cycle_et.setText()
+        if (cycleLen != null) {
+            cycle_et.setText(cycleLen)
+        }
 
         val add_button: Button = view.findViewById<Button>(R.id.addtaskbutton_info)
         add_button.setOnClickListener(){

@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: CheckListSQL, private val navMod: NavMod, private val navCtrl: NavController) :
+class TaskItemAdapter (private val tasks: Array<TaskSQL>, private val checklist: CheckListSQL, private val navMod: NavMod, private val navCtrl: NavController) :
     RecyclerView.Adapter<TaskItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

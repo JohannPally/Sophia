@@ -314,7 +314,7 @@ class DatabaseModel(context: Context) {
         }
     }
 
-    fun getTask(taskID: Int): TaskSQL {
+    fun getTask(taskID: Int): Array<TaskSQL> {
         return MainActivity.testDB.TaskSQLDAO().findById(taskID)
     }
 
