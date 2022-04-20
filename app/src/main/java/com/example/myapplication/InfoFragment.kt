@@ -131,25 +131,24 @@ class InfoFragment : Fragment() {
 
     }
 
-    @SuppressLint("ResourceAsColor")
     public fun setButton(view: View, status:Int){
         val status_button = view.findViewById<Button>(R.id.status_button_info)
         when(status){
             0 -> {
                 status_button.setText("Active")
-                status_button.setBackgroundColor(R.color.active_green)
+                status_button.setBackgroundResource(R.color.active_green)
             }
             1 -> {
                 status_button.setText("Caution")
-                status_button.setBackgroundColor(R.color.caution_yellow)
+                status_button.setBackgroundResource(R.color.caution_yellow)
             }
             2 -> {
                 status_button.setText("Hazard")
-                status_button.setBackgroundColor(R.color.hazard_red)
+                status_button.setBackgroundResource(R.color.hazard_red)
             }
             3 -> {
                 status_button.setText("Offline")
-                status_button.setBackgroundColor(R.color.black)
+                status_button.setBackgroundResource(R.color.black)
             }
         }
 

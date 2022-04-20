@@ -172,8 +172,8 @@
     <fragment
         android:id="@+id/recurseFragment"
         android:name="com.example.myapplication.RecurseFragment"
-        android:label="fragment_recurse"
-        tools:layout="@layout/fragment_recurse" >
+        android:label="Navigation"
+        tools:layout="@layout/fragment_recurse">
         <action
             android:id="@+id/action_recurseFragment_self"
             app:destination="@id/recurseFragment" />
@@ -182,8 +182,8 @@
             app:destination="@id/infoFragment" />
         <argument
             android:name="parent"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_recurseFragment_to_recurseAddFragment"
             app:destination="@id/recurseAddFragment" />
@@ -197,8 +197,8 @@
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.example.myapplication.InfoFragment"
-        android:label="fragment_info"
-        tools:layout="@layout/fragment_info" >
+        android:label="Device Info"
+        tools:layout="@layout/fragment_info">
         <argument
             android:name="id"
             app:argType="integer" />
@@ -209,53 +209,53 @@
     <fragment
         android:id="@+id/recurseAddFragment"
         android:name="com.example.myapplication.RecurseAddFragment"
-        android:label="fragment_recurse_add"
-        tools:layout="@layout/fragment_recurse_add" >
+        android:label="Add Device"
+        tools:layout="@layout/fragment_recurse_add">
         <action
             android:id="@+id/action_recurseAddFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
         <argument
             android:name="parent"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_recurseAddFragment_to_RAddQRScan"
             app:destination="@id/RecurseAddQRScan" />
         <argument
             android:name="rAddName"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
         <argument
             android:name="rAddId"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/RecurseAddQRScan"
         android:name="com.example.myapplication.RAddQRScan"
-        android:label="fragment_r_add_q_r_scan"
-        tools:layout="@layout/fragment_r_add_q_r_scan" >
+        android:label="Scan Device ID"
+        tools:layout="@layout/fragment_r_add_q_r_scan">
         <action
             android:id="@+id/action_RAddQRScan_to_recurseAddFragment"
             app:destination="@id/recurseAddFragment" />
         <argument
             android:name="parent"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="passedName"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
         <argument
             android:name="passedID"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
 
     <fragment
         android:id="@+id/RecurseSearchFragment"
         android:name="com.example.myapplication.SearchFragment"
-        android:label="fragment_recurse_search"
+        android:label="Text Search"
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_RecurseSearchFragment_to_recurseFragment"
@@ -267,8 +267,8 @@
     <fragment
         android:id="@+id/recurseQRSearchFragment"
         android:name="com.example.myapplication.RecurseQRSearchFragment"
-        android:label="fragment_recurse_q_r_search"
-        tools:layout="@layout/fragment_recurse_q_r_search" >
+        android:label="QR Search"
+        tools:layout="@layout/fragment_recurse_q_r_search">
         <action
             android:id="@+id/action_recurseQRSearchFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
