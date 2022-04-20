@@ -19,7 +19,8 @@ data class MaintenanceRecordSQL(
     @ColumnInfo(name = "ipm_procedure") val ipmProcedure: String?,
     @ColumnInfo(name = "status") val status: Int,
     @ColumnInfo(name = "timestamp") val timestamp: Int,
-    @ColumnInfo(name = "parent") val parent: Int?
+    @ColumnInfo(name = "parent") val parent: Int?,
+    @ColumnInfo(name = "qrcode") val qrcode: Int
 )
 
 @Entity(tableName = "levels_table", foreignKeys = [ForeignKey(entity = LevelSQL::class,

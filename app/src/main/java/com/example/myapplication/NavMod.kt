@@ -240,7 +240,8 @@ class NavMod : ViewModel() {
      */
 
     fun RecurseAddtoInfo(navController: NavController, id: Int) {
-        val action = RecurseAddFragmentDirections.actionRecurseAddFragmentToInfoFragment(id = id)
+        navController.popBackStack(R.id.recurseFragment, false)
+        val action = RecurseFragmentDirections.actionRecurseFragmentToInfoFragment(id = id)
         navController.navigate(action)
     }
 

@@ -110,6 +110,7 @@ class InfoFragment : Fragment() {
         var workOrdNum = mr?.workOrderNum
         var status = mr?.status
         var timeStmp = mr?.timestamp
+        var qrcode = mr?.qrcode
 
 
 
@@ -121,7 +122,7 @@ class InfoFragment : Fragment() {
 
 
         devName_ET.setText(devName)
-        qrCode_TV.text = qrID.toString()
+        qrCode_TV.text = qrcode.toString()
         engCode_ET.setText(servEngCode)
         servProv_ET.setText(servProv)
         workOrdNum_ET.setText(workOrdNum)

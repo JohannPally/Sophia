@@ -295,8 +295,7 @@ class DatabaseModel(context: Context) {
     }
 
     fun getMRIDfromQRID(qrID:Int):Int {
-        //TODO @Mantej, this is the func for QR Searching
-        return -1
+        return MainActivity.testDB.maintenanceRecordDAO().findByQRId(qrID)
     }
 
     fun getCheckList(checkListID: Int): CheckListSQL {
@@ -330,7 +329,8 @@ class DatabaseModel(context: Context) {
             ipmProcedure = ipmProcedure,
             status = status,
             timestamp = timeStamp,
-            parent = if (parent == -1) null else parent
+            parent = if (parent == -1) null else parent,
+            qrcode = qrid
         )
         Log.v("Added MR Object", "DBModel")
         val pID = insertHelper(mrObject);
@@ -347,7 +347,6 @@ class DatabaseModel(context: Context) {
             var resultSet: ResultSet = st_2.executeQuery("SELECT * FROM mr_table;")
             println("Retrieving ${resultSet.metaData.columnCount}");
             while (resultSet.next()) {
-                println("PARENT: " + if (resultSet.getInt("parent") == 0) -1 else resultSet.getInt("parent"))
                 var mrObject = MaintenanceRecordSQL(
                     id = resultSet.getInt("id"),
                     deviceName = resultSet.getString("device_name"),
@@ -359,6 +358,7 @@ class DatabaseModel(context: Context) {
                     status = resultSet.getInt("status"),
                     timestamp = resultSet.getInt("timestamp"),
                     parent = if (resultSet.getInt("parent") == 0) null else resultSet.getInt("parent"),
+                    qrcode = resultSet.getInt("QRID")
                 )
                 try {
                     MainActivity.testDB.maintenanceRecordDAO().insert(mrObject)
@@ -405,9 +405,9 @@ class DatabaseModel(context: Context) {
                 val mrObject = log.first;
                 if (log.second) {
                     // New maintenance record
-                    sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" })\n" +
+                     sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp, QRID${if (mrObject.parent != null) ", parent" else "" })\n" +
                             "OUTPUT Inserted.ID\n" +
-                            "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""});";
+                            "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}', '${mrObject.qrcode}'${if (mrObject.parent != null) ", '${mrObject.parent}'" else ""})" + ";";
                 } else {
                     sqlStatement = "UPDATE mr_table SET deviceName = ${mrObject.deviceName}, workOrderNum = ${mrObject.workOrderNum}, serviceProvider = ${mrObject.serviceProvider}, serviceEngineeringCode = ${mrObject.serviceEngineeringCode}, faultCode = ${mrObject.faultCode}, ipmProcedure = ${mrObject.ipmProcedure}, status = ${mrObject.status}, timestamp = ${mrObject.timestamp}, parent = ${mrObject.parent} WHERE id = ${mrObject.id}";
                 }
@@ -432,9 +432,9 @@ class DatabaseModel(context: Context) {
             /** If connected to server, insert MR into server, get assigned ID back from server,
              * insert MR with assigned ID into local DB. If not connected, insert into local DB
              * with temporary ID. Add to SQL logs for future syncing. **/
-            val sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp${if (mrObject.parent != -1) ", parent" else "" })\n" +
+            val sqlStatement = "INSERT INTO mr_table (device_name, work_order_num, service_provider, status, timestamp, QRID${if (mrObject.parent != null) ", parent" else "" })\n" +
                     "OUTPUT Inserted.ID\n" +
-                    "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}'${if (mrObject.parent != -1) ", '${mrObject.parent}'" else ""})" + ";";
+                    "VALUES ('${mrObject.deviceName}', '${mrObject.workOrderNum}', '${mrObject.serviceProvider}', '${mrObject.status}', '${mrObject.timestamp}', '${mrObject.qrcode}'${if (mrObject.parent != null) ", '${mrObject.parent}'" else ""})" + ";";
             Log.v("SQL in helper", sqlStatement)
             println("MR OBJECT PARENT: ${mrObject.parent}")
             val results = sendSqlUpdateToServer(sqlStatement)
