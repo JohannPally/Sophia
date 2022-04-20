@@ -98,18 +98,19 @@ class RecurseQRSearchFragment : Fragment() {
         codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
         codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
         codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
-        codeScanner.isFlashEnabled = false // Whether to enable flash or not
-        var qrID = "null"
+        codeScanner.isFlashEnabled = false // Whether to enable flash or no
+        var tex = ""
 
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             activity?.runOnUiThread {
-                qrID = it.text
-                Toast.makeText(context as Context, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
-                param1 = args.passedName
-                param2 = qrID
-                //TODO check that the MR actually exists/error handle
-                navMod.RecurseQRSearchtoInfo(navController = findNavController(), id = qrID.toInt())
+                tex = it.toString()
+                val qrID = ctrl?.get_search_qr(tex.toInt())!!
+                Toast.makeText(context as Context, "Scan result: ${tex}", Toast.LENGTH_LONG).show()
+                if(qrID != -1)
+                    navMod.RecurseQRSearchtoInfo(navController = findNavController(), id = qrID)
+                else
+                    Toast.makeText(context as Context, "${tex} is not a valid MR QRID", Toast.LENGTH_LONG).show()
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -123,7 +124,7 @@ class RecurseQRSearchFragment : Fragment() {
             codeScanner.startPreview()
         }
 
-        return qrID
+        return tex
     }
 
     /**

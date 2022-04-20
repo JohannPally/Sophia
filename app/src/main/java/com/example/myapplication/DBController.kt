@@ -55,6 +55,10 @@ class DBController(context: Context) {
         return model.getMRTable(parent)
     }
 
+    fun get_search_qr(qrID: Int): Int{
+        return model.getMRIDfromQRID(qrID)
+    }
+
     fun get_all(parent:Int): Pair<Set<LevelSQL>, Set<MaintenanceRecordSQL>>{
         //Log.v("Get all parent", parent.toString())
         return Pair(get_level_table(parent), get_mr_table(parent))

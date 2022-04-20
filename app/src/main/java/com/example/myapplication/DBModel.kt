@@ -294,6 +294,11 @@ class DatabaseModel(context: Context) {
         }
     }
 
+    fun getMRIDfromQRID(qrID:Int):Int {
+        //TODO @Mantej, this is the func for QR Searching
+        return -1
+    }
+
     fun getCheckList(checkListID: Int): CheckListSQL {
         return MainActivity.testDB.CheckListDAO().findById(checkListID)
     }
