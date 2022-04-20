@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -110,25 +111,48 @@ class InfoFragment : Fragment() {
         var status = mr?.status
         var timeStmp = mr?.timestamp
 
-        var devName_TV = view.findViewById<TextView>(R.id.info_devName_tv)
-        var qrCode_TV = view.findViewById<TextView>(R.id.info_QRCode_tv)
-        var status_TV = view.findViewById<TextView>(R.id.info_status_tv)
-        var servEngCode_TV = view.findViewById<TextView>(R.id.info_servEngCode_tv)
-        var servProv_TV = view.findViewById<TextView>(R.id.info_servProv_tv)
-        var workOrdNum_TV = view.findViewById<TextView>(R.id.info_workOrdNum_tv)
 
-        devName_TV.text = "Device: " + devName
-        qrCode_TV.text = "QR ID: " + qrID.toString()
-        status_TV.text = "Device Status: " + status.toString()
-        //servEngCode_TV.text = servEngCode
-        servProv_TV.text = "Service Provider: " + servProv
-        workOrdNum_TV.text = "WorkOrder Number: " + workOrdNum
 
-//        // This button press takes you from the device info screen to device list screen
-//        val deviceListBtn: MaterialButton = view.findViewById<MaterialButton>(R.id.deviceList)
-//        deviceListBtn.setOnClickListener(){
-//                navMod.RecurseAddtoInfo(findNavController())
-//            }
+        val devName_ET = view.findViewById<EditText>(R.id.devname_et_info)
+        val qrCode_TV = view.findViewById<TextView>(R.id.qrcode_tv_info)
+        val engCode_ET = view.findViewById<EditText>(R.id.servengcode_et_info)
+        var servProv_ET = view.findViewById<EditText>(R.id.servprov_et_info)
+        var workOrdNum_ET = view.findViewById<EditText>(R.id.workorder_et_info)
+
+
+        devName_ET.setText(devName)
+        qrCode_TV.text = qrID.toString()
+        engCode_ET.setText(servEngCode)
+        servProv_ET.setText(servProv)
+        workOrdNum_ET.setText(workOrdNum)
+        if (status != null) {
+            setButton(view = view, status = status)
+        }
+
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public fun setButton(view: View, status:Int){
+        val status_button = view.findViewById<Button>(R.id.status_button_info)
+        when(status){
+            0 -> {
+                status_button.setText("Active")
+                status_button.setBackgroundColor(R.color.active_green)
+            }
+            1 -> {
+                status_button.setText("Caution")
+                status_button.setBackgroundColor(R.color.caution_yellow)
+            }
+            2 -> {
+                status_button.setText("Hazard")
+                status_button.setBackgroundColor(R.color.hazard_red)
+            }
+            3 -> {
+                status_button.setText("Offline")
+                status_button.setBackgroundColor(R.color.black)
+            }
+        }
+
     }
 
     companion object {

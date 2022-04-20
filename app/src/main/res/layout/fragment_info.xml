@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/info_cardView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="280dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="10dp"
@@ -19,105 +19,170 @@
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126">
+        app:layout_constraintVertical_bias="0.128">
 
         <TextView
-            android:id="@+id/info_QRCode_tv"
-            android:layout_width="349dp"
-            android:layout_height="20dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/info_status_tv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/qrcode_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Code:" />
 
         <TextView
-            android:id="@+id/info_status_tv"
-            android:layout_width="350dp"
-            android:layout_height="20dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="2dp"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/info_servEngCode_tv"
-            app:layout_constraintTop_toBottomOf="@id/info_QRCode_tv" />
+            android:id="@+id/servengcode_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Engineer Code:"
+            android:translationY="50dp" />
 
         <TextView
-            android:id="@+id/info_servProv_tv"
-            android:layout_width="349dp"
-            android:layout_height="20dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="2dp"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/info_workOrdNum_tv"
-            app:layout_constraintTop_toBottomOf="@id/info_servEngCode_tv" />
+            android:id="@+id/servprovider_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service Provider:"
+            android:translationY="100dp" />
 
         <TextView
-            android:id="@+id/info_workOrdNum_tv"
-            android:layout_width="349dp"
-            android:layout_height="20dp"
-            android:layout_gravity="left"
-            android:layout_marginTop="105dp"
-            android:layout_marginBottom="2dp"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_servProv_tv" />
+            android:id="@+id/workorder_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work Order #:"
+            android:translationY="150dp" />
+
+        <TextView
+            android:id="@+id/status_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status:"
+            android:translationY="200dp" />
+
+        <TextView
+            android:id="@+id/qrcode_tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:translationX="60dp" />
+
+        <EditText
+            android:id="@+id/servengcode_et_info"
+            style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:translationX="100dp"
+            android:translationY="32dp" />
+
+        <EditText
+            android:id="@+id/servprov_et_info"
+            style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:translationX="110dp"
+            android:translationY="84dp" />
+
+        <EditText
+            android:id="@+id/workorder_et_info"
+            style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            android:translationX="95dp"
+            android:translationY="135dp" />
+
+        <Button
+            android:id="@+id/status_button_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            android:translationX="50dp"
+            android:translationY="185dp" />
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/info_devName_tv"
+    <EditText
+        android:id="@+id/devname_et_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/info_cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasks_recyclerView"
-        android:layout_width="409dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/addtaskbutton_info"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tasks_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="3dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info_cardView"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintVertical_bias="0.555">
 
-    <Button
-        android:id="@+id/addtaskbutton_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="355dp"
-        android:text="Add Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_cardView" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tasks_recyclerView"
+            android:layout_width="355dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="75dp" />
 
-    <EditText
-        android:id="@+id/cycle_length_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="73dp"
-        android:ems="3"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addtaskbutton_info"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tasks_recyclerView"
-        app:layout_constraintVertical_bias="0.48" />
+        <Button
+            android:id="@+id/addtaskbutton_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Task"
+            android:textSize="10dp"
+            android:translationX="265dp"
+            android:translationY="10dp" />
+
+        <EditText
+            android:id="@+id/cycle_length_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="3"
+            android:inputType="number"
+            android:textSize="10dp"
+            android:translationX="215dp"
+            android:translationY="20dp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cycle Length:"
+            android:textSize="10sp"
+            android:translationX="150dp"
+            android:translationY="35dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textSize="10dp" />
+    </androidx.cardview.widget.CardView>
+
     //TODO default value
 
 
