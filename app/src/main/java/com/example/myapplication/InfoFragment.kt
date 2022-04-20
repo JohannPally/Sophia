@@ -71,38 +71,22 @@ class InfoFragment : Fragment() {
         val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
         var mr = dbCtrl?.get_mr(args.id)
 
-        //TODO update logic with new getter for tasks and checklist
-//        var tasks = mr?.tasks
-//        var startdate = mr?.date
-//        var cyclelen = mr?.numdays
-//
-//        if(tasks != null){
-//            if(startdate != null && cyclelen !=null){
-//                var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
-//                tasks_rv.adapter = adapter
-//                tasks_rv.layoutManager = LinearLayoutManager(activity)
-//
-//            } else {
-//                //TODO print error box, but should be unreachable
-//            }
-//        } else {
-//            cyclelen = 7
-//            cycle_et.setText("7");
-//            tasks = arrayOf(Triple("Type task name here...", Calendar.getInstance(), 0))
-//            startdate = Calendar.getInstance()
-//            //TODO push change to the MR object
-//            var adapter = TaskItemAdapter(tasks = tasks, cycle = cyclelen, startdate = startdate, navMod = navMod, navCtrl = findNavController())
-//            tasks_rv.adapter = adapter
-//            tasks_rv.layoutManager = LinearLayoutManager(activity)
-//        }
+        //TODO @Mantej pass in the sets of tasks and the checklist into here
+        var adapter = TaskItemAdapter(tasks = , checklist = , navMod = navMod, navCtrl = findNavController())
+        tasks_rv.adapter = adapter
+        tasks_rv.layoutManager = LinearLayoutManager(activity)
+        //TODO @Mantej from the checklist/checklistSQL get the cycle len and set the cycle_et text
+        //note, we are sacrificing the ability to change/save the new cycle length and add task button
+        // not enough time to make a new helper updateChecklist/updateTasks
+        cycle_et.setText()
 
         val add_button: Button = view.findViewById<Button>(R.id.addtaskbutton_info)
         add_button.setOnClickListener(){
-            //TODO define what additem does (add empty task to the rv set and refresh and push to MR object in db
+            //long term define what additem does (add empty task to the rv set and refresh and push to MR object in db
         }
 
         var devName = mr?.deviceName
-        var qrID = mr?.id
+        var mrId = mr?.id
         var fltCode = mr?.faultCode
         var ipmProc = mr?.ipmProcedure
         var servEngCode = mr?.serviceEngineeringCode
@@ -119,7 +103,7 @@ class InfoFragment : Fragment() {
         val engCode_ET = view.findViewById<EditText>(R.id.servengcode_et_info)
         var servProv_ET = view.findViewById<EditText>(R.id.servprov_et_info)
         var workOrdNum_ET = view.findViewById<EditText>(R.id.workorder_et_info)
-
+        val status_button = view.findViewById<Button>(R.id.status_button_info)
 
         devName_ET.setText(devName)
         qrCode_TV.text = qrcode.toString()
@@ -128,6 +112,68 @@ class InfoFragment : Fragment() {
         workOrdNum_ET.setText(workOrdNum)
         if (status != null) {
             setButton(view = view, status = status)
+        }
+
+// TODO @Mantej check that the columnName in each of the 5 updateMR calls below match the appropriate column name in spencers db
+        // they are not the same name as the DAO names
+        // if not working, check the model function for updateMR
+
+        devName_ET.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if(devName != null && !hasFocus){
+                    if(!devName.equals(devName_ET.text)){
+                        if (mrId != null) {
+                            dbCtrl?.updateMR(columnName = "device_name", newValue = devName_ET.text, mr_id = mrId)
+                        }
+                    }
+                }
+            }
+
+        engCode_ET.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if(servEngCode != null && !hasFocus){
+                    if(!servEngCode.equals(engCode_ET.text)){
+                        if (mrId != null) {
+                            dbCtrl?.updateMR(columnName = "service_engineer_code", newValue = engCode_ET.text, mr_id = mrId)
+                        }
+                    }
+                }
+            }
+
+        servProv_ET.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if(servProv != null && !hasFocus){
+                    if(!servProv.equals(servProv_ET.text)){
+                        if (mrId != null) {
+                            dbCtrl?.updateMR(columnName = "service_provider", newValue = servProv_ET.text, mr_id = mrId)
+                        }
+                    }
+                }
+            }
+
+        workOrdNum_ET.onFocusChangeListener =
+            View.OnFocusChangeListener { p0, hasFocus ->
+                if(workOrdNum != null && !hasFocus){
+                    if(!workOrdNum.equals(workOrdNum_ET.text)){
+                        if (mrId != null) {
+                            dbCtrl?.updateMR(columnName = "work_order_num", newValue = workOrdNum_ET.text, mr_id = mrId)
+                        }
+                    }
+                }
+            }
+
+        status_button.setOnClickListener(){
+            when(status){
+                0 -> setButton(view, 1)
+                1 -> setButton(view, 2)
+                2 -> setButton(view, 3)
+                3 -> setButton(view, 0)
+            }
+            if (mrId != null) {
+                if (status != null) {
+                    dbCtrl?.updateMR(columnName = "status", newValue = (status+1).mod(4), mr_id = mrId)
+                }
+            }
         }
 
     }

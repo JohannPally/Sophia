@@ -42,6 +42,17 @@ class TaskItemAdapter (private val tasks: Set<TaskSQL>, private val checklist: C
         val task_date_et = holder.taskDateET
         val task_stat_button = holder.taskStatButton
 
+//        TODO onFocusChangeListener for all ET's
+//        serviceProviderTextView.onFocusChangeListener =
+//            View.OnFocusChangeListener { p0, hasFocus ->
+//                if (localManRec != null && !hasFocus) {
+//                    if (localManRec.serviceProvider != serviceProviderTextView.text.toString()) {
+//                        localManRec.serviceProvider = serviceProviderTextView.text.toString()
+//                        ctrl?.editInfo(DevicePath(catArg, devArg), localManRec);
+//                    }
+//                };
+//            }
+
         task_name_tv.setText(task.name)
         task_date_et.setText(task.updatedate)
         setStatus(task, holder)

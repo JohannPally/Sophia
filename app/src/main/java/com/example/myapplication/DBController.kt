@@ -86,6 +86,10 @@ class DBController(context: Context) {
         return pID
     }
 
+    fun updateMR(columnName: String, newValue: Any, mr_id: Int) {
+        model.updateMRFieldInServer(columnName = columnName, newValue = newValue, mr_id = mr_id)
+    }
+
 //    // L3 call using SQl
 //    fun getMaintenanceRecord(category: String, deviceName: String) : MaintenanceRecord {
 //        return model.getMaintenanceRecord(category, deviceName)

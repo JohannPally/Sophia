@@ -15,6 +15,8 @@ import java.lang.reflect.Type
 import java.net.HttpURLConnection
 import java.net.URL
 import java.sql.*
+import java.util.*
+import kotlin.collections.HashMap
 
 private var dbFilename: String = "database.json"
 private var idFilename: String = "id.json"
@@ -316,6 +318,23 @@ class DatabaseModel(context: Context) {
         return MainActivity.testDB.TaskSQLDAO().findById(taskID)
     }
 
+    fun updateMRFieldInServer(columnName: String, newValue: Any, mr_id: Int) {
+        val sqlStatement = "UPDATE mr_table SET $columnName = $newValue WHERE id = $mr_id";
+        val oldThreadPolicy = StrictMode.getThreadPolicy()
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        if (::connection.isInitialized != null) {
+            try {
+                var statement = connection.createStatement()
+                statement.executeUpdate(sqlStatement);
+                StrictMode.setThreadPolicy(oldThreadPolicy)
+            } catch (e: SQLException) {
+                e.printStackTrace();
+            }
+        }
+        StrictMode.setThreadPolicy(oldThreadPolicy)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun addMaintenanceRecord(qrid: Int, deviceName: String, workOrderNum: String, serviceProvider: String?, serviceEngineeringCode: String?, faultCode: String?, ipmProcedure: String?, status: Int, timeStamp: Int, parent: Int): Int {
         // This function creates an MR SQL object from the inputs and pushes it into the SQL DB
@@ -334,6 +353,7 @@ class DatabaseModel(context: Context) {
         )
         Log.v("Added MR Object", "DBModel")
         val pID = insertHelper(mrObject);
+
         return pID
 
     }
@@ -800,6 +820,10 @@ class DatabaseModel(context: Context) {
                 connection = DriverManager.getConnection(url, username, password)
                 println("SAH:TESTING:getServerConnection 4")
                 getNewMRsHelper()
+                getChecklistHelper()
+                getNewLevelsHelper()
+                getTaskHelper()
+                initializeChecklists()
             } catch (e: ClassNotFoundException) {
                 e.printStackTrace()
             } catch (e: SQLException) {
@@ -811,6 +835,124 @@ class DatabaseModel(context: Context) {
         println("SAH:TESTING:getServerConnection")
     }
 
+//    fun initalizeDummyData() {
+//        val sqlStatement = "INSERT INTO levels_table (level_name)\n" +
+//                "OUTPUT Inserted.ID\n" +
+//                "VALUES ('Neonatal Ward')" + ";";
+//        println("INITIALIZING DUMMY")
+//        val results = sendSqlUpdateToServer(sqlStatement)
+//        if (results != null) {
+//            results.next()
+//            val levelObject = LevelSQL(results.getInt("id"), "Neonatal Ward", null)
+//            println("Level ID: " + results.getInt("id"))
+//            MainActivity.testDB.levelsDAO().insert(levelObject)
+//            var mrObject = MaintenanceRecordSQL(
+//                id = null,
+//                deviceName = "EKG 2",
+//                workOrderNum = "1250",
+//                serviceProvider = "Meditech",
+//                serviceEngineeringCode = "1",
+//                faultCode = "0",
+//                ipmProcedure = "IPM",
+//                status = 0,
+//                timestamp = 0,
+//                parent = results.getInt("id")
+//            )
+//            val pID = insertHelper(mrObject);
+//            println("DONE!")
+//        }
+//    }
 
+    fun initializeChecklists() {
+        val sqlStatement = "INSERT INTO checklist_table (parent, name, cycle, startdate)\n" +
+                "OUTPUT Inserted.ID\n" +
+                "VALUES (1062, 'Routines', 7, 'Mon Mar 14 16:02:37 GMT 2011')" + ";";
+        println("INITIALIZING CHECKLISTS")
+        val results = sendSqlUpdateToServer(sqlStatement)
+        if (results != null) {
+            results.next()
+//            val checklistItem = CheckListSQL(results.getInt("id"), 1062, 'Routines', )
+            println("Checklist ID: " + results.getInt("id"))
+//            MainActivity.testDB.levelsDAO().insert(levelObject)
+            val taskStatement = "INSERT INTO tasks_table (parent, name, status, updatedate)\n" +
+                    "OUTPUT Inserted.ID\n" +
+                    "VALUES (${results.getInt("id")}, 'Clean Filter', 0, 'Mon Mar 14 16:02:37 GMT 2011')" + ";";
+            val new_results = sendSqlUpdateToServer(taskStatement)
+            println("DONE!")
+        }
+    }
+
+    fun initializeDefaultChecklists(mrid: Int) {
+        val sqlStatement = "INSERT INTO checklist_table (parent, name, cycle, startdate)\n" +
+                "OUTPUT Inserted.ID\n" +
+                "VALUES (${mrid}, 'Default Checklist', 7, ${Calendar.getInstance().time.toString()})" + ";";
+        println("INITIALIZING CHECKLISTS")
+        val results = sendSqlUpdateToServer(sqlStatement)
+        if (results != null) {
+            results.next()
+//            val checklistItem = CheckListSQL(results.getInt("id"), 1062, 'Routines', )
+            println("Checklist ID: " + results.getInt("id"))
+//            MainActivity.testDB.levelsDAO().insert(levelObject)
+            val taskStatement = "INSERT INTO tasks_table (parent, name, status, updatedate)\n" +
+                    "OUTPUT Inserted.ID\n" +
+                    "VALUES (${results.getInt("id")}, 'Default Task', 0, ${Calendar.getInstance().time.toString()})" + ";";
+            val new_results = sendSqlUpdateToServer(taskStatement)
+            println("DONE!")
+        }
+    }
+
+    fun getChecklistHelper() {
+        if (::connection.isInitialized) {
+            val oldPolicy = StrictMode.getThreadPolicy()
+            val policy = ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            val st_2: Statement = connection.createStatement()
+            var resultSet: ResultSet = st_2.executeQuery("SELECT * FROM checklist_table;")
+            println("Retrieving Checklist Pairs ${resultSet.metaData.columnCount}");
+            while (resultSet.next()) {
+                var checklistObject = CheckListSQL(
+                    id = resultSet.getInt("id"),
+                    parent = resultSet.getInt("parent"),
+                    cycle = resultSet.getInt("cycle"),
+                    startdate = resultSet.getString("startdate"),
+                    name = resultSet.getString("name"),
+                )
+                try {
+                    MainActivity.testDB.CheckListDAO().insert(checklistObject)
+                    println("Added Checklist")
+                } catch (e: Exception) {
+                    println("Error inserting into DB: $e");
+                }
+            }
+            StrictMode.setThreadPolicy(policy)
+        }
+    }
+
+    fun getTaskHelper() {
+        if (::connection.isInitialized) {
+            val oldPolicy = StrictMode.getThreadPolicy()
+            val policy = ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            val st_2: Statement = connection.createStatement()
+            var resultSet: ResultSet = st_2.executeQuery("SELECT * FROM tasks_table;")
+            println("Retrieving Tasks ${resultSet.metaData.columnCount}");
+            while (resultSet.next()) {
+                var taskObject = TaskSQL(
+                    id = resultSet.getInt("id"),
+                    parent = resultSet.getInt("parent"),
+                    status = resultSet.getInt("status"),
+                    updatedate = resultSet.getString("updatedate"),
+                    name = resultSet.getString("name"),
+                )
+                try {
+                    MainActivity.testDB.TaskSQLDAO().insert(taskObject)
+                    println("Added Task")
+                } catch (e: Exception) {
+                    println("Error inserting into DB: $e");
+                }
+            }
+            StrictMode.setThreadPolicy(policy)
+        }
+    }
 }
 
