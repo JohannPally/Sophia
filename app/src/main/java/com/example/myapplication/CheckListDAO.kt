@@ -8,6 +8,9 @@ interface CheckListDAO {
     @Query( "SELECT * FROM checklist_table WHERE parent = :pid ")
     fun findByParentID(pid: Int): Array<CheckListSQL>
 
+    @Query( "SELECT * FROM checklist_table WHERE parent = :pid LIMIT 1")
+    fun findByParentIDChecklist(pid: Int): CheckListSQL
+
     @Query( "SELECT * FROM checklist_table WHERE parent is null")
     fun findByParentIDTop(): Array<CheckListSQL>
 

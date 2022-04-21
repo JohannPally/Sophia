@@ -301,7 +301,7 @@ class DatabaseModel(context: Context) {
     }
 
     fun getCheckList(checkListID: Int): CheckListSQL {
-        return MainActivity.testDB.CheckListDAO().findById(checkListID)
+        return MainActivity.testDB.CheckListDAO().findByParentIDChecklist(checkListID)
     }
 
     fun getTasksTable(parent:Int):Set<TaskSQL>{
@@ -835,33 +835,34 @@ class DatabaseModel(context: Context) {
         println("SAH:TESTING:getServerConnection")
     }
 
-//    fun initalizeDummyData() {
-//        val sqlStatement = "INSERT INTO levels_table (level_name)\n" +
-//                "OUTPUT Inserted.ID\n" +
-//                "VALUES ('Neonatal Ward')" + ";";
-//        println("INITIALIZING DUMMY")
-//        val results = sendSqlUpdateToServer(sqlStatement)
-//        if (results != null) {
-//            results.next()
-//            val levelObject = LevelSQL(results.getInt("id"), "Neonatal Ward", null)
-//            println("Level ID: " + results.getInt("id"))
-//            MainActivity.testDB.levelsDAO().insert(levelObject)
-//            var mrObject = MaintenanceRecordSQL(
-//                id = null,
-//                deviceName = "EKG 2",
-//                workOrderNum = "1250",
-//                serviceProvider = "Meditech",
-//                serviceEngineeringCode = "1",
-//                faultCode = "0",
-//                ipmProcedure = "IPM",
-//                status = 0,
-//                timestamp = 0,
-//                parent = results.getInt("id")
-//            )
-//            val pID = insertHelper(mrObject);
-//            println("DONE!")
-//        }
-//    }
+    fun initalizeDummyData() {
+        val sqlStatement = "INSERT INTO levels_table (level_name)\n" +
+                "OUTPUT Inserted.ID\n" +
+                "VALUES ('Neonatal Ward')" + ";";
+        println("INITIALIZING DUMMY")
+        val results = sendSqlUpdateToServer(sqlStatement)
+        if (results != null) {
+            results.next()
+            val levelObject = LevelSQL(results.getInt("id"), "Neonatal Ward", null)
+            println("Level ID: " + results.getInt("id"))
+            MainActivity.testDB.levelsDAO().insert(levelObject)
+            var mrObject = MaintenanceRecordSQL(
+                id = null,
+                deviceName = "EKG 2",
+                workOrderNum = "1250",
+                serviceProvider = "Meditech",
+                serviceEngineeringCode = "1",
+                faultCode = "0",
+                ipmProcedure = "IPM",
+                status = 0,
+                timestamp = 0,
+                parent = results.getInt("id"),
+                qrcode = 1
+            )
+            val pID = insertHelper(mrObject);
+            println("DONE!")
+        }
+    }
 
     fun initializeChecklists() {
         val sqlStatement = "INSERT INTO checklist_table (parent, name, cycle, startdate)\n" +

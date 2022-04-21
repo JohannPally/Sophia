@@ -76,6 +76,10 @@ class DBController(context: Context) {
         return model.getTask(id)
     }
 
+    fun forceCheckList(id: Int){
+        model.initializeDefaultChecklists(id)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun add_mr(qrid:Int, devName:String, workOrderNum: String, serviceProvider: String, status: Int, parent:Int): Int {
         var pID = model.addMaintenanceRecord(

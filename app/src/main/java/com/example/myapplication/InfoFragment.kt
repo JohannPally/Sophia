@@ -72,17 +72,30 @@ class InfoFragment : Fragment() {
         var mr = dbCtrl?.get_mr(args.id)
 
         // Gets checklist using the MRID
+        dbCtrl?.forceCheckList(args.id)
         var checkList = dbCtrl?.getCheckList(args.id)
+        Log.v("Checklist ID", checkList.toString())
+        Log.v("Args ID", args.id.toString())
+
         var clID = checkList?.id
         // Get Tasks
         var taskList = clID?.let { dbCtrl?.getTasks(it) }
+        Log.v("Task list ID", taskList.toString())
+        if (taskList.isNullOrEmpty()){
+            Log.v("Task list is null", taskList.toString())
+        } else {
+            Log.v("Task list is not null", taskList.toString())
+        }
 
+        var taskListHardCode : Array<TaskSQL> = arrayOf(
+            TaskSQL(id = 1, parent = 1062, name = "Clean Filter", status = 0, updatedate = "Mon Mar 14 16:02:37 GMT 2011"))
+        var checkListHardCode : CheckListSQL = CheckListSQL(id = 1, parent = 1062, name = "Routines", cycle = 7, startdate = "Mon Mar 14 16:02:37 GMT 2011")
 
         //TODO @Mantej pass in the sets of tasks and the checklist into here
         if (taskList != null && checkList != null ) {
             var adapter = TaskItemAdapter(
-                tasks = taskList,
-                checklist = checkList,
+                tasks = taskListHardCode,
+                checklist = checkListHardCode,
                 navMod = navMod,
                 navCtrl = findNavController()
             )
