@@ -168,11 +168,11 @@ class InfoFragment : Fragment() {
 
         engCode_ET.onFocusChangeListener =
             View.OnFocusChangeListener { p0, hasFocus ->
-                if(servEngCode != null && !hasFocus){
-                    if(!servEngCode.equals(engCode_ET.text)){
+                if(!hasFocus){
+                    if(servEngCode == null || !servEngCode.equals(engCode_ET.text)){
                         if (mr != null) {
                             mr.serviceEngineeringCode = engCode_ET.text.toString()
-                            dbCtrl?.updateMR(columnName = "service_engineer_code", newValue = engCode_ET.text, mr = mr)
+                            dbCtrl?.updateMR(columnName = "service_engineering_code", newValue = engCode_ET.text, mr = mr)
                         }
                     }
                 }
