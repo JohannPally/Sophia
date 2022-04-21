@@ -11,13 +11,13 @@ import java.util.*
     onDelete = CASCADE)])
 data class MaintenanceRecordSQL(
     @PrimaryKey var id: Int?,
-    @ColumnInfo(name = "device_name") val deviceName: String,
-    @ColumnInfo(name = "work_order_num") val workOrderNum: String,
-    @ColumnInfo(name = "service_provider") val serviceProvider: String?,
-    @ColumnInfo(name = "service_engineering_code") val serviceEngineeringCode: String?,
+    @ColumnInfo(name = "device_name") var deviceName: String,
+    @ColumnInfo(name = "work_order_num") var workOrderNum: String,
+    @ColumnInfo(name = "service_provider") var serviceProvider: String?,
+    @ColumnInfo(name = "service_engineering_code") var serviceEngineeringCode: String?,
     @ColumnInfo(name = "fault_code") val faultCode: String?,
     @ColumnInfo(name = "ipm_procedure") val ipmProcedure: String?,
-    @ColumnInfo(name = "status") val status: Int,
+    @ColumnInfo(name = "status") var status: Int,
     @ColumnInfo(name = "timestamp") val timestamp: Int,
     @ColumnInfo(name = "parent") val parent: Int?,
     @ColumnInfo(name = "qrcode") val qrcode: Int

@@ -158,8 +158,9 @@ class InfoFragment : Fragment() {
             View.OnFocusChangeListener { p0, hasFocus ->
                 if(devName != null && !hasFocus){
                     if(!devName.equals(devName_ET.text)){
-                        if (mrId != null) {
-                            dbCtrl?.updateMR(columnName = "device_name", newValue = devName_ET.text, mr_id = mrId)
+                        if (mr != null) {
+                            mr.deviceName = devName_ET.text.toString()
+                            dbCtrl?.updateMR(columnName = "device_name", newValue = devName_ET.text, mr = mr)
                         }
                     }
                 }
@@ -169,8 +170,9 @@ class InfoFragment : Fragment() {
             View.OnFocusChangeListener { p0, hasFocus ->
                 if(servEngCode != null && !hasFocus){
                     if(!servEngCode.equals(engCode_ET.text)){
-                        if (mrId != null) {
-                            dbCtrl?.updateMR(columnName = "service_engineer_code", newValue = engCode_ET.text, mr_id = mrId)
+                        if (mr != null) {
+                            mr.serviceEngineeringCode = engCode_ET.text.toString()
+                            dbCtrl?.updateMR(columnName = "service_engineer_code", newValue = engCode_ET.text, mr = mr)
                         }
                     }
                 }
@@ -180,8 +182,9 @@ class InfoFragment : Fragment() {
             View.OnFocusChangeListener { p0, hasFocus ->
                 if(servProv != null && !hasFocus){
                     if(!servProv.equals(servProv_ET.text)){
-                        if (mrId != null) {
-                            dbCtrl?.updateMR(columnName = "service_provider", newValue = servProv_ET.text, mr_id = mrId)
+                        if (mr != null) {
+                            mr.serviceProvider = servProv_ET.text.toString()
+                            dbCtrl?.updateMR(columnName = "service_provider", newValue = servProv_ET.text, mr = mr)
                         }
                     }
                 }
@@ -191,8 +194,9 @@ class InfoFragment : Fragment() {
             View.OnFocusChangeListener { p0, hasFocus ->
                 if(workOrdNum != null && !hasFocus){
                     if(!workOrdNum.equals(workOrdNum_ET.text)){
-                        if (mrId != null) {
-                            dbCtrl?.updateMR(columnName = "work_order_num", newValue = workOrdNum_ET.text, mr_id = mrId)
+                        if (mr != null) {
+                            mr.workOrderNum = workOrdNum_ET.text.toString()
+                            dbCtrl?.updateMR(columnName = "work_order_num", newValue = workOrdNum_ET.text, mr = mr)
                         }
                     }
                 }
@@ -205,9 +209,10 @@ class InfoFragment : Fragment() {
                 2 -> setButton(view, 3)
                 3 -> setButton(view, 0)
             }
-            if (mrId != null) {
+            if (mr != null) {
                 if (status != null) {
-                    dbCtrl?.updateMR(columnName = "status", newValue = (status+1).mod(4), mr_id = mrId)
+                    mr.status = (status+1).mod(4)
+                    dbCtrl?.updateMR(columnName = "status", newValue = (status+1).mod(4), mr = mr)
                 }
             }
         }

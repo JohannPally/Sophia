@@ -318,8 +318,15 @@ class DatabaseModel(context: Context) {
         return MainActivity.testDB.TaskSQLDAO().findById(taskID)
     }
 
-    fun updateMRFieldInServer(columnName: String, newValue: Any, mr_id: Int) {
-        val sqlStatement = "UPDATE mr_table SET $columnName = $newValue WHERE id = $mr_id";
+    fun updateMRFieldInServer(columnName: String, newValue: Any, mr: MaintenanceRecordSQL) {
+        println("UPDATE CALLED")
+        val sqlStatement: String;
+        if (newValue is Int) {
+            sqlStatement = "UPDATE mr_table SET $columnName = $newValue WHERE id = ${mr.id}";
+        } else {
+            sqlStatement = "UPDATE mr_table SET $columnName = '$newValue' WHERE id = ${mr.id}";
+        }
+        println("SQL : ${sqlStatement}")
         val oldThreadPolicy = StrictMode.getThreadPolicy()
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -328,6 +335,7 @@ class DatabaseModel(context: Context) {
                 var statement = connection.createStatement()
                 statement.executeUpdate(sqlStatement);
                 StrictMode.setThreadPolicy(oldThreadPolicy)
+                MainActivity.testDB.maintenanceRecordDAO().pushUpdate(mr)
             } catch (e: SQLException) {
                 e.printStackTrace();
             }
