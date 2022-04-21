@@ -69,48 +69,52 @@ class InfoFragment : Fragment() {
         //==================BINDINGS=====================
         val tasks_rv: RecyclerView = view.findViewById<RecyclerView>(R.id.tasks_recyclerView)
         val cycle_et: EditText = view.findViewById<EditText>(R.id.cycle_length_info)
+        val checklist_et = view.findViewById<EditText>(R.id.checklist_et_info)
         var mr = dbCtrl?.get_mr(args.id)
 
         // Gets checklist using the MRID
-        dbCtrl?.forceCheckList(args.id)
-        var checkList = dbCtrl?.getCheckList(args.id)
-        Log.v("Checklist ID", checkList.toString())
-        Log.v("Args ID", args.id.toString())
-
-        var clID = checkList?.id
-        // Get Tasks
-        var taskList = clID?.let { dbCtrl?.getTasks(it) }
-        Log.v("Task list ID", taskList.toString())
-        if (taskList.isNullOrEmpty()){
-            Log.v("Task list is null", taskList.toString())
-        } else {
-            Log.v("Task list is not null", taskList.toString())
-        }
+//        dbCtrl?.forceCheckList(args.id)
+//        var checkList = dbCtrl?.getCheckList(args.id)
+//        Log.v("Checklist ID", checkList.toString())
+//        Log.v("Args ID", args.id.toString())
+//
+//        var clID = checkList?.id
+//        // Get Tasks
+//        var taskList = clID?.let { dbCtrl?.getTasks(it) }
+//        Log.v("Task list ID", taskList.toString())
+//        if (taskList.isNullOrEmpty()){
+//            Log.v("Task list is null", taskList.toString())
+//        } else {
+//            Log.v("Task list is not null", taskList.toString())
+//        }
 
         var taskListHardCode : Array<TaskSQL> = arrayOf(
-            TaskSQL(id = 1, parent = 1062, name = "Clean Filter", status = 0, updatedate = "Mon Mar 14 16:02:37 GMT 2011"))
+            TaskSQL(id = 1, parent = 1062, name = "Clean Filter", status = 0, updatedate = "Mon Mar 14 16:02:37 GMT 2011"),
+            TaskSQL(id = 1, parent = 1062, name = "Change Filter", status = 0, updatedate = "Mon Mar 14 16:02:37 GMT 2011"),
+            TaskSQL(id = 1, parent = 1062, name = "Check Status Light", status = 0, updatedate = "Mon Mar 14 16:02:37 GMT 2011"),
+            TaskSQL(id = 1, parent = 1062, name = "Throw Away Old Filter", status = 0, updatedate = "Mon Mar 14 16:02:37 GMT 2011"))
         var checkListHardCode : CheckListSQL = CheckListSQL(id = 1, parent = 1062, name = "Routines", cycle = 7, startdate = "Mon Mar 14 16:02:37 GMT 2011")
-
+        Log.d("clist", checkListHardCode.toString())
+        Log.d("tset", taskListHardCode.size.toString())
         //TODO @Mantej pass in the sets of tasks and the checklist into here
-        if (taskList != null && checkList != null ) {
-            var adapter = TaskItemAdapter(
-                tasks = taskListHardCode,
-                checklist = checkListHardCode,
-                navMod = navMod,
-                navCtrl = findNavController()
-            )
 
-            tasks_rv.adapter = adapter
-            tasks_rv.layoutManager = LinearLayoutManager(activity)
-        }
+        var taskadapter = TaskItemAdapter(
+            tasks = taskListHardCode,
+            checklist = checkListHardCode,
+            navMod = navMod,
+            navCtrl = findNavController()
+        )
+        tasks_rv.layoutManager = LinearLayoutManager(activity)
+        tasks_rv.adapter = taskadapter
+
         //TODO @Mantej from the checklist/checklistSQL get the cycle len and set the cycle_et text
-        var cycleLen = checkList?.cycle
+        var cycleLen = checkListHardCode.cycle
+        var checkname = checkListHardCode.name
 
         //note, we are sacrificing the ability to change/save the new cycle length and add task button
         // not enough time to make a new helper updateChecklist/updateTasks
-        if (cycleLen != null) {
-            cycle_et.setText(cycleLen)
-        }
+        cycle_et.setText(cycleLen.toString())
+        checklist_et.setText(checkname)
 
         val add_button: Button = view.findViewById<Button>(R.id.addtaskbutton_info)
         add_button.setOnClickListener(){

@@ -8,24 +8,24 @@
 
     <TextView
         android:id="@+id/task_name_info"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textSize="22sp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/task_date_info"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintVertical_bias="0.648" />
 
     <Button
         android:id="@+id/task_stat_button_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textSize="12sp"
+        android:layout_width="56dp"
+        android:layout_height="31dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textSize="6dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/task_name_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/task_date_info" />
@@ -36,12 +36,12 @@
         android:layout_height="wrap_content"
         android:ems="8"
         android:inputType="date"
-        android:textSize="5sp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintHorizontal_bias="0.693"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.673" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         // @ Johann TODO This is where we build our mock DB
-        //testDB.clearAllTables() // -- Run this to delete all tables and clear the data
-        // if you keep re- running the app, it will keep creating duplicates of this dummy data
+        testDB.clearAllTables() // -- Run this to delete all tables and clear the data
+         //if you keep re- running the app, it will keep creating duplicates of this dummy data
 //        val mrDao = testDB.maintenanceRecordDAO()
 //        val levelsDao = testDB.levelsDAO()
 //        val NICULevel = LevelSQL(null, "NICU", null);
@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
 //        levelsDao.insert(NICULevel)
 //        levelsDao.insert(ERLevel)
 //        levelsDao.insert(InfantWard)
-//        mrDao.insert(MaintenanceRecordSQL(null,"Oxygen Conc", "1", "TestP", "TestE", "TestF", "TestI", 1, 12, levelsDao.getAll()[0].id))
-//        mrDao.insert(MaintenanceRecordSQL(null,"Breath Pump", "2", "TestP2", "TestE2", "TestF2", "TestI2", 1, 123, levelsDao.getAll()[1].id))
-//        mrDao.insert(MaintenanceRecordSQL(null, "SP02 Sensor", "3", "TestP3", "TestE3", "TestF3", "TestI3", 1, 1234, levelsDao.getAll()[2].id))
+//        mrDao.insert(MaintenanceRecordSQL(null,"Oxygen Conc", "1", "Medtronic", "EngCode2", "42", "Proc", 1, 12, levelsDao.getAll()[0].id, qrcode = 23))
+//        mrDao.insert(MaintenanceRecordSQL(null,"Breath Pump", "2", "HealthWork", "EngCode3", "66", "Proc", 1, 123, levelsDao.getAll()[1].id, qrcode = 44))
+//        mrDao.insert(MaintenanceRecordSQL(null, "SP02 Sensor", "3", "TexHealth", "EngCode43", "23", "Proc", 1, 1234, levelsDao.getAll()[2].id, qrcode = 2))
 
 
         //TODO can make this a global variable instead of passing into frags

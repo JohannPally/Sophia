@@ -55,6 +55,7 @@ class TaskItemAdapter (private val tasks: Array<TaskSQL>, private val checklist:
 
         task_name_tv.setText(task.name)
         task_date_et.setText(task.updatedate)
+        task_stat_button.setText("complete")
         setStatus(task, holder)
         task_stat_button.setOnClickListener(){
             //TODO change update date in TaskSQL
@@ -109,6 +110,7 @@ class TaskItemAdapter (private val tasks: Array<TaskSQL>, private val checklist:
     }
 
     override fun getItemCount(): Int {
+        Log.d("size", tasks.size.toString())
         return tasks.size
     }
 }
